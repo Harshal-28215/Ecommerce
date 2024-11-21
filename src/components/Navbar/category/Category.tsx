@@ -1,21 +1,29 @@
 import React from 'react'
 import Link from 'next/link'
 
-function Category() {
+type CategoryType = {
+    _id: string;
+    name: string;
+    parent: string | null;
+    subcategories?: CategoryType[];
+}
 
-    const category = [
-        { name: 'Men' },
-        { name: 'Women' },
-        { name: 'Kids' },
-        { name: 'Upper' },
-        { name: 'Bottom' },
-        { name: 'Middle' },
-    ]
+async function Category() {
+
+    async function fetchCategory(){
+        const category = await fetch('http://localhost:3000/api/category/CreateCategory', {
+            method: 'GET',
+        })
+        
+        return category.json();
+    }
+    const category = await fetchCategory();
+    
 
     return (
         <section className='w-[100vw] flex justify-center items-center h-10 gap-16'>
-         {category.map((category) => (
-            <Link href='/category' key={category.name}>{category.name}</Link>
+         {category.map((category: CategoryType) => (
+            <Link href={{pathname:`/category/${category.name}`, query:{id:category._id}}} key={category._id}>{category.name}</Link>
          ))}
         </section>
     )
