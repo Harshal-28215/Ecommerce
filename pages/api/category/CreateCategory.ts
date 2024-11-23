@@ -37,14 +37,25 @@ const POST = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         if (req.method === 'GET') {
             if (req.query.id) {
-                // Fetch a single category by ID
                 console.log("Requested ID:", req.query.id);
 
-                const category = await Category.find({parent: req.query.id}).lean();
-                if (!category) {
+                const topLevelCategories =(await Category.find({parent: req.query.id}).lean()).map(category => ({
+                    _id: category._id,
+                    name: category.name,
+                    parent: category.parent,
+                    subcategories: []
+                })) as CategoryType[];
+                
+                if (!topLevelCategories) {
                     return res.status(404).json({ error: "Category not found" });
                 }
-                return res.status(200).json(category);
+
+                const categoriesWithSubcategories = await Promise.all(
+                    topLevelCategories.map((category: CategoryType) =>
+                        getCategoryWithSubcategories(category._id)
+                    )
+                );
+                return res.status(200).json(categoriesWithSubcategories);
             }
             // Fetch all top-level categories and their nested subcategories
             const topLevelCategories = (await Category.find({ parent: null }).lean()).map(category => ({
@@ -53,6 +64,7 @@ const POST = async (req: NextApiRequest, res: NextApiResponse) => {
                 parent: category.parent,
                 subcategories: []
             })) as CategoryType[];
+            
 
             const categoriesWithSubcategories = await Promise.all(
                 topLevelCategories.map((category: CategoryType) =>
