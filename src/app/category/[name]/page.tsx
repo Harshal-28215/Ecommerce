@@ -11,11 +11,16 @@ async function page({searchParams}:{searchParams:URLSearchParams}) {
 
   async function fetchCategory(){
     const category = await fetch(`http://localhost:3000/api/category/CreateCategory?id=${id}`, {
+      cache:'force-cache',
+      next:{revalidate:3600},
+      
         method: 'GET',
     })
     
     return category.json();
 }
+
+
 const category = await fetchCategory();
 
   return (
