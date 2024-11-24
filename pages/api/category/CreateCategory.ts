@@ -91,9 +91,11 @@ const POST = async (req: NextApiRequest, res: NextApiResponse) => {
 
             // Check if a parent category ID is provided, otherwise it's a top-level category
             const parent = parentId ? await Category.findById(parentId) : null;
+            const slug = name.toLowerCase().replace(/ /g, '-');
 
-            const newCategory = new Category({ name, parent });
+            const newCategory = new Category({ name, parent, slug });
             await newCategory.save();
+            
             return res.status(201).json(newCategory);
         }
 

@@ -13,6 +13,12 @@ const CategorySchema = new mongoose.Schema(
       ref: 'Category',
       default: null, 
     },
+    slug: {
+      type: String,
+      required: [true, 'Category slug is required'],
+      unique: true,
+      trim: true,
+    },
     createdAt: {
       type: Date,
       default: Date.now,
