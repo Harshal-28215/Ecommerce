@@ -1,33 +1,19 @@
-import CategoryName from '@/components/Navbar/category/CategoryName';
 import React from 'react'
 
 type URLSearchParams = {
-  id: string;
+  s: string;
 }
 
 async function page({searchParams}:{searchParams:URLSearchParams}) {
 
-  const {id} = await searchParams;
-
-  async function fetchCategory(){
-    const category = await fetch(`http://localhost:3000/api/category/CreateCategory?id=${id}`, {
-      cache:'force-cache',
-      next:{revalidate:3600},
-      
-        method: 'GET',
-    })
-    
-    return category.json();
-}
-
-
-const category = await fetchCategory();
+  const { s } = await searchParams;
 
   return (
     <main>
-      <CategoryName category={category}/>
+      {s}
     </main>
   )
 }
 
 export default page
+export const dynamic = "force-dynamic"; 
