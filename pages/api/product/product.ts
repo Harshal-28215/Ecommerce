@@ -1,5 +1,5 @@
 import connectToDatabase from "@/lib/mongodb/db";
-import Product from "@/lib/schemas/Product";
+import Product from "../../../src/lib/schemas/Product";
 import { NextApiRequest, NextApiResponse } from "next";
 import formidable from "formidable";
 import fs from "fs";
@@ -24,11 +24,11 @@ const CreateProduct = async (req: NextApiRequest, res: NextApiResponse) => {
       }
     });
 
-    try {
-      if (req.method === "POST") {
+    if (req.method === "POST") {
 
-        const { name, description, price, category } = fields;
+      const { name, description, price, category } = fields;
 
+      try {
         if (!name) {
           return res.status(400).json({ error: "Name is required" });
         }
@@ -41,9 +41,6 @@ const CreateProduct = async (req: NextApiRequest, res: NextApiResponse) => {
             contentType: file.mimetype,
           }));
 
-        console.log(images);
-        
-
         const product = new Product({
           name,
           description,
@@ -54,14 +51,13 @@ const CreateProduct = async (req: NextApiRequest, res: NextApiResponse) => {
 
         await product.save();
         res.status(201).json({ message: "Product created successfully", product });
-
-      } else {
-        res.setHeader("Allow", ["GET", "POST"]);
-        res.status(405).end(`Method ${req.method} Not Allowed`);
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error creating product" });
       }
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Internal Server Error" });
+    } else {
+      res.setHeader("Allow", ["GET", "POST"]);
+      res.status(405).end(`Method ${req.method} Not Allowed`);
     }
   });
 };
