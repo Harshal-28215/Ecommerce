@@ -17,6 +17,7 @@ type CategoryType = {
     _id: string;
     name: string;
     parent: string | null;
+    slug: string;
     subcategories?: CategoryType[];
 }
 
@@ -35,14 +36,14 @@ export default function NavigationMenuDemo({ category }: { category: CategoryTyp
                                     <div key={subcategory._id}>
                                     <ListItem
                                         className="py-1 hover:bg-transparent font-extrabold uppercase"
-                                        href={`/category/${encodeURIComponent(subcategory.name || 'unknown')}?id=${subcategory._id}`}
+                                        href={`/category/${encodeURIComponent(subcategory.name || 'unknown')}?s=${subcategory.slug}`}
                                         title={subcategory.name || 'Unknown Category'}
                                     />
                                     {subcategory.subcategories &&
                                         subcategory.subcategories.map((nestedSubcategory) => (
                                             <ListItem
-                                                className="py-0 hover:bg-transparent text-slate-500"
-                                                href={`/category/${encodeURIComponent(nestedSubcategory.name || 'unknown')}?id=${nestedSubcategory._id}`}
+                                                className="py-0 hover:bg-transparent text-slate-500 hover:font-extrabold hover:underline"
+                                                href={`/category/${encodeURIComponent(nestedSubcategory.name || 'unknown')}?s=${nestedSubcategory.slug}`}
                                                 title={nestedSubcategory.name || 'Unknown Subcategory'}
                                                 key={nestedSubcategory._id}
                                             />

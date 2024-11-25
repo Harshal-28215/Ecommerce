@@ -18,6 +18,7 @@ async function getCategoryWithSubcategories(categoryId: string): Promise<Categor
         _id: sub._id,
         name: sub.name,
         parent: sub.parent,
+        slug: sub.slug,
         subcategories: []
     })) as CategoryType[];
 
@@ -31,18 +32,19 @@ async function getCategoryWithSubcategories(categoryId: string): Promise<Categor
     };
 }
 
-const POST = async (req: NextApiRequest, res: NextApiResponse) => {
+const CreateCategory = async (req: NextApiRequest, res: NextApiResponse) => {
     await connectToDatabase();
 
     try {
         if (req.method === 'GET') {
-            if (req.query.id) {
-                console.log("Requested ID:", req.query.id);
+            if (req.query.slug) {
+                console.log("Requested ID:", req.query.slug);
 
-                const topLevelCategories =(await Category.find({parent: req.query.id}).lean()).map(category => ({
+                const topLevelCategories =(await Category.find({slug: req.query.slug}).lean()).map(category => ({
                     _id: category._id,
                     name: category.name,
                     parent: category.parent,
+                    slug: category.slug,
                     subcategories: []
                 })) as CategoryType[];
                 
@@ -62,6 +64,7 @@ const POST = async (req: NextApiRequest, res: NextApiResponse) => {
                 _id: category._id,
                 name: category.name,
                 parent: category.parent,
+                slug: category.slug,
                 subcategories: []
             })) as CategoryType[];
             
@@ -77,7 +80,7 @@ const POST = async (req: NextApiRequest, res: NextApiResponse) => {
 
         if (req.method === 'POST') {
             // Create a new category
-            const { name, parentId } = req.body;
+            let { name, parentId, slug } = req.body;
 
             Category.findOne({ name }).then((category) => {
                 if (category) {
@@ -91,7 +94,12 @@ const POST = async (req: NextApiRequest, res: NextApiResponse) => {
 
             // Check if a parent category ID is provided, otherwise it's a top-level category
             const parent = parentId ? await Category.findById(parentId) : null;
-            const slug = name.toLowerCase().replace(/ /g, '-');
+
+            if (!slug) {
+                slug = name.toLowerCase().replace(/ /g, '-');
+            }else{
+                slug = slug.toLowerCase().replace(/ /g, '-');
+            }
 
             const newCategory = new Category({ name, parent, slug });
             await newCategory.save();
@@ -107,4 +115,4 @@ const POST = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 }
 
-export default POST;
+export default CreateCategory;
