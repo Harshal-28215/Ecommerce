@@ -33,6 +33,7 @@ const CreateProduct = async (req: NextApiRequest, res: NextApiResponse) => {
           return res.status(400).json({ error: "Name is required" });
         }
 
+        
         const uploadedFiles = Array.isArray(files.images) ? files.images : [files.images];
         const images = uploadedFiles
           .filter((file) => file !== undefined)
