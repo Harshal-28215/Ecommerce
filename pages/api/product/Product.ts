@@ -7,24 +7,25 @@ import fs from "fs";
 const CreateProduct = async (req: NextApiRequest, res: NextApiResponse) => {
   await connectToDatabase();
 
-  const form = formidable({
-    multiples: true,
-    keepExtensions: true,
-  });
+  if (req.method === "POST") {
 
-  form.parse(req, async (err, fields: Record<string, any>, files) => {
-    if (err) {
-      console.error(err);
-      return res.status(400).json({ error: "Error parsing form data" });
-    }
-
-    Object.keys(fields).forEach((key) => {
-      if (Array.isArray(fields[key]) && fields[key].length === 1) {
-        fields[key] = fields[key][0];
-      }
+    const form = formidable({
+      multiples: true,
+      keepExtensions: true,
     });
 
-    if (req.method === "POST") {
+    form.parse(req, async (err, fields: Record<string, any>, files) => {
+      if (err) {
+        console.error(err);
+        return res.status(400).json({ error: "Error parsing form data" });
+      }
+
+      Object.keys(fields).forEach((key) => {
+        if (Array.isArray(fields[key]) && fields[key].length === 1) {
+          fields[key] = fields[key][0];
+        }
+      });
+
 
       const { name, description, price, category, ProductDetails, sizeAndFit, materialAndCare, specifications } = fields;
 
@@ -59,11 +60,11 @@ const CreateProduct = async (req: NextApiRequest, res: NextApiResponse) => {
         console.error(error);
         res.status(500).json({ error: "Error creating product" });
       }
-    } else {
-      res.setHeader("Allow", ["GET", "POST"]);
-      res.status(405).end(`Method ${req.method} Not Allowed`);
-    }
-  });
+    });
+  } else {
+    res.setHeader("Allow", ["GET", "POST"]);
+    res.status(405).end(`Method ${req.method} Not Allowed`);
+  }
 };
 
 export default CreateProduct;
