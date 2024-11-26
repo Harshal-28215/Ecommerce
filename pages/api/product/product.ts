@@ -26,14 +26,13 @@ const CreateProduct = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (req.method === "POST") {
 
-      const { name, description, price, category } = fields;
+      const { name, description, price, category, ProductDetails, sizeAndFit, materialAndCare, specifications } = fields;
 
       try {
-        if (!name) {
-          return res.status(400).json({ error: "Name is required" });
-        }
+        const stringSpecifications = specifications
+          ? JSON.parse(specifications)
+          : [];
 
-        
         const uploadedFiles = Array.isArray(files.images) ? files.images : [files.images];
         const images = uploadedFiles
           .filter((file) => file !== undefined)
@@ -45,8 +44,12 @@ const CreateProduct = async (req: NextApiRequest, res: NextApiResponse) => {
         const product = new Product({
           name,
           description,
-          price: parseFloat(Array.isArray(price) ? price[0] : price || "0"),
           category,
+          ProductDetails,
+          sizeAndFit,
+          materialAndCare,
+          price: parseFloat(Array.isArray(price) ? price[0] : price || "0"),
+          specifications: stringSpecifications,
           images: images,
         });
 

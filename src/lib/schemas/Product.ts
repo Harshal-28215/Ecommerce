@@ -5,6 +5,15 @@ const ProductSchema = new Schema({
   description: { type: String, required: true },
   price: { type: Number, required: true },
   category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
+  ProductDetails: { type: String, required: true },
+  sizeAndFit: { type: String },
+  materialAndCare: { type: String },
+  specifications: [
+    {
+      title: { type: String },
+      about: { type: String }
+    }
+  ],
   images: [
     {
       data: { type: Buffer, required: true },
