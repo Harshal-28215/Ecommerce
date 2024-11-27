@@ -8,6 +8,8 @@ async function page({searchParams}:{searchParams:URLSearchParams}) {
 
   const { s } = await searchParams;
 
+  
+
   return (
     <main>
       {s}

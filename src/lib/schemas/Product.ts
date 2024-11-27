@@ -4,7 +4,7 @@ const ProductSchema = new Schema({
   name: { type: String, required: true },
   description: { type: String, required: true },
   price: { type: Number, required: true },
-  category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
+  category: { type: String, required: true },
   ProductDetails: { type: String, required: true },
   sizeAndFit: { type: String },
   materialAndCare: { type: String },

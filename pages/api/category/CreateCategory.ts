@@ -10,7 +10,7 @@ const CreateCategory = async (req: NextApiRequest, res: NextApiResponse) => {
         await getCategory(req, res);
     } else if (req.method === 'POST') {
         // Create a new category
-        await createCategory(req, res);
+        createCategory(req, res);
     } else {
         // Handle unsupported methods
         res.setHeader('Allow', ['GET', 'POST']); // Specify allowed methods
