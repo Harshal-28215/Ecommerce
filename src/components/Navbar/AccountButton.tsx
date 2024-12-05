@@ -33,38 +33,23 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import Link from "next/link"
-import { useEffect, useState } from "react"
-import { getUser } from "@/lib/utils"
+import { useMyContext } from "@/Context/context"
 
 function AccountButton() {
 
-  const [user, setUser] = useState(null)
-
-  useEffect(() => {
-    async function fetchuser() {
-      const user = await getUser();
-
-      console.log(user);
-      
-      if (user) {
-        setUser(user)
-      }
-    }
-
-    fetchuser()
-  }, [])
+  const {user} = useMyContext();  
 
   const handleLogOut = async () => {
-    // const response = await fetch('http://localhost:3000/api/auth/logout', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   credentials: 'include',
-    // })
-    // if (response.ok) {
-    //   window.location.href = '/'
-    // }
+    const response = await fetch('http://localhost:3000/api/user/logout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    })
+    if (response.ok) {
+      window.location.href = '/'
+    }
     console.log('Logged out');
 
   }

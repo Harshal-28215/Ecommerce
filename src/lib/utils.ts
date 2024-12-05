@@ -41,22 +41,3 @@ export type userType = {
   name: string;
   id: string;
 }
-
-export async function getUser(){
-  "use client"
-  const response = await fetch('http://localhost:3000/api/user/user', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    credentials: "include",
-  })
-
-  console.log(response);
-  
-
-  if (response.ok) {
-    return await response.json()
-  }
-  return null
-}

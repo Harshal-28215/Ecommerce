@@ -28,6 +28,7 @@ import {
 import {
   PasswordInput
 } from "@/components/ui/password-input"
+import { useRouter } from "next/navigation"
 
 const formSchema = z.object({
   UserName: z.string().min(3),
@@ -41,6 +42,7 @@ const formSchema = z.object({
 });
 
 export default function SignupForm() {
+  const router = useRouter()
 
   const form = useForm < z.infer < typeof formSchema >> ({
     resolver: zodResolver(formSchema),
@@ -55,11 +57,27 @@ export default function SignupForm() {
  async function onSubmit(values: z.infer < typeof formSchema > ) {
 
   const data = {
-    username: values.UserName,
+    name: values.UserName,
     email: values.email,
     password: values.Password,
   }
-  console.log(data);
+  try {
+    const response = await fetch("http://localhost:3000/api/user/signup", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+        credentials:'include',
+        });
+
+        if (response.ok) {
+            router.push('/login')
+        }
+        
+  } catch (error) {
+    console.error('An unexpected error happened while login:', error)
+  }
   
   }
 

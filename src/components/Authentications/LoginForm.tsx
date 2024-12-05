@@ -69,7 +69,7 @@ export default function LoginForm() {
         }
         
   } catch (error) {
-    
+    console.error('An unexpected error happened while login:', error)
   }
   
 
