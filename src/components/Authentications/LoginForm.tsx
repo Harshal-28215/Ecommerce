@@ -27,6 +27,7 @@ import {
 import {
   PasswordInput
 } from "@/components/ui/password-input"
+import { useRouter } from "next/navigation"
 
 const formSchema = z.object({
   email: z.string(),
@@ -34,6 +35,7 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
+    const router = useRouter();
 
   const form = useForm < z.infer < typeof formSchema >> ({
     resolver: zodResolver(formSchema),
@@ -51,6 +53,24 @@ export default function LoginForm() {
   }
 
   console.log(data);
+
+  try {
+    const response = await fetch("http://localhost:3000/api/user/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+        credentials:'include',
+        });
+
+        if (response.ok) {
+            router.push('/')
+        }
+        
+  } catch (error) {
+    
+  }
   
 
       toast(

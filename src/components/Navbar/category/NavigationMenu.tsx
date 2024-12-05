@@ -2,7 +2,7 @@
 
 import * as React from "react"
 
-import { cn } from "@/lib/utils"
+import { categoryType, cn } from "@/lib/utils"
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -13,20 +13,12 @@ import {
 } from "@/components/ui/navigation-menu"
 import Link from "next/link"
 
-type CategoryType = {
-    _id: string;
-    name: string;
-    parent: string | null;
-    slug: string;
-    subcategories?: CategoryType[];
-}
-
-export default function NavigationMenuDemo({ category }: { category: CategoryType[] }) {
+export default function NavigationMenuDemo({ category }: { category: categoryType[] }) {
 
     return (
         <NavigationMenu>
             <NavigationMenuList>
-                {category.map((category: CategoryType) => (
+                {category.map((category: categoryType) => (
                     <NavigationMenuItem key={category._id}>
                         <NavigationMenuTrigger>{category.name}</NavigationMenuTrigger>
                         <NavigationMenuContent>

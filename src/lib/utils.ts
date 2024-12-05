@@ -27,3 +27,11 @@ export type productType = {
       },
   ];
 }
+
+export type categoryType = {
+  _id: string;
+    name: string;
+    parent: string | null;
+    slug: string;
+    subcategories?: categoryType[];
+}
