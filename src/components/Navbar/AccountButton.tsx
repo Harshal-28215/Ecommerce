@@ -1,39 +1,74 @@
 "use client"
 
 import {
-    Cloud,
-    CreditCard,
-    Github,
-    Keyboard,
-    LifeBuoy,
-    LogOut,
-    Mail,
-    MessageSquare,
-    Plus,
-    PlusCircle,
-    Settings,
-    User,
-    UserPlus,
-    Users,
-  } from "lucide-react"
-   
-  import { Button } from "@/components/ui/button"
-  import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuGroup,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuPortal,
-    DropdownMenuSeparator,
-    DropdownMenuShortcut,
-    DropdownMenuSub,
-    DropdownMenuSubContent,
-    DropdownMenuSubTrigger,
-    DropdownMenuTrigger,
-  } from "@/components/ui/dropdown-menu"
+  Cloud,
+  CreditCard,
+  Github,
+  Keyboard,
+  LifeBuoy,
+  LogIn,
+  LogOut,
+  Mail,
+  MessageSquare,
+  Plus,
+  PlusCircle,
+  Settings,
+  User,
+  UserPlus,
+  Users,
+} from "lucide-react"
+
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import Link from "next/link"
+import { useEffect, useState } from "react"
+import { getUser } from "@/lib/utils"
 
 function AccountButton() {
+
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    async function fetchuser() {
+      const user = await getUser();
+
+      console.log(user);
+      
+      if (user) {
+        setUser(user)
+      }
+    }
+
+    fetchuser()
+  }, [])
+
+  const handleLogOut = async () => {
+    // const response = await fetch('http://localhost:3000/api/auth/logout', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   credentials: 'include',
+    // })
+    // if (response.ok) {
+    //   window.location.href = '/'
+    // }
+    console.log('Logged out');
+
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -46,22 +81,18 @@ function AccountButton() {
           <DropdownMenuItem>
             <User />
             <span>Profile</span>
-            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <CreditCard />
             <span>Billing</span>
-            <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <Settings />
             <span>Settings</span>
-            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <Keyboard />
             <span>Keyboard shortcuts</span>
-            <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
@@ -96,7 +127,6 @@ function AccountButton() {
           <DropdownMenuItem>
             <Plus />
             <span>New Team</span>
-            <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
@@ -113,11 +143,27 @@ function AccountButton() {
           <span>API</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <LogOut />
-          <span>Log out</span>
-          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-        </DropdownMenuItem>
+        {user == null ?
+          <>
+            <Link href='/login'>
+              <DropdownMenuItem className="cursor-pointer">
+                <LogIn />
+                <span>Log In</span>
+              </DropdownMenuItem>
+            </Link>
+            <Link href='/signup'>
+              <DropdownMenuItem className="cursor-pointer">
+                <LogIn />
+                <span>Sign Up</span>
+              </DropdownMenuItem>
+            </Link>
+          </> : <>
+            <DropdownMenuItem className="cursor-pointer" onClick={handleLogOut}>
+              <LogOut />
+              <span>Log out</span>
+            </DropdownMenuItem>
+          </>
+        }
       </DropdownMenuContent>
     </DropdownMenu>
   )

@@ -20,7 +20,10 @@ const logIn = async (req: NextApiRequest, res: NextApiResponse) => {
 
         const token = jwt.sign({ email: user.email, name: user.name, id: user._id }, 'secretKey', { expiresIn: '1h' });
 
-        res.setHeader('Set-Cookie', `token=${token}; HttpOnly; Path=/; Max-Age=3600`);
+        res.setHeader(
+            "Set-Cookie",
+            `token=${token}; HttpOnly; Path=/; Max-Age=3600; SameSite=Strict`
+          );
 
         res.status(200).json({ message: 'Logged in', token });
     }

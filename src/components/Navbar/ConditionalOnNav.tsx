@@ -4,9 +4,9 @@ import React from 'react'
 import Navbar from './Navbar'
 import Category from './category/Category'
 import { usePathname } from 'next/navigation'
-import { categoryType } from '@/lib/utils'
+import { categoryType, userType } from '@/lib/utils'
 
-function ConditionalOnNav({ category }: { category: categoryType[] }) {
+function ConditionalOnNav({ category }: { category: categoryType[]}) {
 
     const pathname = usePathname();
 

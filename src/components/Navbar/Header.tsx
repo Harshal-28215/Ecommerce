@@ -9,12 +9,12 @@ async function Header() {
 
     method: 'GET',
 })
-
 const category = await response.json()
+
   
   return (
     <header>
-      <ConditionalOnNav category={category}/>
+      <ConditionalOnNav category={category} />
     </header>
   )
 }
