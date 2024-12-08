@@ -1,6 +1,8 @@
 "use client"
 
 import {
+  ShoppingBag,
+  Trash,
   User,
 } from "lucide-react"
 
@@ -30,18 +32,17 @@ function CartButton() {
           <DropdownMenuItem>
             <User />
             <span>Profile</span>
-            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
           </DropdownMenuItem>
 
           <DropdownMenuSeparator />
 
           <DropdownMenuItem>
+            <ShoppingBag />
             <span>Go To Cart</span>
-            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem>
+            <Trash />
             <span>Clear All</span>
-            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
           </DropdownMenuItem>
 
         </DropdownMenuGroup>

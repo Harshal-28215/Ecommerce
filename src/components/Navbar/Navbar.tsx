@@ -3,7 +3,6 @@ import AccountButton from './AccountButton';
 import CartButton from './CartButton';
 import Link from 'next/link';
 import Search from './Search';
-import { userType } from '@/lib/utils';
 
 function Navbar() {
   return (

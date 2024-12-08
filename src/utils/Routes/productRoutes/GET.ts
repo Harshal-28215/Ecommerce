@@ -1,6 +1,6 @@
-import Product from "@/lib/schemas/Product";
 import { NextApiRequest, NextApiResponse } from "next";
 import Category from "@/lib/schemas/Category";
+import { Product } from "@/lib/schemas/SchemaUtils";
 
 async function getProduct(req: NextApiRequest, res: NextApiResponse) {
   
