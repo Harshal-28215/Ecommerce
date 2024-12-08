@@ -43,15 +43,17 @@ const cartHandle = async (req: NextApiRequest, res: NextApiResponse) => {
         const { userID } = req.body;
 
         try {                        
-            const cart = await Cart.findOne({ user: userID }).populate("products");            
+            const cart = await Cart.findOne({ user: userID }).populate("products").lean();            
     
             if (!cart) {
                 res.status(404).json({ message: "Cart not found for this user" });
             }
-
+            
+            const products = cart && !Array.isArray(cart) && cart.products ? cart.products : [];
+            
             res.status(200).json({
                 message: "Cart fetched successfully",
-                products: cart.products,
+                products
             });
         } catch (error) {
             res.status(500).json({ message: "Error fetching cart" });
