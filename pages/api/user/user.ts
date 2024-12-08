@@ -14,7 +14,7 @@ const user = async (req: NextApiRequest, res: NextApiResponse) => {
 
         try {
             const user = jwt.verify(token, 'secretKey') as jwt.JwtPayload;
-            return res.json({ email: user.email, role: user.name, id: user.id });
+            return res.json({ email: user.email, name: user.name, id: user.id });
         } catch (err) {
             return res.status(403).json({ error: 'Invalid token' });
         }

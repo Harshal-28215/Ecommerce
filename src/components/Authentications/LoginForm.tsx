@@ -28,6 +28,7 @@ import {
   PasswordInput
 } from "@/components/ui/password-input"
 import { useRouter } from "next/navigation"
+import { useMyContext } from "@/Context/context"
 
 const formSchema = z.object({
   email: z.string(),
@@ -35,6 +36,7 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
+  const {setUser} = useMyContext();
     const router = useRouter();
 
   const form = useForm < z.infer < typeof formSchema >> ({
@@ -52,8 +54,6 @@ export default function LoginForm() {
     password: values.Password,
   }
 
-  console.log(data);
-
   try {
     const response = await fetch("http://localhost:3000/api/user/login", {
         method: "POST",
@@ -63,10 +63,13 @@ export default function LoginForm() {
         body: JSON.stringify(data),
         credentials:'include',
         });
-
+        const user = await response.json()
+        
         if (response.ok) {
             router.push('/')
         }
+
+        setUser(user.userObj);
         
   } catch (error) {
     console.error('An unexpected error happened while login:', error)

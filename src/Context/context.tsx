@@ -3,15 +3,16 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 interface ContextProps {
-    // Define your context properties here
     user: { name: string, email: string, id: string } | null;
+    setUser: React.Dispatch<React.SetStateAction<{ name: string, email: string, id: string } | null>>;
 }
 
-const defaultContext = {
-    user: null
+const defaultContext: ContextProps = {
+    user: null,
+    setUser: () => {}
 }
 
-const MyContext = createContext<ContextProps | undefined>(defaultContext);
+const MyContext = createContext<ContextProps>(defaultContext);
 
 export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }): JSX.Element => {
 
@@ -27,6 +28,7 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }): JSX
           credentials: "include",
         })        
         const data = await response.json()
+      console.log(data);
       
         if (response.ok) {
           setUser(data);
@@ -38,7 +40,8 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }): JSX
     
 
     const value = {
-        user
+        user,
+        setUser
     };
 
     return (
