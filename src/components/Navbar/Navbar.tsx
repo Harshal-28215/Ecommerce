@@ -1,6 +1,6 @@
 import React from 'react'
 import AccountButton from './AccountButton';
-import CartButton from './CartButton';
+import CartButton from './cart/CartButton';
 import Link from 'next/link';
 import Search from './Search';
 

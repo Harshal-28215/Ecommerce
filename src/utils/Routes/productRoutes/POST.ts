@@ -26,18 +26,6 @@ function productPost(req: NextApiRequest, res: NextApiResponse) {
     const { name, description, price, category, specifications } = fields;
     const cardImage = files.cardImage;
     try {
-      const stringSpecifications = specifications
-        ? JSON.parse(specifications)
-        : [];
-
-      const uploadedFiles = Array.isArray(files.images) ? files.images : [files.images];
-      const images = uploadedFiles
-        .filter((file) => file !== undefined)
-        .map((file) => ({
-          data: Buffer.from(fs.readFileSync(file.filepath)),
-          contentType: file.mimetype,
-        }));
-
       const cardimage = { data: cardImage ? Buffer.from(fs.readFileSync(cardImage[0]?.filepath)) : null, contentType: cardImage ? cardImage[0]?.mimetype : null };
 
       const product = new Product({

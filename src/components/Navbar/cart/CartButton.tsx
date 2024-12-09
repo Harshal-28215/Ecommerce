@@ -14,11 +14,17 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useMyContext } from "@/Context/context";
+import Image from "next/image";
+import ImageData from "./ImageData";
 
 function CartButton() {
+const {cart} = useMyContext();
+
+const products = cart?.products || [];
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -29,6 +35,13 @@ function CartButton() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
 
+          {products.map((product, index) => {            
+            return(
+            <DropdownMenuItem key={index}>
+              <ImageData image={product.cardImage}/>
+              <span>{product.name}</span>
+            </DropdownMenuItem>
+          )})}
           <DropdownMenuItem>
             <User />
             <span>Profile</span>
