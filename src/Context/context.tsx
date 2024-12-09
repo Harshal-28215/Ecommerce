@@ -8,7 +8,7 @@ interface ContextProps {
 
   cart: {
     products: {
-      _id: string, 
+      _id: string,
       cardImage: {
         contentType: string;
         data: string;
@@ -19,12 +19,25 @@ interface ContextProps {
       category: string
     }[]
   } | null;
+
+  setCart: React.Dispatch<React.SetStateAction<{
+    _id: string,
+    cardImage: {
+      contentType: string;
+      data: string;
+    },
+    price: number,
+    name: string,
+    description: string,
+    category: string
+  } | null>>
 }
 
 const defaultContext: ContextProps = {
   user: null,
   cart: null,
   setUser: () => { },
+  setCart: () => { },
 }
 
 const MyContext = createContext<ContextProps>(defaultContext);
@@ -81,6 +94,7 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }): JSX
     user,
     setUser,
     cart,
+    setCart
   };
 
   return (

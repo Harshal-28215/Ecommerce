@@ -21,9 +21,22 @@ import Image from "next/image";
 import ImageData from "./ImageData";
 
 function CartButton() {
-const {cart} = useMyContext();
+const {cart, user, setCart} = useMyContext();
 
 const products = cart?.products || [];
+
+const handleDelete = async () => {
+  const response = await fetch(`http://localhost:3000/api/cart/Cart?uid=${user?.id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: "include",
+  })
+  if (response.ok) {
+    setCart(null);
+  }
+}
 
   return (
     <DropdownMenu>
@@ -53,7 +66,7 @@ const products = cart?.products || [];
             <ShoppingBag />
             <span>Go To Cart</span>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={handleDelete}>
             <Trash />
             <span>Clear All</span>
           </DropdownMenuItem>

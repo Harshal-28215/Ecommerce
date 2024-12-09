@@ -14,9 +14,9 @@ const cartHandle = async (req: NextApiRequest, res: NextApiResponse) => {
             let cart = await Cart.findOne({ user: userID });
 
             if (cart) {
-                
+
                 if (!cart.products.includes(productID)) {
-                    
+
                     cart = await Cart.findByIdAndUpdate(
                         cart._id,
                         { $push: { products: productID } },
@@ -40,23 +40,37 @@ const cartHandle = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     if (req.method === "GET") {
-        const userID = req.query.uid as string;        
+        const userID = req.query.uid as string;
 
-        try {                        
-            const cart = await Cart.findOne({ user: userID }).populate("products").lean();            
-            
+        try {
+            const cart = await Cart.findOne({ user: userID }).populate("products").lean();
+
             if (!cart) {
                 res.status(404).json({ message: "Cart not found for this user" });
             }
-            
+
             const products = cart && !Array.isArray(cart) && cart.products ? cart.products : [];
-            
+
             res.status(200).json({
                 message: "Cart fetched successfully",
                 products,
             });
         } catch (error) {
             res.status(500).json({ message: "Error fetching cart" });
+        }
+    }
+
+    if (req.method === "DELETE") {
+
+        try {
+            const user = req.query.uid
+            await Cart.findOneAndDelete({ user })
+
+            res.status(200).json({
+                massage: "Cart Cleared"
+            })
+        } catch (error) {
+            res.status(500).json({ massage: "Error Deleting Category" })
         }
     }
 
