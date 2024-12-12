@@ -4,10 +4,11 @@ import Link from 'next/link'
 import React from 'react'
 import WhishListButton from './WhishListButton'
 
-function Product({ product }: { product: productType }) {
+function Product({ product,forKey }: { product: productType,forKey:string }) {
+    
     return (
-        <div className='block relative w-[210px] h-[390px]'>
-            <WhishListButton />
+        <div className='block relative w-[210px] h-[390px]' key={forKey}>
+            <WhishListButton product={product}/>
             <Link href='/product'>
                 <div className='w-full h-[80%] bg-black relative'>
                     <Image src='/temp.webp' alt='Product Image' width={300} height={500} />

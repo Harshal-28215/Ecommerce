@@ -6,34 +6,23 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export type productType = {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  category: string;
-  ProductDetails: string;
-  sizeAndFit: string;
-  materialAndCare: string;
-  specifications: [
-      {
-          title: string;
-          about: string;
-      }
-  ];
-  images: [
-      {
-          data: Buffer;
-          contentType: string;
-      },
-  ];
+  _id: string,
+  cardImage: {
+    contentType: string;
+    data: string;
+  },
+  price: number,
+  name: string,
+  description: string,
+  category: string
 }
 
 export type categoryType = {
   _id: string;
-    name: string;
-    parent: string | null;
-    slug: string;
-    subcategories?: categoryType[];
+  name: string;
+  parent: string | null;
+  slug: string;
+  subcategories?: categoryType[];
 }
 
 export type userType = {

@@ -1,13 +1,38 @@
 "use client"
 
+import { useMyContext } from '@/Context/context';
+import { productType } from '@/lib/utils';
 import Image from 'next/image'
 import React from 'react';
 
-function WhishListButton() {
 
-    const [isWhishList, setIsWhishList] = React.useState(false);
+function WhishListButton({product}:{product:productType}) {
 
-    const handleclick =()=>{
+  const {user,setCart,cart} = useMyContext();
+
+  const [isWhishList, setIsWhishList] = React.useState(false);
+    
+
+    const whishlistData = {
+      productID: product._id,
+      userID: user?.id
+    }    
+
+    const handleclick = async ()=>{
+      const response = await fetch(`http://localhost:3000/api/cart/Cart`, {
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify(whishlistData),
+        credentials: 'include'
+      })
+
+      if (response.ok) {
+        setCart({products:[...(cart?.products || []), product]})
+      }
+      
+      
         setIsWhishList(!isWhishList)
     }
 

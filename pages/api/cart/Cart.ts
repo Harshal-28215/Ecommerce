@@ -10,7 +10,7 @@ const cartHandle = async (req: NextApiRequest, res: NextApiResponse) => {
         try {
 
             const { userID, productID } = req.body;
-
+            
             let cart = await Cart.findOne({ user: userID });
 
             if (cart) {

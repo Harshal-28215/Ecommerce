@@ -1,5 +1,6 @@
 "use client"
 
+import { productType } from '@/lib/utils';
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 interface ContextProps {
@@ -7,29 +8,11 @@ interface ContextProps {
   setUser: React.Dispatch<React.SetStateAction<{ name: string, email: string, id: string } | null>>;
 
   cart: {
-    products: {
-      _id: string,
-      cardImage: {
-        contentType: string;
-        data: string;
-      },
-      price: number,
-      name: string,
-      description: string,
-      category: string
-    }[]
+    products: productType[]
   } | null;
 
   setCart: React.Dispatch<React.SetStateAction<{
-    _id: string,
-    cardImage: {
-      contentType: string;
-      data: string;
-    },
-    price: number,
-    name: string,
-    description: string,
-    category: string
+    products: productType[]
   } | null>>
 }
 
@@ -56,7 +39,6 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }): JSX
       credentials: "include",
     })
     const data = await response.json()
-    console.log(data);
 
 
     if (response.ok) {
@@ -74,7 +56,6 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }): JSX
         credentials: "include",
       })
       const data = await response.json()
-      console.log(data);
 
       if (response.ok) {
         setUser(data);

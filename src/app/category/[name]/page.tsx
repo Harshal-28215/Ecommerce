@@ -18,7 +18,7 @@ async function page({ searchParams }: { searchParams: Promise<URLSearchParams> }
   return (
     <main className='flex gap-8 p-8'>
       {products.map((product: productType) => (
-        <Product key={product.id} product={product} />
+        <Product forKey={product.id} product={product} />
       ))}
     </main>
   )
