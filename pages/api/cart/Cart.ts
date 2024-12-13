@@ -10,7 +10,7 @@ const cartHandle = async (req: NextApiRequest, res: NextApiResponse) => {
         try {
 
             const { userID, productID } = req.body;
-            
+
             let cart = await Cart.findOne({ user: userID });
 
             if (cart) {
@@ -62,15 +62,37 @@ const cartHandle = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (req.method === "DELETE") {
 
-        try {
-            const user = req.query.uid
-            await Cart.findOneAndDelete({ user })
+        const { uid, pid } = req.query;
 
-            res.status(200).json({
-                massage: "Cart Cleared"
-            })
-        } catch (error) {
-            res.status(500).json({ massage: "Error Deleting Category" })
+        if (pid) {
+            try {
+                const cart = await Cart.updateOne(
+                    { user: uid },
+                    { $pull:{ products: pid }}
+                )
+
+                console.log(cart);
+                
+
+                res.status(200).json({
+                    massage: "product removed from cart"
+                })
+            } catch {
+                res.status(500).json({
+                    massage: "error removing product"
+                })
+            }
+        } else {
+
+            try {
+                await Cart.findOneAndDelete({ user: uid })
+
+                res.status(200).json({
+                    massage: "Cart Cleared"
+                })
+            } catch (error) {
+                res.status(500).json({ massage: "Error Deleting Category" })
+            }
         }
     }
 

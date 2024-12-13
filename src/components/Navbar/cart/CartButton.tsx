@@ -21,22 +21,33 @@ import Image from "next/image";
 import ImageData from "./ImageData";
 
 function CartButton() {
-const {cart, user, setCart} = useMyContext();
+  const { cart, user, setCart } = useMyContext();
 
-const products = cart?.products || [];
+  const products = cart?.products || [];
 
-const handleDelete = async () => {
-  const response = await fetch(`http://localhost:3000/api/cart/Cart?uid=${user?.id}`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    credentials: "include",
-  })
-  if (response.ok) {
-    setCart(null);
+  const handleDelete = async () => {
+    const response = await fetch(`http://localhost:3000/api/cart/Cart?uid=${user?.id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: "include",
+    })
+    if (response.ok) {
+      setCart(null);
+    }
   }
-}
+
+  const handleProductDelete = async (pid: string) => {
+
+    const response = await fetch(`http://localhost:3000/api/cart/Cart?uid=${user?.id}&pid=${pid}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: "include",
+    })
+  }
 
   return (
     <DropdownMenu>
@@ -48,13 +59,17 @@ const handleDelete = async () => {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
 
-          {products.map((product, index) => {            
-            return(
-            <DropdownMenuItem key={index}>
-              <ImageData image={product.cardImage}/>
-              <span>{product.name}</span>
-            </DropdownMenuItem>
-          )})}
+          {products.map((product, index) => {
+            return (
+              <div className="flex items-center justify-between group hover:bg-accent transition-colors px-2" key={product._id}>
+                <DropdownMenuItem>
+                  <ImageData image={product.cardImage} />
+                  <span>{product.name}</span>
+                </DropdownMenuItem>
+                <Trash className="invisible group-hover:visible cursor-pointer" onClick={() => handleProductDelete(product._id)} />
+              </div>
+            )
+          })}
           <DropdownMenuItem>
             <User />
             <span>Profile</span>

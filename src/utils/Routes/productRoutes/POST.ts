@@ -23,7 +23,7 @@ function productPost(req: NextApiRequest, res: NextApiResponse) {
     });
 
 
-    const { name, description, price, category, specifications } = fields;
+    const { name, description, price, category } = fields;
     const cardImage = files.cardImage;
     try {
       const cardimage = { data: cardImage ? Buffer.from(fs.readFileSync(cardImage[0]?.filepath)) : null, contentType: cardImage ? cardImage[0]?.mimetype : null };
