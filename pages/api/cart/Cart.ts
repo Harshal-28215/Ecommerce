@@ -72,41 +72,41 @@ const cartHandle = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (req.method === "DELETE") {
 
-        const user = authenticate(req, res);
-        if (!user) return res.status(401).send("Invalid token");
+            const user = authenticate(req, res);
+            if (!user) return res.status(401).send("Invalid token");
 
-        const isauthorize = authorize(["admin"])(req, res);
-        if (!isauthorize) return res.status(403).send("Unauthorized");
+            const isauthorize = await authorize(["admin"], Cart)(req, res);
+            if (!isauthorize) return res.status(403).send("Unauthorized");
 
-        const { uid, pid } = req.query;
 
-        if (pid) {
-            try {
-                await Cart.updateOne(
-                    { user: uid },
-                    { $pull:{ products: pid }}
-                )                
+            const { uid, pid } = req.query;
+            if (pid) {
+                try {
+                    await Cart.updateOne(
+                        { user: uid },
+                        { $pull: { products: pid } }
+                    )
 
-                res.status(200).json({
-                    massage: "product removed from cart"
-                })
-            } catch {
-                res.status(500).json({
-                    massage: "error removing product"
-                })
+                    res.status(200).json({
+                        massage: "product removed from cart"
+                    })
+                } catch {
+                    res.status(500).json({
+                        massage: "error removing product"
+                    })
+                }
+            } else {
+
+                try {
+                    await Cart.findOneAndDelete({ user: uid })
+
+                    res.status(200).json({
+                        massage: "Cart Cleared"
+                    })
+                } catch (error) {
+                    res.status(500).json({ massage: "Error Deleting Category" })
+                }
             }
-        } else {
-
-            try {
-                await Cart.findOneAndDelete({ user: uid })
-
-                res.status(200).json({
-                    massage: "Cart Cleared"
-                })
-            } catch (error) {
-                res.status(500).json({ massage: "Error Deleting Category" })
-            }
-        }
     }
 
 }

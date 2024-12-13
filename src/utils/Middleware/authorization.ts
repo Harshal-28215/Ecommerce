@@ -1,4 +1,4 @@
-import { Cart } from "@/lib/schemas/SchemaUtils";
+import mongoose from "mongoose";
 import { NextApiRequest, NextApiResponse } from "next";
 
 type CustomNextApiRequest = NextApiRequest &{
@@ -10,21 +10,25 @@ type CustomNextApiRequest = NextApiRequest &{
     };
   }
 
-const authorize = (roles:string[]) => async (req:CustomNextApiRequest, res:NextApiResponse) => {
+const authorize = (
+    roles: string[],
+    model: mongoose.Model<any>,
+  ) => async (req:CustomNextApiRequest, res:NextApiResponse) => {
 
    const role = req.user?.role;
+   const userID = req.user?.id
    const {uid} = req.query;
 
 
-   const cart = await Cart.findOne({user:uid})
+   const cart = await model.findOne({user:uid})
    
-   if (cart.user == uid) {
+   if (cart.user == userID) {
        return true
    }
-
-   if (!role || !roles.includes(role)) {
+    if (!role || !roles.includes(role)) {
        return res.status(403).send('Unauthorized');
-   }else{
+   }
+   else{
        return true;
    }
    
