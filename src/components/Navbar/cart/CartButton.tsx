@@ -17,13 +17,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useMyContext } from "@/Context/context";
-import Image from "next/image";
 import ImageData from "./ImageData";
 
 function CartButton() {
   const { cart, user, setCart } = useMyContext();
 
-  const products = cart?.products || [];
 
   const handleDelete = async () => {
     const response = await fetch(`http://localhost:3000/api/cart/Cart?uid=${user?.id}`, {
@@ -47,6 +45,16 @@ function CartButton() {
       },
       credentials: "include",
     })
+
+    if (response.ok) {
+      if (cart) { 
+        const updatedCart = cart.filter((item) => item._id !== pid);
+        setCart(updatedCart);
+      }
+      else{
+        setCart(null)
+      }
+    }
   }
 
   return (
@@ -59,7 +67,7 @@ function CartButton() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
 
-          {products.map((product, index) => {
+          {cart?.map((product, index) => {
             return (
               <div className="flex items-center justify-between group hover:bg-accent transition-colors px-2" key={product._id}>
                 <DropdownMenuItem>

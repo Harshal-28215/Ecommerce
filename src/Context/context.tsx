@@ -7,13 +7,9 @@ interface ContextProps {
   user: { name: string, email: string, id: string } | null;
   setUser: React.Dispatch<React.SetStateAction<{ name: string, email: string, id: string } | null>>;
 
-  cart: {
-    products: productType[]
-  } | null;
+  cart: productType[] | null
 
-  setCart: React.Dispatch<React.SetStateAction<{
-    products: productType[]
-  } | null>>
+  setCart: React.Dispatch<React.SetStateAction<productType[] | null>>
 }
 
 const defaultContext: ContextProps = {
@@ -39,10 +35,11 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }): JSX
       credentials: "include",
     })
     const data = await response.json()
-
+    console.log(data.products);
+    
 
     if (response.ok) {
-      setCart(data);
+      setCart(data.products);
     }
   }
 

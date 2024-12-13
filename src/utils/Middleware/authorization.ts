@@ -25,7 +25,7 @@ const authorize = (
    if (cart.user == userID) {
        return true
    }
-    if (!role || !roles.includes(role)) {
+    else if (!role || !roles.includes(role)) {
        return res.status(403).send('Unauthorized');
    }
    else{
