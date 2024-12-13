@@ -18,14 +18,15 @@ const logIn = async (req: NextApiRequest, res: NextApiResponse) => {
             return res.status(401).send('Invalid credentials');
         }
 
-        const token = jwt.sign({ email: user.email, name: user.name, id: user._id }, 'secretKey', { expiresIn: '1h' });
+        const token = jwt.sign({ email: user.email, name: user.name, id: user._id, role:user.role }, 'secretKey', { expiresIn: '1h' });
+        
 
         res.setHeader(
             "Set-Cookie",
             `token=${token}; HttpOnly; Path=/; Max-Age=3600; SameSite=Strict`
-          );
+          );          
 
-          const userObj = {email: user.email, name: user.name, id: user._id}
+          const userObj = {email: user.email, name: user.name, id: user._id, role: user.role};
 
         res.status(200).json({ message: 'Logged in', userObj });
     }

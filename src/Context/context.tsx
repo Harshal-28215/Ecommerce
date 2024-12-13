@@ -30,6 +30,9 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }): JSX
   const [user, setUser] = useState(defaultContext.user);
   const [cart, setCart] = useState(defaultContext.cart);
 
+  console.log(user);
+  
+
   async function getCart() {
     const response = await fetch(`http://localhost:3000/api/cart/Cart?uid=${user?.id}`, {
       method: 'GET',

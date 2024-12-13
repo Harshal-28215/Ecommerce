@@ -1,12 +1,18 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import connectToDatabase from "@/lib/mongodb/db";
 import { Cart } from "@/lib/schemas/SchemaUtils";
+import authenticate from "@/utils/Middleware/authentication";
+import authorize from "@/utils/Middleware/authorization";
 
 const cartHandle = async (req: NextApiRequest, res: NextApiResponse) => {
 
     await connectToDatabase();
 
     if (req.method === "POST") {
+
+        const user = authenticate(req, res);
+        if (!user) return res.status(401).send("Invalid token");
+
         try {
 
             const { userID, productID } = req.body;
@@ -40,6 +46,10 @@ const cartHandle = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     if (req.method === "GET") {
+
+        const user = authenticate(req, res);
+        if (!user) return res.status(401).send("Invalid token");
+
         const userID = req.query.uid as string;
 
         try {
@@ -62,17 +72,20 @@ const cartHandle = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (req.method === "DELETE") {
 
+        const user = authenticate(req, res);
+        if (!user) return res.status(401).send("Invalid token");
+
+        const isauthorize = authorize(["admin"])(req, res);
+        if (!isauthorize) return res.status(403).send("Unauthorized");
+
         const { uid, pid } = req.query;
 
         if (pid) {
             try {
-                const cart = await Cart.updateOne(
+                await Cart.updateOne(
                     { user: uid },
                     { $pull:{ products: pid }}
-                )
-
-                console.log(cart);
-                
+                )                
 
                 res.status(200).json({
                     massage: "product removed from cart"
