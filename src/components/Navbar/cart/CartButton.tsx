@@ -22,7 +22,6 @@ import ImageData from "./ImageData";
 function CartButton() {
   const { cart, user, setCart } = useMyContext();
 
-
   const handleDelete = async () => {
     const response = await fetch(`http://localhost:3000/api/cart/Cart?uid=${user?.id}`, {
       method: 'DELETE',
@@ -47,11 +46,11 @@ function CartButton() {
     })
 
     if (response.ok) {
-      if (cart) { 
+      if (cart) {
         const updatedCart = cart.filter((item) => item._id !== pid);
         setCart(updatedCart);
       }
-      else{
+      else {
         setCart(null)
       }
     }
@@ -67,7 +66,7 @@ function CartButton() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
 
-          {cart?.map((product, index) => {
+          {cart?.map((product) => {
             return (
               <div className="flex items-center justify-between group hover:bg-accent transition-colors px-2" key={product._id}>
                 <DropdownMenuItem>

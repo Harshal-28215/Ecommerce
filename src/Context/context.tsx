@@ -14,7 +14,7 @@ interface ContextProps {
 
 const defaultContext: ContextProps = {
   user: null,
-  cart: null,
+  cart: [],
   setUser: () => { },
   setCart: () => { },
 }
@@ -24,7 +24,7 @@ const MyContext = createContext<ContextProps>(defaultContext);
 export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }): JSX.Element => {
 
   const [user, setUser] = useState(defaultContext.user);
-  const [cart, setCart] = useState(defaultContext.cart);  
+  const [cart, setCart] = useState(defaultContext.cart);
 
   async function getCart() {
     const response = await fetch(`http://localhost:3000/api/cart/Cart?uid=${user?.id}`, {
@@ -35,8 +35,6 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }): JSX
       credentials: "include",
     })
     const data = await response.json()
-    console.log(data.products);
-    
 
     if (response.ok) {
       setCart(data.products);

@@ -8,7 +8,7 @@ import React from 'react';
 
 function WhishListButton({product}:{product:productType}) {
 
-  const {user,setCart,cart} = useMyContext();
+  const {user,setCart} = useMyContext();
 
   const [isWhishList, setIsWhishList] = React.useState(false);
     
@@ -29,7 +29,7 @@ function WhishListButton({product}:{product:productType}) {
       })
 
       if (response.ok) {
-        setCart({products:[...(cart?.products || []), product]})
+        setCart((prevCart) => prevCart ? [...prevCart, product] : [product])
       }
       
       
