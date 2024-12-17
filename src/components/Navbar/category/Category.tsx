@@ -4,7 +4,7 @@ import { categoryType } from '@/lib/utils';
 
 function Category({ category }: { category: categoryType[] }) {
     return (
-        <section className='w-[100vw] flex justify-center items-center h-10 gap-16'>
+        <section className='w-[100%] flex justify-center items-center h-10 gap-16'>
             <NavigationMenuDemo category={category} />
         </section>
     )

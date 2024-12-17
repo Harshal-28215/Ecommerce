@@ -1,8 +1,14 @@
-
+import DetailSide from "@/components/Product/productDetails/DetailSide"
+import ImageSide from "@/components/Product/productDetails/ImageSide"
 
 function page() {
+
     return (
-        <h1>this is product</h1>
+        <div className="p-4 flex gap-4">
+
+            <ImageSide />
+            <DetailSide />
+        </div>
     )
 }
 

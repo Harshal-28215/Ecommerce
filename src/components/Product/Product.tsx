@@ -9,7 +9,7 @@ function Product({ product }: { product: productType }) {
     return (
         <div className='block relative w-[210px] h-[390px]' key={product._id}>
             <WhishListButton product={product}/>
-            <Link href='/product'>
+            <Link href={`/product/${product._id}`}>
                 <div className='w-full h-[80%] bg-black relative'>
                     <Image src='/temp.webp' alt='Product Image' width={300} height={500} />
                     <div className='absolute text-black bg-white/40 p-1 bottom-2 left-1 flex text-end flex-row text-[12px] font-bold'>
