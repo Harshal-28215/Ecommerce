@@ -1,13 +1,22 @@
 import { Heart, LucideShoppingBag, Truck } from 'lucide-react'
 import React from 'react'
 
-function Description() {
+type ProductIdProp={
+        _id: string,
+        name: string,
+        description: string,
+        price: number,
+        category: string,
+}
+
+function Description({ProductId}:{ProductId:ProductIdProp}) {
+    
     return (
         <>
             <div className="flex flex-col gap-4 border-b pb-5">
                 <div>
-                    <h1 className="text-2xl font-bold">Van Heusen</h1>
-                    <p className="text-xl text-black/50">Athleisure Men Solid Pure Cotton Antibacterial Smart Tech T-Shirt</p>
+                    <h1 className="text-2xl font-bold">{ProductId.name}</h1>
+                    <p className="text-xl text-black/50">{ProductId.description}</p>
                 </div>
                 <div className="flex items-center border w-[170px] h-[30px] justify-center">
                     <span>4.5</span>
@@ -19,7 +28,7 @@ function Description() {
 
             <div className="border-b pb-5">
                 <div className="flex gap-3 my-[10px]">
-                    <h1 className="text-xl font-bold">$619</h1>
+                    <h1 className="text-xl font-bold">${ProductId.price}</h1>
                     <h1 className="text-xl text-black/50">MRP <span className="line-through">$799</span></h1>
                     <h1 className="text-xl text-[#ff905a] font-bold">(20% OFF)</h1>
                 </div>

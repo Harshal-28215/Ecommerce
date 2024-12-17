@@ -1,25 +1,24 @@
 import React from 'react'
 
-function Size_Material() {
+function Size_Material({ sizeAndFit, materialAndCare }: { sizeAndFit: string, materialAndCare: string }) {
     return (
         <div>
             <h1 className='flex gap-2 text-xl font-bold mt-7'>Size & Fit</h1>
 
-            <p>The model (height 6') is wearing a size M</p>
+            {sizeAndFit.split('\n').map((line,index)=>(
+                <React.Fragment key={index}>
+                    {line}
+                    <br />
+                </React.Fragment>
+            ))}
 
             <h1 className='flex gap-2 text-xl font-bold mt-7'>Material & Care</h1>
-            <p>cotton</p>
-            <p>cotton</p>
-            <p>cotton</p>
-            <p>cotton</p>
-            <p>cotton</p>
-            <p>cotton</p>
-            <p>cotton</p>
-            <p>cotton</p>
-            <p>cotton</p>
-            <p>cotton</p>
-            <p>cotton</p>
-            <p>cotton</p>
+            {materialAndCare.split('\n').map((line, index) => (
+                <React.Fragment key={index}>
+                    {line}
+                    <br />
+                </React.Fragment>
+            ))}
 
         </div>
     )
