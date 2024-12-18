@@ -17,6 +17,10 @@ type DeatailSideDataProp = {
         description: string,
         price: number,
         category: string,
+        cardImage:{
+            data:string,
+            contentType:string
+        }
     },
     specifications: [{
         title: string,
@@ -28,7 +32,7 @@ type DeatailSideDataProp = {
 function DetailSide({ DeatailSideData }:{DeatailSideData:DeatailSideDataProp}) {
     return (
         <aside className="w-[50%] px-3">
-            <Description ProductId={DeatailSideData.ProductId}/>
+            <Description Product={DeatailSideData.ProductId}/>
             <Bestoffers />
             <ProductDetail ProductDetails={DeatailSideData.ProductDetails}/>
             <Feature />

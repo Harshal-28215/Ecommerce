@@ -3,7 +3,8 @@ import React from 'react'
 
 type ImageDataProps = {
     data: string[],
-    contentType: string
+    contentType: string,
+    _id:string
 }[]
 
 function ImageSide({ ImageData }: { ImageData: ImageDataProps }) {
@@ -15,7 +16,7 @@ function ImageSide({ ImageData }: { ImageData: ImageDataProps }) {
                 const base64Image = `data:${image.contentType};base64,${image.data}`;
 
                 return (
-                    <div className="w-[100%] h-[500px]">
+                    <div className="w-[100%] h-[500px]" key={image._id}>
                         <Image className="w-[100%] h-[100%] object-cover" src={base64Image} width={700} height={500} alt="productimage" />
                     </div>
                 )

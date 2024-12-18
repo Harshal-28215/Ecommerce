@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { useMyContext } from "@/Context/context";
 import ImageData from "./ImageData";
+import Link from "next/link";
 
 function CartButton() {
   const { cart, user, setCart } = useMyContext();
@@ -85,8 +86,10 @@ function CartButton() {
           <DropdownMenuSeparator />
 
           <DropdownMenuItem>
-            <ShoppingBag />
-            <span>Go To Cart</span>
+            <Link href='/cart' className="w-full flex items-center gap-2">
+              <ShoppingBag className="w-4"/>
+              <span>Go To Cart</span>
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem onClick={handleDelete}>
             <Trash />

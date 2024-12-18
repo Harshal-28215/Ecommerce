@@ -21,7 +21,7 @@ export default function NavigationMenuDemo({ category }: { category: categoryTyp
                 {category.map((category: categoryType) => (
                     <NavigationMenuItem key={category._id}>
                         <NavigationMenuTrigger>{category.name}</NavigationMenuTrigger>
-                        <NavigationMenuContent>
+                        <NavigationMenuContent className="z-30">
                             <ul className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4 p-6 w-[70vw]"
                             >
                                 {category.subcategories && category.subcategories.map((subcategory) => (
