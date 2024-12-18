@@ -10,9 +10,11 @@ async function page({ searchParams }: { searchParams: Promise<URLSearchParams> }
 
   const s = (await searchParams).s;
 
-  const data = await fetch(`http://localhost:3000/api/product/Product?s=${s}`)
+  const encodedS = encodeURIComponent(s);
 
-  const products = await data.json();
+  const data = await fetch(`http://localhost:3000/api/product/Product?s=${encodedS}`)
+
+  const products = await data.json(); 
   
 
   return (
@@ -25,5 +27,3 @@ async function page({ searchParams }: { searchParams: Promise<URLSearchParams> }
 }
 
 export default page
-
-export const dynamic = "force-dynamic"; 

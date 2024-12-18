@@ -8,7 +8,7 @@ async function getProduct(req: NextApiRequest, res: NextApiResponse) {
     const slug = req.query.s as string;
   
     try {
-      // Fetch categories and their subcategories
+
       const categories = await Category.aggregate([
         {
             $match: { slug }, // Match the root category by slug
@@ -33,6 +33,9 @@ async function getProduct(req: NextApiRequest, res: NextApiResponse) {
             },
           },
       ]);
+
+      console.log(slug);
+      
   
       if (!categories.length) {
           return res.status(404).json({ error: "Category not found" });

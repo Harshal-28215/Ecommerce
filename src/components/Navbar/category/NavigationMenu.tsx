@@ -35,7 +35,7 @@ export default function NavigationMenuDemo({ category }: { category: categoryTyp
                                         subcategory.subcategories.map((nestedSubcategory) => (
                                             <ListItem
                                                 className="py-0 hover:bg-transparent text-slate-500 hover:font-extrabold hover:underline"
-                                                href={`/category/${encodeURIComponent(nestedSubcategory.name || 'unknown')}?s=${nestedSubcategory.slug}`}
+                                                href={`/category/${encodeURIComponent(nestedSubcategory.name)}?s=${encodeURIComponent(nestedSubcategory.slug)}`}
                                                 title={nestedSubcategory.name || 'Unknown Subcategory'}
                                                 key={nestedSubcategory._id}
                                             />
