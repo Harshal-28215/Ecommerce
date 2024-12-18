@@ -1,14 +1,24 @@
+"use client"
+
 import { productType } from '@/lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import WhishListButton from './WhishListButton'
+import { usePathname } from 'next/navigation'
 
-function Product({ product }: { product: productType }) {
+
+interface ProductProps {
+    product: productType;
+}
+
+function Product({ product }: ProductProps) {
     
+    const pathname = usePathname()    
+
     return (
         <div className='block relative w-[210px] h-[390px]' key={product._id}>
-            <WhishListButton product={product}/>
+            {pathname === '/cart' ? null : <WhishListButton product={product}/>}
             <Link href={`/product/${product._id}`}>
                 <div className='w-full h-[80%] bg-black relative'>
                     <Image src='/temp.webp' alt='Product Image' width={300} height={500} />

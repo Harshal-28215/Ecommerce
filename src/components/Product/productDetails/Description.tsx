@@ -1,22 +1,17 @@
-import { Heart, LucideShoppingBag, Truck } from 'lucide-react'
+import { LucideShoppingBag, Truck } from 'lucide-react'
 import React from 'react'
+import ProductWhishlistButton from './ProductWhishlistButton'
+import { productType } from '@/lib/utils'
 
-type ProductIdProp={
-        _id: string,
-        name: string,
-        description: string,
-        price: number,
-        category: string,
-}
 
-function Description({ProductId}:{ProductId:ProductIdProp}) {
+function Description({Product}:{Product:productType}) {
     
     return (
         <>
             <div className="flex flex-col gap-4 border-b pb-5">
                 <div>
-                    <h1 className="text-2xl font-bold">{ProductId.name}</h1>
-                    <p className="text-xl text-black/50">{ProductId.description}</p>
+                    <h1 className="text-2xl font-bold">{Product.name}</h1>
+                    <p className="text-xl text-black/50">{Product.description}</p>
                 </div>
                 <div className="flex items-center border w-[170px] h-[30px] justify-center">
                     <span>4.5</span>
@@ -28,7 +23,7 @@ function Description({ProductId}:{ProductId:ProductIdProp}) {
 
             <div className="border-b pb-5">
                 <div className="flex gap-3 my-[10px]">
-                    <h1 className="text-xl font-bold">${ProductId.price}</h1>
+                    <h1 className="text-xl font-bold">${Product.price}</h1>
                     <h1 className="text-xl text-black/50">MRP <span className="line-through">$799</span></h1>
                     <h1 className="text-xl text-[#ff905a] font-bold">(20% OFF)</h1>
                 </div>
@@ -45,7 +40,8 @@ function Description({ProductId}:{ProductId:ProductIdProp}) {
                     </div>
                     <div className="flex gap-4">
                         <button className="h-[50px] w-[300px] text-center bg-[#ff527b] flex justify-center items-center gap-4 rounded-sm text-white font-bold"> <LucideShoppingBag /> ADD TO BAG </button>
-                        <button className="h-[50px] w-[300px] text-center flex justify-center items-center gap-4 rounded-sm font-bold border"> <Heart /> WHISHLIST </button>
+
+                        <ProductWhishlistButton Product={Product}/>
                     </div>
                 </div>
             </div>
