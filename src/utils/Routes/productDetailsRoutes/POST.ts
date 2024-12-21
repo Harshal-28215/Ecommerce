@@ -4,6 +4,10 @@ import fs from "fs";
 import ProductDeatail from "@/lib/schemas/ProductDeatail";
 
 export const POST = async (req: NextApiRequest, res: NextApiResponse) => {
+
+  console.log("hello from productdetails");
+  
+
     const form = formidable({
         multiples: true,
         keepExtensions: true,
@@ -36,6 +40,8 @@ export const POST = async (req: NextApiRequest, res: NextApiResponse) => {
               data: Buffer.from(fs.readFileSync(file.filepath)),
               contentType: file.mimetype,
             }));
+
+
 
           const product = new ProductDeatail({
             ProductDetails,

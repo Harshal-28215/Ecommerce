@@ -18,6 +18,8 @@ export const useWhishlist =(product:productType)=>{
     const whishlistedCart = cart?.some(cartItem => cartItem._id === product._id);
     if (whishlistedCart) {
       setIsWhishList(true);
+    }else{
+      setIsWhishList(false);
     }
   }, [cart])
 
