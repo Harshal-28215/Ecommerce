@@ -12,7 +12,9 @@ async function page({ searchParams }: { searchParams: Promise<URLSearchParams> }
 
   const encodedS = encodeURIComponent(s);
 
-  const data = await fetch(`http://localhost:3000/api/product/Product?s=${encodedS}`)
+  const data = await fetch(`http://localhost:3000/api/product/Product?s=${encodedS}`,{
+    method:"GET"
+  })
 
   const products = await data.json();
   

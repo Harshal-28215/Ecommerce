@@ -20,7 +20,7 @@ function DeleteButton({id}:{id:string}) {
     }
 
   return (
-    <Button className='absolute top-[12%] w-[30px] hover:bg-white/50 right-1 bg-white/50 text-black z-10' onClick={handleclick}>
+    <Button className='absolute top-[12%] w-[30px] hover:bg-white/50 right-1 bg-white/50 text-black z-[1]' onClick={handleclick}>
       <Trash2 />
     </Button>
   )
