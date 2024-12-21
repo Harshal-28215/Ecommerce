@@ -6,6 +6,7 @@ import Link from 'next/link'
 import React from 'react'
 import WhishListButton from './WhishListButton'
 import { usePathname } from 'next/navigation'
+import DeleteButton from './DeleteButton'
 
 
 interface ProductProps {
@@ -19,6 +20,7 @@ function Product({ product }: ProductProps) {
     return (
         <div className='block relative w-[210px] h-[390px]' key={product._id}>
             {pathname === '/cart' ? null : <WhishListButton product={product}/>}
+            <DeleteButton id={product._id}/>
             <Link href={`/product/${product._id}`}>
                 <div className='w-full h-[80%] bg-black relative'>
                     <Image src='/temp.webp' alt='Product Image' width={300} height={500} />

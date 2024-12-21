@@ -4,8 +4,6 @@ import fs from "fs";
 import ProductDeatail from "@/lib/schemas/ProductDeatail";
 
 export const POST = async (req: NextApiRequest, res: NextApiResponse) => {
-
-  console.log("hello from productdetails");
   
 
     const form = formidable({

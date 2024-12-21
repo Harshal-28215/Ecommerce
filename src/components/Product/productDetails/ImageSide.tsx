@@ -17,7 +17,7 @@ function ImageSide({ ImageData }: { ImageData: ImageDataProps }) {
 
                 return (
                     <div className="w-[100%] h-[500px]" key={image._id}>
-                        <Image className="w-[100%] h-[100%] object-cover" src={base64Image} width={700} height={500} alt="productimage" />
+                        <Image className="w-full h-full object-cover" src={base64Image} width={700} height={500} alt="productimage" />
                     </div>
                 )
             })}

@@ -14,7 +14,7 @@ async function page({ searchParams }: { searchParams: Promise<URLSearchParams> }
 
   const data = await fetch(`http://localhost:3000/api/product/Product?s=${encodedS}`)
 
-  const products = await data.json(); 
+  const products = await data.json();
   
 
   return (
