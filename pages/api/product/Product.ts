@@ -9,7 +9,7 @@ const CreateProduct = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (req.method === "POST") {
     // Create a new product
-    productPost(req, res);
+    await productPost(req, res);
 
   } else if (req.method === "GET") {
     // Get all products
