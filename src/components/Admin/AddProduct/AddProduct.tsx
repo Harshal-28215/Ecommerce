@@ -11,22 +11,14 @@ import {
     Button
 } from "@/components/ui/button"
 import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
+    Form
 } from "@/components/ui/form"
-import {
-    Input
-} from "@/components/ui/input"
 import { useState } from "react"
-import { Textarea } from "../../ui/textarea"
 import AddProductDetail from "./AddProductDetail"
 import AddCoverImage from "./AddCoverImage"
 import AddCoverProduct from "./AddCoverProduct"
 import AddProductDetailImage from "./AddProductDetailImage"
+import useSubmit from "@/utils/hooks/useSubmit"
 
 const formSchema = z.object({
     name: z.string().min(3, "Name must be at least 3 characters"),
@@ -72,74 +64,16 @@ export default function AddProduct() {
         },
     })
 
-    async function onSubmit(values: z.infer<typeof formSchema>) {
-
-        const formData = new FormData();
-
-        formData.append("name", values.name);
-        formData.append("description", values.description);
-        formData.append("price", values.price);
-        formData.append("category", values.category);
-
-        const coverImageData = new FormData();
-
-        values.cardImage.forEach((file) => {
-            coverImageData.append("cardImage", file);
-        });
-
-        const ProductDetailsformdata = new FormData();
-
-        ProductDetailsformdata.append("materialAndCare", values.materialAndCare)
-        ProductDetailsformdata.append("ProductDetails", values.ProductDetails)
-        ProductDetailsformdata.append("sizeAndFit", values.sizeAndFit)
-        ProductDetailsformdata.append("specifications", JSON.stringify(specifications))
-
-        const productImageData = new FormData();
-        values.images.forEach((file) => {
-            productImageData.append("images", file)
-        })        
-
-        const response = await fetch("http://localhost:3000/api/product/Product", {
-            method: "POST",
-            body: formData,
-            credentials: 'include',
-        });
-
-        const responseData = await response.json()
-        const productId = responseData.product._id
-
-        if (response.ok && productId) {
-            await fetch(`http://localhost:3000/api/Image/coverImage?id=${productId}`, {
-                method: "POST",
-                body: coverImageData,
-                credentials: 'include',
-            });
-
-            await fetch(`http://localhost:3000/api/Image/productImage?id=${productId}`, {
-                method: "POST",
-                body: productImageData,
-                credentials: 'include',
-            });
-
-            ProductDetailsformdata.append("ProductId", productId)
-
-            await fetch("http://localhost:3000/api/productdetail/product", {
-                method: "POST",
-                body: ProductDetailsformdata,
-                credentials: 'include',
-            });
-
-        }
-    }
+    const { isSubmitting, handlesubmit } = useSubmit()
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-3xl mx-auto py-10">
+            <form onSubmit={form.handleSubmit(handlesubmit)} className="space-y-8 max-w-3xl mx-auto py-10">
                 <AddCoverProduct form={form} />
-                <AddCoverImage form={form}/>
-                <AddProductDetail form={form}  specifications={specifications} setSpecifications={setSpecifications}/>
-                <AddProductDetailImage form={form}/>
-                <Button type="submit">Submit</Button>
+                <AddCoverImage form={form} />
+                <AddProductDetail form={form} specifications={specifications} setSpecifications={setSpecifications} />
+                <AddProductDetailImage form={form} />
+                <Button type="submit" disabled={isSubmitting}>{isSubmitting ? "Loading..." : "Submit"}</Button>
             </form>
         </Form>
     )

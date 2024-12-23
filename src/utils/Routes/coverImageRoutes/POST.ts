@@ -18,7 +18,7 @@ export default function addImage(req: NextApiRequest, res: NextApiResponse) {
         if (req.query.id) {
 
             try {
-                const image = files.cardImage;
+                const image = files.images;
 
                 const cardImage = { data: image ? Buffer.from(fs.readFileSync(image[0]?.filepath)) : null, contentType: image ? image[0].mimetype : null }
 
