@@ -1,11 +1,8 @@
-"use client"
-
 import { productType } from '@/lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import WhishListButton from './WhishListButton'
-import { usePathname } from 'next/navigation'
 import DeleteButton from './DeleteButton'
 
 
@@ -13,17 +10,23 @@ interface ProductProps {
     product: productType;
 }
 
-function Product({ product }: ProductProps) {
-    
-    const pathname = usePathname()    
+async function Product({ product }: ProductProps) {
+
+    const response = await fetch(`http://localhost:3000/api/Image/coverImage?id=${product._id}`,{
+        method:"GET"
+    })
+    .then(data => data.json())
+
+    const coverImage = response.image.CardImage;
+    const base64Image = `data:${coverImage.contentType};base64,${coverImage.data}`;
 
     return (
         <div className='block relative w-[210px] h-[390px]' key={product._id}>
-            {pathname === '/cart' ? null : <WhishListButton product={product}/>}
-            <DeleteButton id={product._id}/>
+            <WhishListButton product={product} />
+            <DeleteButton id={product._id} />
             <Link href={`/product/${product._id}`}>
                 <div className='w-full h-[80%] bg-black relative'>
-                    <Image src='/temp.webp' alt='Product Image' width={300} height={500} />
+                    <Image src={base64Image} alt='Product Image' width={300} height={500} />
                     <div className='absolute text-black bg-white/40 p-1 bottom-2 left-1 flex text-end flex-row text-[12px] font-bold'>
                         <span>4.5</span>
                         <span>⭐</span>

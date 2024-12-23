@@ -29,7 +29,7 @@ async function page({ params }: { params: { id: string } }) {
 
     return (
         <div className="p-4 flex gap-4">
-            <ImageSide ImageData={data[0].images} />
+            <ImageSide id={id} />
             <DetailSide DeatailSideData={DeatailSideData}/>
         </div>
     )

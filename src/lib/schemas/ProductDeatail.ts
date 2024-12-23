@@ -12,12 +12,6 @@ const ProductDetailsSchema = new mongoose.Schema({
             about: { type: String }
         }
     ],
-    images: [
-        {
-            data: { type: Buffer, required: true },
-            contentType: { type: String, required: true },
-        },
-    ],
 });
 
 export default mongoose.models.ProductDetails || mongoose.model("ProductDetails", ProductDetailsSchema);

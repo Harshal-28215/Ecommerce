@@ -11,7 +11,7 @@ export const POST = async (req: NextApiRequest, res: NextApiResponse) => {
         keepExtensions: true,
       });
     
-      form.parse(req, async (err, fields: Record<string, any>, files) => {
+      form.parse(req, async (err, fields: Record<string, any>) => {
         if (err) {
           console.error(err);
           return res.status(400).json({ error: "Error parsing form data" });
@@ -30,23 +30,12 @@ export const POST = async (req: NextApiRequest, res: NextApiResponse) => {
           const stringSpecifications = specifications
             ? JSON.parse(specifications)
             : [];
-    
-          const uploadedFiles = Array.isArray(files.images) ? files.images : [files.images];
-          const images = uploadedFiles
-            .filter((file) => file !== undefined)
-            .map((file) => ({
-              data: Buffer.from(fs.readFileSync(file.filepath)),
-              contentType: file.mimetype,
-            }));
-
-
 
           const product = new ProductDeatail({
             ProductDetails,
             sizeAndFit,
             materialAndCare,
             specifications:stringSpecifications,
-            images:images,
             ProductId
           });
     

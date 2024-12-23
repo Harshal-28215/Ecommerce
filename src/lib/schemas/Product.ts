@@ -5,8 +5,4 @@ export const ProductSchema = new Schema({
   description: { type: String, required: true },
   price: { type: Number, required: true },
   category: { type: String, required: true },
-  cardImage: {
-    data: { type: Buffer, required: true },
-    contentType: { type: String, required: true }
-  },
 });

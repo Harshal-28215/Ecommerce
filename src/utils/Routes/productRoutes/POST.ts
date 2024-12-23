@@ -10,7 +10,7 @@ function productPost(req: NextApiRequest, res: NextApiResponse) {
     keepExtensions: true,
   });
 
-  form.parse(req, async (err, fields: Record<string, any>, files) => {
+  form.parse(req, async (err, fields: Record<string, any>) => {
     if (err) {
       console.error(err);
       return res.status(400).json({ error: "Error parsing form data" });
@@ -24,17 +24,13 @@ function productPost(req: NextApiRequest, res: NextApiResponse) {
 
 
     const { name, description, price, category } = fields;
-    const cardImage = files.cardImage;
     
     
     try {
-      const cardimage = { data: cardImage ? Buffer.from(fs.readFileSync(cardImage[0]?.filepath)) : null, contentType: cardImage ? cardImage[0]?.mimetype : null };
-
       const product = new Product({
         name,
         description,
         category,
-        cardImage: cardimage,
         price: parseFloat(Array.isArray(price) ? price[0] : price || "0"),
       });
 

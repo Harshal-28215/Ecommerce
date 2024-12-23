@@ -1,17 +1,18 @@
 import Image from 'next/image'
 import React from 'react'
 
-type ImageDataProps = {
-    data: string[],
-    contentType: string,
-    _id:string
-}[]
+async function ImageSide({ id }: { id: string }) {
 
-function ImageSide({ ImageData }: { ImageData: ImageDataProps }) {
+const response = await fetch(`http://localhost:3000/api/Image/productImage?id=${id}`,{
+    method:"GET"
+}).then(data => data.json())
+
+const ImageData = response.image.DetailImage
+
     return (
         <aside className="w-[50%] h-fit grid grid-cols-2 grid-flow-row gap-4">
 
-            {ImageData.map(image => {
+            {ImageData?.map((image:{data:string,contentType:string,_id:string}) => {
 
                 const base64Image = `data:${image.contentType};base64,${image.data}`;
 

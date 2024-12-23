@@ -22,7 +22,7 @@ import {
     Input
 } from "@/components/ui/input"
 import { useState } from "react"
-import { Textarea } from "../ui/textarea"
+import { Textarea } from "../../ui/textarea"
 
 const formSchema = z.object({
     name: z.string().min(3, "Name must be at least 3 characters"),
@@ -93,23 +93,26 @@ export default function AddProduct() {
         formData.append("price", values.price);
         formData.append("category", values.category);
 
+        const coverImageData = new FormData();
+
         values.cardImage.forEach((file) => {
-            formData.append("cardImage", file);
+            coverImageData.append("cardImage", file);
         });
 
         console.log(formData);
-        
+
 
         const ProductDetailsformdata = new FormData();
-        
-        values.images.forEach((file) => {
-            ProductDetailsformdata.append("images",file)
-        })
 
-        ProductDetailsformdata.append("materialAndCare",values.materialAndCare)
-        ProductDetailsformdata.append("ProductDetails",values.ProductDetails)
-        ProductDetailsformdata.append("sizeAndFit",values.sizeAndFit)
-        ProductDetailsformdata.append("specifications", JSON.stringify(specifications))        
+        ProductDetailsformdata.append("materialAndCare", values.materialAndCare)
+        ProductDetailsformdata.append("ProductDetails", values.ProductDetails)
+        ProductDetailsformdata.append("sizeAndFit", values.sizeAndFit)
+        ProductDetailsformdata.append("specifications", JSON.stringify(specifications))
+
+        const productImageData = new FormData();
+        values.images.forEach((file) => {
+            productImageData.append("images", file)
+        })
 
         const response = await fetch("http://localhost:3000/api/product/Product", {
             method: "POST",
@@ -119,10 +122,26 @@ export default function AddProduct() {
 
         const responseData = await response.json()
         const productId = responseData.product._id
-        
 
         if (response.ok && productId) {
-            ProductDetailsformdata.append("ProductId",productId)
+            await fetch(`http://localhost:3000/api/Image/coverImage?id=${productId}`, {
+                method: "POST",
+                body: coverImageData,
+                credentials: 'include',
+            });
+        }
+
+        if (response.ok && productId) {
+            await fetch(`http://localhost:3000/api/Image/productImage?id=${productId}`, {
+                method: "POST",
+                body: productImageData,
+                credentials: 'include',
+            });
+        }
+
+
+        if (response.ok && productId) {
+            ProductDetailsformdata.append("ProductId", productId)
 
             const response = await fetch("http://localhost:3000/api/productdetail/product", {
                 method: "POST",
@@ -132,7 +151,7 @@ export default function AddProduct() {
 
             console.log(response);
         }
-        
+
 
     }
 
