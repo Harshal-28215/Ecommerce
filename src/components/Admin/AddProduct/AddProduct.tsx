@@ -23,6 +23,10 @@ import {
 } from "@/components/ui/input"
 import { useState } from "react"
 import { Textarea } from "../../ui/textarea"
+import AddProductDetail from "./AddProductDetail"
+import AddCoverImage from "./AddCoverImage"
+import AddCoverProduct from "./AddCoverProduct"
+import AddProductDetailImage from "./AddProductDetailImage"
 
 const formSchema = z.object({
     name: z.string().min(3, "Name must be at least 3 characters"),
@@ -68,22 +72,6 @@ export default function AddProduct() {
         },
     })
 
-    const addRow = () => {
-        setSpecifications([...specifications, { title: "", about: "" }]);
-    };
-
-    const removeRow = (index: number) => {
-        const updated = [...specifications];
-        updated.splice(index, 1);
-        setSpecifications(updated);
-    };
-
-    const updateRow = (index: number, field: 'title' | 'about', value: string) => {
-        const updated = [...specifications];
-        updated[index][field] = value;
-        setSpecifications(updated);
-    };
-
     async function onSubmit(values: z.infer<typeof formSchema>) {
 
         const formData = new FormData();
@@ -99,9 +87,6 @@ export default function AddProduct() {
             coverImageData.append("cardImage", file);
         });
 
-        console.log(formData);
-
-
         const ProductDetailsformdata = new FormData();
 
         ProductDetailsformdata.append("materialAndCare", values.materialAndCare)
@@ -112,7 +97,7 @@ export default function AddProduct() {
         const productImageData = new FormData();
         values.images.forEach((file) => {
             productImageData.append("images", file)
-        })
+        })        
 
         const response = await fetch("http://localhost:3000/api/product/Product", {
             method: "POST",
@@ -129,236 +114,31 @@ export default function AddProduct() {
                 body: coverImageData,
                 credentials: 'include',
             });
-        }
 
-        if (response.ok && productId) {
             await fetch(`http://localhost:3000/api/Image/productImage?id=${productId}`, {
                 method: "POST",
                 body: productImageData,
                 credentials: 'include',
             });
-        }
 
-
-        if (response.ok && productId) {
             ProductDetailsformdata.append("ProductId", productId)
 
-            const response = await fetch("http://localhost:3000/api/productdetail/product", {
+            await fetch("http://localhost:3000/api/productdetail/product", {
                 method: "POST",
                 body: ProductDetailsformdata,
                 credentials: 'include',
             });
 
-            console.log(response);
         }
-
-
     }
 
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-3xl mx-auto py-10">
-
-                <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Name</FormLabel>
-                            <FormControl>
-                                <Input
-                                    placeholder="Name"
-
-                                    type="text"
-                                    {...field} />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-
-                <FormField
-                    control={form.control}
-                    name="description"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Description</FormLabel>
-                            <FormControl>
-                                <Input
-                                    placeholder="Description"
-
-                                    type="text"
-                                    {...field} />
-                            </FormControl>
-
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-
-                <FormField
-                    control={form.control}
-                    name="price"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Price</FormLabel>
-                            <FormControl>
-                                <Input
-                                    placeholder="price"
-
-                                    type="number"
-                                    {...field} />
-                            </FormControl>
-
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="cardImage"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Card Image</FormLabel>
-                            <FormControl>
-                                <Input
-                                    placeholder="Card Image"
-                                    type="file"
-                                    onChange={(e) => {
-                                        field.onChange(e.target.files);
-                                    }}
-                                />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="category"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Category</FormLabel>
-                            <FormControl>
-                                <Input
-                                    placeholder="category"
-                                    type="text"
-                                    {...field} />
-                            </FormControl>
-
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-
-                {/* product detail data */}
-                <FormField
-                    control={form.control}
-                    name="images"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Images</FormLabel>
-                            <FormControl>
-                                <Input
-                                    placeholder="Product Image"
-                                    type="file"
-                                    multiple
-                                    onChange={(e) => {
-                                        field.onChange(e.target.files);
-                                    }}
-                                />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-
-                <FormField
-                    control={form.control}
-                    name="sizeAndFit"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Size & Fit</FormLabel>
-                            <FormControl>
-                                <Input
-                                    placeholder="Size & Fit"
-                                    type="text"
-                                    {...field} />
-                            </FormControl>
-
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="ProductDetails"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Product Details</FormLabel>
-                            <FormControl>
-                                <Textarea
-                                    placeholder="Product Details"
-                                    {...field} />
-                            </FormControl>
-
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="materialAndCare"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Material & Care</FormLabel>
-                            <FormControl>
-                                <Textarea
-                                    placeholder="Material & Care"
-                                    {...field} />
-                            </FormControl>
-
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="specifications"
-                    render={() => (
-                        <FormItem>
-                            <FormLabel>Specifications</FormLabel>
-                            <div>
-                                {specifications.map((row, index) => (
-                                    <div key={index} className="flex items-center gap-4 mb-2">
-                                        <Input
-                                            placeholder="Title"
-                                            value={row.title}
-                                            onChange={(e) => updateRow(index, "title", e.target.value)}
-                                        />
-                                        <Input
-                                            placeholder="About"
-                                            value={row.about}
-                                            onChange={(e) => updateRow(index, "about", e.target.value)}
-                                        />
-                                        <Button
-                                            type="button"
-                                            variant="destructive"
-                                            onClick={() => removeRow(index)}
-                                        >
-                                            Remove
-                                        </Button>
-                                    </div>
-                                ))}
-                                <Button type="button" onClick={addRow}>
-                                    Add Specification
-                                </Button>
-                            </div>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-
+                <AddCoverProduct form={form} />
+                <AddCoverImage form={form}/>
+                <AddProductDetail form={form}  specifications={specifications} setSpecifications={setSpecifications}/>
+                <AddProductDetailImage form={form}/>
                 <Button type="submit">Submit</Button>
             </form>
         </Form>

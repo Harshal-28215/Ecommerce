@@ -1,4 +1,4 @@
-import Image from "@/lib/schemas/Image";
+import productImage from "@/lib/schemas/productImage";
 import formidable from "formidable";
 import fs from "fs";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -26,10 +26,16 @@ export default function addProductImage(req: NextApiRequest, res: NextApiRespons
                         contentType: file.mimetype,
                     }));
 
-                    await Image.findOneAndUpdate({productId:req.query.id,DetailImage:images});
+                    const addProductImage = new productImage({
+                        DetailImage:images,
+                        productId:req.query.id
+                    })
+
+                    await addProductImage.save()
 
                 res.status(200).json({
                     message: "image created successfull",
+                    addProductImage
                 })
             } catch (error) {
                 res.status(500).json({

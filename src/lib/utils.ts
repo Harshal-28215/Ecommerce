@@ -1,4 +1,5 @@
 import { clsx, type ClassValue } from "clsx"
+import { UseFormReturn } from "react-hook-form";
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
@@ -29,4 +30,8 @@ export type userType = {
   email: string;
   name: string;
   id: string;
+}
+
+export type productform={
+    form:UseFormReturn<any>
 }
