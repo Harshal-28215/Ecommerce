@@ -1,6 +1,6 @@
 "use client"
 
-import { productType } from '@/lib/utils';
+import { productType } from '@/utils/utils';
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 interface ContextProps {

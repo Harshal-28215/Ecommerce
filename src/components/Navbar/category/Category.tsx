@@ -1,6 +1,6 @@
 import React from 'react'
 import NavigationMenuDemo from './NavigationMenu';
-import { categoryType } from '@/lib/utils';
+import { categoryType } from '@/utils/utils';
 
 function Category({ category }: { category: categoryType[] }) {
     return (

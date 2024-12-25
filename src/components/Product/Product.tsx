@@ -1,4 +1,4 @@
-import { productType } from '@/lib/utils'
+import { productType } from '@/utils/utils'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -12,18 +12,18 @@ interface ProductProps {
 
 async function Product({ product }: ProductProps) {
 
-    const response = await fetch(`http://localhost:3000/api/Image/coverImage?id=${product._id}`,{
-        method:"GET",
+    const response = await fetch(`http://localhost:3000/api/Image/coverImage?id=${product._id}`, {
+        method: "GET",
     })
-    .then(data => data.json())
+        .then(data => data.json())
 
     const coverImage = await response.image.CardImage;
     const base64Image = `data:${coverImage.contentType};base64,${coverImage.data}`;
-    
+
 
     return (
         <div className='block relative w-[210px] h-[390px]' key={product._id}>
-            <WhishListButton product={product} />
+            {/* <WhishListButton product={product} /> */}
             <DeleteButton id={product._id} />
             <Link href={`/product/${product._id}`}>
                 <div className='w-full h-[80%] bg-black relative'>

@@ -3,7 +3,6 @@
 import {
   ShoppingBag,
   Trash,
-  User,
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -22,6 +21,7 @@ import Link from "next/link";
 
 function CartButton() {
   const { cart, user, setCart } = useMyContext();
+
 
   const handleDelete = async () => {
     const response = await fetch(`http://localhost:3000/api/cart/Cart?uid=${user?.id}`, {
@@ -71,7 +71,7 @@ function CartButton() {
             return (
               <Link href={`/product/${product._id}`} className="flex items-center justify-between group hover:bg-accent transition-colors px-2" key={product._id}>
                 <DropdownMenuItem className="cursor-pointer">
-                  <ImageData image={product.cardImage} />
+                  <ImageData id={product._id} />
                   <span>{product.name}</span>
                 </DropdownMenuItem>
                 <Trash className="invisible group-hover:visible cursor-pointer" onClick={() => handleProductDelete(product._id)} />

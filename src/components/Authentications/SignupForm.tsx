@@ -36,15 +36,15 @@ const formSchema = z.object({
   Password: z.string(),
   ConfirmPassword: z.string()
 })
-.refine((data) => data.Password === data.ConfirmPassword, {
-  message: "Passwords do not match",
-  path: ["ConfirmPassword"], // Specify which field the error applies to
-});
+  .refine((data) => data.Password === data.ConfirmPassword, {
+    message: "Passwords do not match",
+    path: ["ConfirmPassword"], // Specify which field the error applies to
+  });
 
 export default function SignupForm() {
   const router = useRouter()
 
-  const form = useForm < z.infer < typeof formSchema >> ({
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       UserName: "",
@@ -54,37 +54,37 @@ export default function SignupForm() {
     },
   })
 
- async function onSubmit(values: z.infer < typeof formSchema > ) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
 
-  const data = {
-    name: values.UserName,
-    email: values.email,
-    password: values.Password,
-  }
-  try {
-    const response = await fetch("http://localhost:3000/api/user/signup", {
+    const data = {
+      name: values.UserName,
+      email: values.email,
+      password: values.Password,
+    }
+    try {
+      const response = await fetch("http://localhost:3000/api/user/signup", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-        credentials:'include',
-        });
+        credentials: 'include',
+      });
 
-        if (response.ok) {
-            router.push('/login')
-        }
-        
-  } catch (error) {
-    console.error('An unexpected error happened while login:', error)
-  }
-  
+      if (response.ok) {
+        router.push('/login')
+      }
+
+    } catch (error) {
+      console.error('An unexpected error happened while login:', error)
+    }
+
   }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-3xl mx-auto py-10">
-        
+
         <FormField
           control={form.control}
           name="UserName"
@@ -92,17 +92,17 @@ export default function SignupForm() {
             <FormItem>
               <FormLabel>UserName</FormLabel>
               <FormControl>
-                <Input 
-                placeholder="Name"
-                
-                type="text"
-                {...field} />
+                <Input
+                  placeholder="Name"
+
+                  type="text"
+                  {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        
+
         <FormField
           control={form.control}
           name="email"
@@ -110,18 +110,18 @@ export default function SignupForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input 
-                placeholder="Email"
-                
-                type="email"
-                {...field} />
+                <Input
+                  placeholder="Email"
+
+                  type="email"
+                  {...field} />
               </FormControl>
-              
+
               <FormMessage />
             </FormItem>
           )}
         />
-        
+
         <FormField
           control={form.control}
           name="Password"
@@ -135,8 +135,8 @@ export default function SignupForm() {
             </FormItem>
           )}
         />
-        
-        
+
+
         <FormField
           control={form.control}
           name="ConfirmPassword"
@@ -150,7 +150,7 @@ export default function SignupForm() {
             </FormItem>
           )}
         />
-        
+
         <Button type="submit">Submit</Button>
       </form>
     </Form>

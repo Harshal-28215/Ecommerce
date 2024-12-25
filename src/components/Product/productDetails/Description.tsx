@@ -1,11 +1,12 @@
 import { LucideShoppingBag, Truck } from 'lucide-react'
 import React from 'react'
 import ProductWhishlistButton from './ProductWhishlistButton'
-import { productType } from '@/lib/utils'
+import { productType } from '@/utils/utils'
+import ProductCartButton from './ProductCartButton'
 
 
-function Description({Product}:{Product:productType}) {
-    
+function Description({ Product }: { Product: productType }) {
+
     return (
         <>
             <div className="flex flex-col gap-4 border-b pb-5">
@@ -39,9 +40,8 @@ function Description({Product}:{Product:productType}) {
                         <button className="w-[50px] h-[50px] border border-black/30 rounded-full text-sm text-center">L</button>
                     </div>
                     <div className="flex gap-4">
-                        <button className="h-[50px] w-[300px] text-center bg-[#ff527b] flex justify-center items-center gap-4 rounded-sm text-white font-bold"> <LucideShoppingBag /> ADD TO BAG </button>
-
-                        <ProductWhishlistButton Product={Product}/>
+                        <ProductCartButton Product={Product} />
+                        <ProductWhishlistButton Product={Product} />
                     </div>
                 </div>
             </div>

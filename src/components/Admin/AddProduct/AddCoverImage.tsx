@@ -1,9 +1,9 @@
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { productform } from '@/lib/utils';
+import { productform } from '@/utils/utils';
 import React from 'react'
 
-function AddCoverImage({form}:productform) {
+function AddCoverImage({ form }: productform) {
     return (
         <FormField
             control={form.control}

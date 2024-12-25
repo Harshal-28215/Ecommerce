@@ -1,7 +1,7 @@
 import React from 'react'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { productform } from '@/lib/utils';
+import { productform } from '@/utils/utils';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 
@@ -10,23 +10,23 @@ type AddProductDetailProps = productform & {
     setSpecifications: React.Dispatch<React.SetStateAction<{ title: string, about: string }[]>>;
 };
 
-function AddProductDetail({form,specifications,setSpecifications}:AddProductDetailProps) {
+function AddProductDetail({ form, specifications, setSpecifications }: AddProductDetailProps) {
 
     const addRow = () => {
-            setSpecifications([...specifications, { title: "", about: "" }]);
-        };
-    
-        const removeRow = (index: number) => {
-            const updated = [...specifications];
-            updated.splice(index, 1);
-            setSpecifications(updated);
-        };
-    
-        const updateRow = (index: number, field: 'title' | 'about', value: string) => {
-            const updated = [...specifications];
-            updated[index][field] = value;
-            setSpecifications(updated);
-        };
+        setSpecifications([...specifications, { title: "", about: "" }]);
+    };
+
+    const removeRow = (index: number) => {
+        const updated = [...specifications];
+        updated.splice(index, 1);
+        setSpecifications(updated);
+    };
+
+    const updateRow = (index: number, field: 'title' | 'about', value: string) => {
+        const updated = [...specifications];
+        updated[index][field] = value;
+        setSpecifications(updated);
+    };
 
     return (
         <>

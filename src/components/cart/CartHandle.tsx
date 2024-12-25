@@ -7,7 +7,6 @@ import Product from '../Product/Product';
 function CartHandle() {
 
     const {cart} = useMyContext();
-    console.log(cart);
     
 
   return (

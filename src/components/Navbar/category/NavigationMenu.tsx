@@ -2,7 +2,7 @@
 
 import * as React from "react"
 
-import { categoryType, cn } from "@/lib/utils"
+import { categoryType, cn } from "@/utils/utils"
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -26,21 +26,21 @@ export default function NavigationMenuDemo({ category }: { category: categoryTyp
                             >
                                 {category.subcategories && category.subcategories.map((subcategory) => (
                                     <div key={subcategory._id}>
-                                    <ListItem
-                                        className="py-1 hover:bg-transparent font-extrabold uppercase"
-                                        href={`/category/${encodeURIComponent(subcategory.name || 'unknown')}?s=${subcategory.slug}`}
-                                        title={subcategory.name || 'Unknown Category'}
-                                    />
-                                    {subcategory.subcategories &&
-                                        subcategory.subcategories.map((nestedSubcategory) => (
-                                            <ListItem
-                                                className="py-0 hover:bg-transparent text-slate-500 hover:font-extrabold hover:underline"
-                                                href={`/category/${encodeURIComponent(nestedSubcategory.name)}?s=${encodeURIComponent(nestedSubcategory.slug)}`}
-                                                title={nestedSubcategory.name || 'Unknown Subcategory'}
-                                                key={nestedSubcategory._id}
-                                            />
-                                        ))}
-                                </div>
+                                        <ListItem
+                                            className="py-1 hover:bg-transparent font-extrabold uppercase"
+                                            href={`/category/${encodeURIComponent(subcategory.name || 'unknown')}?s=${subcategory.slug}`}
+                                            title={subcategory.name || 'Unknown Category'}
+                                        />
+                                        {subcategory.subcategories &&
+                                            subcategory.subcategories.map((nestedSubcategory) => (
+                                                <ListItem
+                                                    className="py-0 hover:bg-transparent text-slate-500 hover:font-extrabold hover:underline"
+                                                    href={`/category/${encodeURIComponent(nestedSubcategory.name)}?s=${encodeURIComponent(nestedSubcategory.slug)}`}
+                                                    title={nestedSubcategory.name || 'Unknown Subcategory'}
+                                                    key={nestedSubcategory._id}
+                                                />
+                                            ))}
+                                    </div>
                                 ))}
                             </ul>
                         </NavigationMenuContent>

@@ -32,6 +32,6 @@ export type userType = {
   id: string;
 }
 
-export type productform={
-    form:UseFormReturn<any>
+export type productform = {
+  form: UseFormReturn<any>
 }
