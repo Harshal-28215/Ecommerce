@@ -11,7 +11,7 @@ function Navbar() {
 
         <Search />
         
-        <div className='space-x-5'>
+        <div className='space-x-5 flex items-center justify-center'>
             <CartButton />
             <AccountButton />
         </div>

@@ -16,6 +16,7 @@ import {
   Trash,
   Trash2,
   User,
+  UserCircle,
   UserPlus,
   Users,
 } from "lucide-react"
@@ -94,7 +95,7 @@ function AccountButton() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">{user ? user.name : "Account"}</Button>
+        <Button variant="outline"> <UserCircle /> <span className="text-base">{user ? user.name : "Account"}</span></Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>

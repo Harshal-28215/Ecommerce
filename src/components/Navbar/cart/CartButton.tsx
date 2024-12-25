@@ -1,6 +1,7 @@
 "use client"
 
 import {
+  LucideShoppingBag,
   ShoppingBag,
   Trash,
 } from "lucide-react"
@@ -60,7 +61,7 @@ function CartButton() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">Cart</Button>
+        <Button variant="outline"> <LucideShoppingBag /> <span className="text-base">Cart</span></Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
@@ -83,7 +84,7 @@ function CartButton() {
 
           <DropdownMenuItem>
             <Link href='/cart' className="w-full flex items-center gap-2">
-              <ShoppingBag className="w-4"/>
+              <ShoppingBag className="w-4" />
               <span>Go To Cart</span>
             </Link>
           </DropdownMenuItem>
