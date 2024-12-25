@@ -13,6 +13,8 @@ import {
   Plus,
   PlusCircle,
   Settings,
+  Trash,
+  Trash2,
   User,
   UserPlus,
   Users,
@@ -34,10 +36,11 @@ import {
 } from "@/components/ui/dropdown-menu"
 import Link from "next/link"
 import { useMyContext } from "@/Context/context"
+import ImageData from "./cart/ImageData"
 
 function AccountButton() {
 
-  const {user} = useMyContext();  
+  const { user, whishlist, setWhishlist } = useMyContext();
 
   const handleLogOut = async () => {
     const response = await fetch('http://localhost:3000/api/user/logout', {
@@ -52,6 +55,40 @@ function AccountButton() {
     }
     console.log('Logged out');
 
+  }
+
+  const handleDelete = async () => {
+    const response = await fetch(`http://localhost:3000/api/whishlist/whishlist?uid=${user?.id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: "include",
+    })
+    if (response.ok) {
+      setWhishlist(null);
+    }
+  }
+
+  const handleProductDelete = async (pid: string) => {
+
+    const response = await fetch(`http://localhost:3000/api/whishlist/whishlist?uid=${user?.id}&pid=${pid}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: "include",
+    })
+
+    if (response.ok) {
+      if (whishlist) {
+        const updatedCart = whishlist.filter((item) => item._id !== pid);
+        setWhishlist(updatedCart);
+      }
+      else {
+        setWhishlist(null)
+      }
+    }
   }
 
   return (
@@ -93,18 +130,23 @@ function AccountButton() {
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
-                <DropdownMenuItem>
-                  <Mail />
-                  <span>Email</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <MessageSquare />
-                  <span>Message</span>
-                </DropdownMenuItem>
+
+                {whishlist?.map((product) => {
+                  return (
+                    <Link href={`/product/${product._id}`} className="flex items-center justify-between group hover:bg-accent transition-colors px-2" key={product._id}>
+                      <DropdownMenuItem className="cursor-pointer">
+                        <ImageData id={product._id} />
+                        <span>{product.name}</span>
+                      </DropdownMenuItem>
+                      <Trash className="invisible group-hover:visible cursor-pointer" onClick={() => handleProductDelete(product._id)} />
+                    </Link>
+                  )
+                })}
+
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <PlusCircle />
-                  <span>More...</span>
+                <DropdownMenuItem onClick={handleDelete}>
+                  <Trash2 />
+                  <span>Clear Whishlist</span>
                 </DropdownMenuItem>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>

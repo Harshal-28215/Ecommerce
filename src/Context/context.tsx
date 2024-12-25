@@ -8,15 +8,19 @@ interface ContextProps {
   setUser: React.Dispatch<React.SetStateAction<{ name: string, email: string, id: string } | null>>;
 
   cart: productType[] | null
+  whishlist: productType[] | null
 
   setCart: React.Dispatch<React.SetStateAction<productType[] | null>>
+  setWhishlist: React.Dispatch<React.SetStateAction<productType[] | null>>
 }
 
 const defaultContext: ContextProps = {
   user: null,
   cart: [],
+  whishlist: [],
   setUser: () => { },
   setCart: () => { },
+  setWhishlist: () => { },
 }
 
 const MyContext = createContext<ContextProps>(defaultContext);
@@ -25,6 +29,7 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }): JSX
 
   const [user, setUser] = useState(defaultContext.user);
   const [cart, setCart] = useState(defaultContext.cart);
+  const [whishlist, setWhishlist] = useState(defaultContext.whishlist);
 
   async function getCart() {
     const response = await fetch(`http://localhost:3000/api/cart/Cart?uid=${user?.id}`, {
@@ -38,6 +43,21 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }): JSX
 
     if (response.ok) {
       setCart(data.products);
+    }
+  }
+
+  async function getWhishlist() {
+    const response = await fetch(`http://localhost:3000/api/whishlist/whishlist?uid=${user?.id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: "include",
+    })
+    const data = await response.json()
+
+    if (response.ok) {
+      setWhishlist(data.products);
     }
   }
 
@@ -62,6 +82,7 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }): JSX
   useEffect(() => {
     if (user) {
       getCart();
+      getWhishlist();
     }
   }, [user])
 
@@ -70,7 +91,9 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }): JSX
     user,
     setUser,
     cart,
-    setCart
+    setCart,
+    whishlist,
+    setWhishlist
   };
 
   return (

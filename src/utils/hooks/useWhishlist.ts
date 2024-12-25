@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 export const useWhishlist = (product: productType) => {
 
-  const { user, setCart, cart } = useMyContext();
+  const { user, setWhishlist, whishlist } = useMyContext();
 
   const [isWhishList, setIsWhishList] = useState(false);
 
@@ -15,17 +15,17 @@ export const useWhishlist = (product: productType) => {
   }
 
   useEffect(() => {
-    const whishlistedCart = cart?.some(cartItem => cartItem._id === product._id);
+    const whishlistedCart = whishlist?.some(cartItem => cartItem._id === product._id);
     if (whishlistedCart) {
       setIsWhishList(true);
     } else {
       setIsWhishList(false);
     }
-  }, [cart])
+  }, [whishlist])
 
 
-  const addCart = async () => {
-    const response = await fetch(`http://localhost:3000/api/cart/Cart`, {
+  const addWhishlist = async () => {
+    const response = await fetch(`http://localhost:3000/api/whishlist/whishlist`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -35,16 +35,16 @@ export const useWhishlist = (product: productType) => {
     })
 
     if (response.ok && isWhishList == false) {
-      setCart((prevCart) => prevCart ? [...prevCart, product] : [product])
+      setWhishlist((prevCart) => prevCart ? [...prevCart, product] : [product])
       setIsWhishList(true)
     } else {
-      const filteredCart = cart?.filter(cart => cart._id != product._id)
+      const filteredCart = whishlist?.filter(whishlist => whishlist._id != product._id)
       if (filteredCart) {
-        setCart(filteredCart)
+        setWhishlist(filteredCart)
       }
       setIsWhishList(false)
     }
   }
 
-  return { addCart, isWhishList }
+  return { addWhishlist, isWhishList }
 }
