@@ -3,7 +3,7 @@
 import { useMyContext } from '@/Context/context';
 import { productType } from '@/utils/utils'
 import { LucideShoppingBag, SquareCheck } from 'lucide-react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 function ProductCartButton({ Product }: { Product: productType }) {
 
@@ -14,6 +14,15 @@ function ProductCartButton({ Product }: { Product: productType }) {
         productID: Product._id,
         userID: user?.id
     }
+
+    useEffect(() => {
+        const whishlistedCart = cart?.some(cartItem => cartItem._id === Product._id);
+        if (whishlistedCart) {
+            setIsCart(true);
+        } else {
+            setIsCart(false);
+        }
+    }, [cart])
 
     const addCart = async () => {
         const response = await fetch(`http://localhost:3000/api/cart/Cart`, {

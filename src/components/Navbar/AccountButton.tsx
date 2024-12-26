@@ -127,7 +127,7 @@ function AccountButton() {
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>
               <UserPlus />
-              <span>Invite users</span>
+              <span>WhishList</span>
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
