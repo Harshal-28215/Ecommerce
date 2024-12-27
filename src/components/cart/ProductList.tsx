@@ -1,18 +1,16 @@
 "use client"
 
 import { useMyContext } from '@/Context/context'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import ImageData from '../Navbar/cart/ImageData'
 import Link from 'next/link'
 
 function ProductList() {
 
-    const [item, setItem] = useState<string[]>([])
-    const [allitem, setAllitem] = useState(false)
-    const { cart, setCart, user } = useMyContext()
+    const { cart, setCart, user, item, setItem, allitem, setAllitem } = useMyContext()
 
     useEffect(() => {
-        if (item.length > 0) {
+        if (item && item.length > 0 && item[1]) {
             setAllitem(true)
         } else {
             setAllitem(false)
@@ -25,7 +23,7 @@ function ProductList() {
             setItem([]);
         } else {
             setAllitem(true);
-            cart?.forEach(product => setItem(prev => [...prev, product._id]))
+            cart?.forEach(product => setItem(prev => [...(prev || []), { id: product._id, price: product.price }]))
         }
     }
 
@@ -63,13 +61,13 @@ function ProductList() {
         }
     }
 
-    const handlechange = (id: string) => {
-        const checkitem = item.some(item => item === id);
+    const handlechange = (id: string, price: number) => {
+        const checkitem = item?.some(item => item.id === id);
         if (checkitem) {
-            const filteritem = item.filter(item => item !== id)
-            setItem(filteritem)
+            const filteritem = item?.filter(item => item.id !== id)
+            setItem(filteritem || [])
         } else {
-            setItem(prevItems => [...prevItems, id])
+            setItem(prevItems => [...(prevItems || []), { id, price }])
         }
     }
 
@@ -84,14 +82,14 @@ function ProductList() {
                         onChange={allitemchange}
                         checked={allitem}
                     />
-                    <label htmlFor="check">{item.length}/{cart?.length} Item Selected</label>
+                    <label htmlFor="check">{item?.length}/{cart?.length} Item Selected</label>
                 </div>
                 <p onClick={handleremove}>Remove</p>
             </div>
 
             {cart?.map((product) => (
                 <div key={product._id} className='flex gap-4 relative w-full border border-black/10 p-3 rounded-md mb-3'>
-                    <input type="checkbox" name="cheak" className='absolute w-4 h-4 top-4 left-4' onChange={() => handlechange(product._id)} checked={item.some(item => item === product._id)} />
+                    <input type="checkbox" name="cheak" className='absolute w-4 h-4 top-4 left-4' onChange={() => handlechange(product._id,product.price)} checked={item?.some(item => item.id === product._id)} />
                     <Link href={`/product/${product._id}`}>
                         <ImageData id={product._id} width={100} height={150} />
                     </Link>
@@ -102,7 +100,7 @@ function ProductList() {
                         </Link>
                         <div>
                             <p>${product.price}</p>
-                            <p>$2,399</p>
+                            <p className='line-through text-black/60'>$2,399</p>
                             <p>38% OFF</p>
                         </div>
                         <p className='flex items-center'>

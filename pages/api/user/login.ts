@@ -23,7 +23,7 @@ const logIn = async (req: NextApiRequest, res: NextApiResponse) => {
 
         res.setHeader(
             "Set-Cookie",
-            `token=${token}; HttpOnly; Path=/; Max-Age=3600; SameSite=Strict`
+            `token=${token}; HttpOnly; Path=/; SameSite=Strict`
           );          
 
           const userObj = {email: user.email, name: user.name, id: user._id, role: user.role};

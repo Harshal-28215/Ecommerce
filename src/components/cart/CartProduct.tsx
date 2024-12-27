@@ -4,7 +4,7 @@ import ProductList from './ProductList'
 
 function CartProduct() {
   return (
-    <div className='w-[40%]'>
+    <div className='w-[40%] border-r pr-5'>
       <ProductOffer />
       <ProductList />
     </div>
