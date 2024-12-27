@@ -72,7 +72,7 @@ function CartButton() {
             return (
               <Link href={`/product/${product._id}`} className="flex items-center justify-between group hover:bg-accent transition-colors px-2" key={product._id}>
                 <DropdownMenuItem className="cursor-pointer">
-                  <ImageData id={product._id} />
+                  <ImageData id={product._id} width={40} height={40}/>
                   <span>{product.name}</span>
                 </DropdownMenuItem>
                 <Trash className="invisible group-hover:visible cursor-pointer" onClick={() => handleProductDelete(product._id)} />

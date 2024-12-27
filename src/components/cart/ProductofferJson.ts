@@ -1,0 +1,22 @@
+export const productdoffer = [
+    "10% Instant Discount on Federal Bank Credit and Debit Cards on a min spend of ₹3,000. TCA",
+    "10% Instant Discount on Canara Bank Credit Card on a min spend of ₹3,000. TCA",
+    "10% Instant Discount on DBS Bank Credit Card and Credit Card EMI on a min spend of ₹3,500. TCA",
+    "10% Instant Discount on HDFC Bank Credit Card EMI on a min spend of ₹3,500. TCA",
+    "10% Instant Discount on IDFC FIRST Bank Credit Card EMI on a min spend of ₹3,500. TCA",
+    "20% Instant Discount on HSBC Live+/Cashback Credit Cards on a min spend of ₹3,000. TCA",
+    "10% Instant Discount on HSBC Premier Credit Card on a min spend of ₹5,000 (only for Myntra Luxe). TCA",
+    "7.5% Instant Discount up to ₹750 on every spend with Myntra Kotak Credit Card. TCA",
+    "10% Cashback on BHIM UPI & RuPay Credit Card on UPI Transactions. TCA",
+    "Flat ₹50 Assured Cashback on minimum transaction of ₹2000 on RuPay Credit Card with Paytm UPI. TCA",
+    "Assured Cashback Up To ₹200 on 1st and 3rd Paytm UPI transaction on a min spend of ₹500. TCA",
+    "Flat ₹100 cashback on minimum transaction of ₹750 on RuPay Credit Card with PhonePe UPI, first transaction only. TCA",
+    "Flat ₹75 Cashback on transaction with PayZapp on a min spend of ₹1500. TCA",
+    "Get up to ₹500 Cashback on CRED UPI on a min spend of ₹250. TCA",
+    "Upto ₹500 Cashback on Mobikwik Wallet transaction on Myntra on a min spend of ₹1,500.TCA",
+    "Flat ₹75 Cashback on Mobikwik Wallet transaction on Myntra (New Users) on a min spend of ₹2,000.TCA",
+    "Get up to ₹250 Cashback on Mobikwik UPI on a min spend of ₹999. TCA",
+    "Get up to ₹1000 Cashback on RuPay Credit Card transaction via CRED UPI on a min spend of ₹300. TCA",
+    "Flat ₹30 Cashback on Freecharge UPI (Android Devices only) on a minimum spend of ₹1,999. TCA",
+    "Flat ₹100 on Airtel Payments Bank transactions on a min spend of ₹1,000. TCA"
+]

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react'
 
-function ImageData({ id }: { id: string }) {
+function ImageData({ id, width, height }: { id: string, width: number, height: number }) {
 
     const [image, setImage] = useState<string | null>(null)
 
@@ -25,7 +25,7 @@ function ImageData({ id }: { id: string }) {
 
     return (
         <>
-            {image && <Image src={image} alt="Product Image" width={50} height={50} className="w-[40px] h-[40px] object-cover" />}
+            {image && <Image src={image} alt="Product Image" width={width} height={height} className="object-cover" style={{ width: width, height: height }} />}
         </>
     )
 }
