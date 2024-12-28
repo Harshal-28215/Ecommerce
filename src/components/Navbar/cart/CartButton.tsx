@@ -19,6 +19,7 @@ import {
 import { useMyContext } from "@/Context/context";
 import ImageData from "./ImageData";
 import Link from "next/link";
+import React from "react";
 
 function CartButton() {
   const { cart, user, setCart } = useMyContext();
@@ -70,13 +71,15 @@ function CartButton() {
 
           {cart?.map((product) => {
             return (
-              <Link href={`/product/${product._id}`} className="flex items-center justify-between group hover:bg-accent transition-colors px-2" key={product._id}>
-                <DropdownMenuItem className="cursor-pointer">
-                  <ImageData id={product._id} width={40} height={40}/>
-                  <span>{product.name}</span>
-                </DropdownMenuItem>
-                <Trash className="invisible group-hover:visible cursor-pointer" onClick={() => handleProductDelete(product._id)} />
-              </Link>
+              <div className="flex justify-between items-center group relative" key={product._id}>
+                <Link href={`/product/${product._id}`} className="flex items-center justify-between hover:bg-accent transition-colors px-2 w-full">
+                  <DropdownMenuItem className="cursor-pointer">
+                    <ImageData id={product._id} width={40} height={40} />
+                    <span>{product.name}</span>
+                  </DropdownMenuItem>
+                </Link>
+                <Trash className="invisible group-hover:visible cursor-pointer absolute right-2" onClick={() => handleProductDelete(product._id)} />
+              </div>
             )
           })}
 
