@@ -84,7 +84,7 @@ function ProductList() {
                     />
                     <label htmlFor="check">{item?.length}/{cart?.length} Item Selected</label>
                 </div>
-                <p onClick={handleremove}>Remove</p>
+                <p className='cursor-pointer' onClick={handleremove}>Remove</p>
             </div>
 
             {cart?.map((product) => (

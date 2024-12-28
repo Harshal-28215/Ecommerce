@@ -147,7 +147,6 @@ function AccountButton() {
                 <DropdownMenuSeparator />
                 <Link href='/whishlist'>
                   <DropdownMenuItem className="cursor-pointer">
-                    <Trash2 />
                     <span>Go To Whishlist</span>
                   </DropdownMenuItem>
                 </Link>

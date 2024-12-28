@@ -29,6 +29,9 @@ import {
 } from "@/components/ui/password-input"
 import { useRouter } from "next/navigation"
 import { useMyContext } from "@/Context/context"
+import { useState } from "react"
+
+import { useToast } from "@/hooks/use-toast"
 
 const formSchema = z.object({
   email: z.string(),
@@ -36,10 +39,12 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
-  const {setUser} = useMyContext();
-    const router = useRouter();
+  const { toast } = useToast()
+  const [isloading, setIsloading] = useState(false);
+  const { setUser } = useMyContext();
+  const router = useRouter();
 
-  const form = useForm < z.infer < typeof formSchema >> ({
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
@@ -47,46 +52,51 @@ export default function LoginForm() {
     },
   })
 
- async function onSubmit(values: z.infer < typeof formSchema > ) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
 
-  const data = {
-    email: values.email,
-    password: values.Password,
-  }
 
-  try {
-    const response = await fetch("http://localhost:3000/api/user/login", {
+    const data = {
+      email: values.email,
+      password: values.Password,
+    }
+
+    try {
+      setIsloading(true);
+      const response = await fetch("http://localhost:3000/api/user/login", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-        credentials:'include',
-        });
-        const user = await response.json()
-        
-        if (response.ok) {
-            router.push('/')
-        }
+        credentials: 'include',
+      });
+      const user = await response.json()
 
-        setUser(user.userObj);
-        
-  } catch (error) {
-    console.error('An unexpected error happened while login:', error)
-  }
-  
+      if (response.ok) {
+        toast({
+          title: "Success",
+          description: "Login Successfully",
+        })
+        router.push('/')
+      }
+      setUser(user.userObj);
 
-      toast(
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-        </pre>
-      );
+    } catch (error) {
+      toast({
+        variant:"destructive",
+        title: "Error",
+        description: "Some Error Accured During Login",
+      })
+    } finally {
+      setIsloading(false)
+    }
+
   }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-3xl mx-auto py-10">
-        
+
         <FormField
           control={form.control}
           name="email"
@@ -94,18 +104,18 @@ export default function LoginForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input 
-                placeholder="Email"
-                
-                type="email"
-                {...field} />
+                <Input
+                  placeholder="Email"
+
+                  type="email"
+                  {...field} />
               </FormControl>
-              
+
               <FormMessage />
             </FormItem>
           )}
         />
-        
+
         <FormField
           control={form.control}
           name="Password"
@@ -119,8 +129,8 @@ export default function LoginForm() {
             </FormItem>
           )}
         />
-        
-        <Button type="submit">Submit</Button>
+
+        <Button type="submit" disabled={isloading}>{isloading ? "loading..." : "Submit"}</Button>
       </form>
     </Form>
   )

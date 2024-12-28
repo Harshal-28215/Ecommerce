@@ -29,6 +29,7 @@ import {
   PasswordInput
 } from "@/components/ui/password-input"
 import { useRouter } from "next/navigation"
+import { useToast } from "@/hooks/use-toast"
 
 const formSchema = z.object({
   UserName: z.string().min(3),
@@ -42,6 +43,7 @@ const formSchema = z.object({
   });
 
 export default function SignupForm() {
+  const {toast} = useToast();
   const router = useRouter()
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -72,11 +74,18 @@ export default function SignupForm() {
       });
 
       if (response.ok) {
+        toast({
+          title:"Success",
+          description:"Signup Successfully"
+        })
         router.push('/login')
       }
 
     } catch (error) {
-      console.error('An unexpected error happened while login:', error)
+      toast({
+        title:"Error",
+        description:"Error during signup"
+      })
     }
 
   }
