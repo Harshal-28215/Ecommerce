@@ -10,7 +10,7 @@ function ProductList() {
     const { cart, setCart, user, item, setItem, allitem, setAllitem } = useMyContext()
 
     useEffect(() => {
-        if (item && item.length > 0 && item[1]) {
+        if (item && item.length > 0) {
             setAllitem(true)
         } else {
             setAllitem(false)
