@@ -82,3 +82,24 @@ body {
     -webkit-appearance: none;
     margin: 0;
   }
+
+  .cross{
+    position: relative;
+    display: block;
+    width: 2px;
+    height: 20px;
+    border-radius: 20px;
+    rotate: 45deg;
+    background-color: black;
+  }
+
+  .cross::before{
+    content: "";
+    position: absolute;
+    display: block;
+    width: 2px;
+    height: 20px;
+    border-radius: 20px;
+    rotate: 90deg;
+    background-color: black;
+  }
