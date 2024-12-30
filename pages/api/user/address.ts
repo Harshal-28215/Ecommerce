@@ -4,7 +4,16 @@ import authenticate from "@/utils/Middleware/authentication";
 import authorize from "@/utils/Middleware/authorization";
 import { NextApiRequest, NextApiResponse } from "next";
 
-async function address(req: NextApiRequest, res: NextApiResponse) {
+type CustomNextApiRequest = NextApiRequest & {
+    user?: {
+        email: string;
+        name: string;
+        id: string;
+        role: string;
+    };
+}
+
+async function address(req: CustomNextApiRequest, res: NextApiResponse) {
 
     await connectToDatabase();
 
@@ -13,8 +22,8 @@ async function address(req: NextApiRequest, res: NextApiResponse) {
         if (!user) return res.status(401).send("Invalid token");
 
         try {
-            const { id } = req.query;
-            const { name, mobile, pincode, address, town, city } = req.body;
+            const id = req.user?.id;
+            const { name, mobile, pincode, address, town, city, state } = req.body;
 
 
             const addAddress = new Address({
@@ -24,6 +33,7 @@ async function address(req: NextApiRequest, res: NextApiResponse) {
                 address,
                 town,
                 city,
+                state,
                 userId: id
             });
 
@@ -38,12 +48,9 @@ async function address(req: NextApiRequest, res: NextApiResponse) {
         const user = authenticate(req, res);
         if (!user) return res.status(401).send("Invalid token");
 
-        const isauthorize = await authorize(["admin"], Address)(req, res);
-        if (!isauthorize) return res.status(403).send("Unauthorized");
-
         try {
-            const { id } = req.query;
-            const address = await Address.findOne({ userId: id })
+            const userID = req.user?.id
+            const address = await Address.find({ userId: userID })
             res.status(200).json({ message: "Address fetched successfully", address })
         } catch (error) {
             res.status(500).json({ message: "Error fetching product" })

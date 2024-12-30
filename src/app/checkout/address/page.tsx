@@ -1,7 +1,8 @@
 import Address from '@/components/address/Address'
 import React from 'react'
 
-function page() {
+async function page() {
+  
   return (
     <main>
       <Address />
