@@ -9,26 +9,34 @@ interface ContextProps {
 
   cart: productType[] | null
   whishlist: productType[] | null
-  item:{
-    id:string,
-    price:number,
+  item: {
+    id: string,
+    price: number,
   }[] | null;
-  allitem:boolean
+  allitem: boolean
+  selected: string
+  active: boolean
 
+  setActive: React.Dispatch<React.SetStateAction<boolean>>
+  setSelected: React.Dispatch<React.SetStateAction<string>>
   setCart: React.Dispatch<React.SetStateAction<productType[] | null>>
   setWhishlist: React.Dispatch<React.SetStateAction<productType[] | null>>
   setItem: React.Dispatch<React.SetStateAction<{ id: string, price: number }[] | null>>
-  setAllitem:React.Dispatch<React.SetStateAction<boolean>>
+  setAllitem: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const defaultContext: ContextProps = {
   user: null,
   cart: [],
   whishlist: [],
-  item:[],
-  allitem:false,
-  setAllitem:()=>{},
-  setItem:()=>{},
+  item: [],
+  allitem: false,
+  selected: "",
+  active: false,
+  setActive: () => { },
+  setSelected: () => { },
+  setAllitem: () => { },
+  setItem: () => { },
   setUser: () => { },
   setCart: () => { },
   setWhishlist: () => { },
@@ -43,6 +51,9 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }): JSX
   const [whishlist, setWhishlist] = useState(defaultContext.whishlist);
   const [item, setItem] = useState(defaultContext.item)
   const [allitem, setAllitem] = useState(false)
+  const [selected, setSelected] = useState("");
+  const [active, setActive] = useState(false);
+
 
   async function getCart() {
     const response = await fetch(`http://localhost:3000/api/cart/Cart?uid=${user?.id}`, {
@@ -110,7 +121,11 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }): JSX
     item,
     setItem,
     allitem,
-    setAllitem
+    setAllitem,
+    selected,
+    setSelected,
+    active,
+    setActive
   };
 
   return (

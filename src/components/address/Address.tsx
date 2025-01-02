@@ -4,10 +4,24 @@ import React, { useEffect, useState } from 'react'
 import { Button } from '../ui/button'
 import AddAddressForm from './AddressForm'
 import AllAddress from './AllAddress'
+import { useMyContext } from '@/Context/context'
+
+type addressProp = {
+    _id: string,
+    name: string,
+    mobile: number,
+    pincode: number,
+    address: string,
+    town: string,
+    city: string,
+    state: string,
+    default: boolean,
+    userId: string
+};
 
 function Address() {
+    const [address, setAddress] = useState<addressProp[]>([])
     const [active, setActive] = useState(false)
-    const [address, setAddress] = useState([])
 
     useEffect(() => {
         async function getaddress(){
@@ -25,15 +39,15 @@ function Address() {
         
     },[])
     return (
-        <div className='w-[40%]'>
-            <div className='w-full flex justify-between items-center'>
-                <h1>Select Delivery Address</h1>
+        <div className='w-[40%] border-r border-black/20 p-5'>
+            <div className='w-full flex justify-between items-center pb-4 mb-4'>
+                <h1 className='font-bold'>Select Delivery Address</h1>
                 <Button variant="outline" onClick={() => setActive(!active)}>Add Address</Button>
-                <AddAddressForm address={active} setAddress={setActive} />
+                {active && <AddAddressForm address={undefined} edit={false} setActive={setActive}/>}
             </div>
             <div>
                 <h1>Address</h1>
-                {address.map(address => <AllAddress address={address} key={address._id}/>)}
+                {address.map(address => <AllAddress address={address} key={address._id} />)}
             </div>
         </div>
     )

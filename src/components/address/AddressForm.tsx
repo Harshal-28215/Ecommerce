@@ -23,6 +23,8 @@ import {
 import { useState } from "react"
 
 import { useToast } from "@/hooks/use-toast"
+import { useMyContext } from "@/Context/context"
+import { addressProp } from "@/utils/utils"
 
 const formSchema = z.object({
     name: z.string().nonempty("Name is required"),
@@ -34,32 +36,36 @@ const formSchema = z.object({
     state: z.string().nonempty("State is required"),
 });
 
-export default function AddAddressForm({address,setAddress}:{address:boolean,setAddress:React.Dispatch<React.SetStateAction<boolean>>}) {
+export default function AddAddressForm({ address,edit,setActive }: { address?: addressProp, edit?: boolean,setActive:React.Dispatch<React.SetStateAction<boolean>> }) {
     const { toast } = useToast()
+    const { user } = useMyContext();
     const [isloading, setIsloading] = useState(false);
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            name: "",
-            mobile: "",
-            pincode: "",
-            address: "",
-            town: "",
-            city: "",
-            state: "",
-        },
+            name: edit ? address?.name : "",
+            mobile: edit ? address?.mobile.toString() : "",
+            pincode: edit ? address?.pincode.toString() : "",
+            address: edit ? address?.address : "",
+            town: edit ? address?.town : "",
+            city: edit ? address?.city : "",
+            state: edit ? address?.state : "",
+        }
     })
+
+    const url = address && edit ? `http://localhost:3000/api/user/address?id=${address?._id}&uid=${user?.id}` : "http://localhost:3000/api/user/address"
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         setIsloading(true);
         try {
-            const response = await fetch("http://localhost:3000/api/user/address", {
-                method: "POST",
+            const response = await fetch(url, {
+                method: address?"PUT":"POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(values),
+                credentials: "include",
             });
 
             if (response.ok) {
@@ -68,6 +74,7 @@ export default function AddAddressForm({address,setAddress}:{address:boolean,set
                     description: "Address added successfully",
                 })
                 form.reset();
+                window.location.reload();
             } else {
                 const data = await response.json();
                 toast(data.message)
@@ -84,12 +91,12 @@ export default function AddAddressForm({address,setAddress}:{address:boolean,set
     }
 
     return (
-        <div className={`fixed w-[100vw] h-[100vh] top-0 left-0 z-50 flex items-center justify-center bg-black bg-opacity-50 ${address ? 'block' : 'hidden'}`}>
+        <div className={`fixed w-[100vw] h-[100vh] top-0 left-0 z-50 flex items-center justify-center bg-black bg-opacity-50`}>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="mx-auto py-10 w-[400px] bg-white rounded-lg shadow-lg p-8 relative">
                     <div className="absolute top-4 left-0 px-5 w-full flex justify-between items-center border-b border-black/10 pb-4">
                         <h1>Add New Address</h1>
-                        <div className="w-[30px] h-[30px] flex justify-center items-center relative cursor-pointer" onClick={()=>setAddress(false)}><span className="cross"></span>
+                        <div className="w-[30px] h-[30px] flex justify-center items-center relative cursor-pointer" onClick={()=>setActive(false)}><span className="cross"></span>
                         </div>
                     </div>
                     <div className="space-y-3 mt-10">

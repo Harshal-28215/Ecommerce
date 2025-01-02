@@ -35,3 +35,16 @@ export type userType = {
 export type productform = {
   form: UseFormReturn<any>
 }
+
+export type addressProp = {
+    _id: string,
+    name: string,
+    mobile: number,
+    pincode: number,
+    address: string,
+    town: string,
+    city: string,
+    state: string,
+    default: boolean,
+    userId: string
+};

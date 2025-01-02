@@ -1,18 +1,42 @@
 "use client"
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button } from '../ui/button'
 import { useMyContext } from '@/Context/context'
+import { usePathname, useRouter } from 'next/navigation'
 
 function CartPayment() {
 
-  const { item } = useMyContext()
+  const router = useRouter();
+  const path = usePathname();
+
+  console.log("path", path);
+
+
+  const { item, setItem, selected } = useMyContext()
+
+  useEffect(() => {
+    if (item?.length === 0) {
+      const storedItems = localStorage.getItem('cartItems');
+      setItem(storedItems ? JSON.parse(storedItems) : [])
+    }
+
+  }, [])
 
   let totalMrp = 0;
 
   item?.forEach(element => {
     totalMrp += element.price;
   });
+
+  const setitemtolocal = () => {
+    if (path === '/cart') {
+      localStorage.setItem('cartItems', JSON.stringify(item))
+      router.push('/checkout/address')
+    } else if (path === '/checkout/address') {
+      router.push('/checkout/payment')
+    }
+  }
 
   return (
     <div className='w-[25%] space-y-2 p-5 text-sm'>
@@ -27,7 +51,12 @@ function CartPayment() {
       }
 
       <h1 className='pt-3 border-t border-black/20 flex justify-between font-bold'>Total Amount <span>${totalMrp}</span></h1>
-      <Button className='w-full bg-[#ff3f6c] rounded-md'>PLACE ORDER</Button>
+      {path === '/cart' ?
+        <Button className='w-full bg-[#ff3f6c] rounded-md' disabled={item?.length === 0} onClick={setitemtolocal}>PROCEED TO BUY</Button>
+
+        : path === '/checkout/address' &&
+        <Button className='w-full bg-[#ff3f6c] rounded-md' disabled={selected === ""} onClick={setitemtolocal}>PROCEED TO PAYMENT</Button>
+      }
     </div>
   )
 }

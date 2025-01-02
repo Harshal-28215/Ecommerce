@@ -10,7 +10,7 @@ const AddressSchema = new mongoose.Schema({
     city:{type:String, require:true},
     default:{type:Boolean, default:false},
     state:{type:String, require:true},
-    userId: { type: mongoose.Schema.ObjectId, ref: User },
+    user: { type: mongoose.Schema.ObjectId, ref: User },
 })
 
 export default mongoose.models.Address || mongoose.model("Address", AddressSchema);

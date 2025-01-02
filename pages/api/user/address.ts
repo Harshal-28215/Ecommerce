@@ -34,7 +34,7 @@ async function address(req: CustomNextApiRequest, res: NextApiResponse) {
                 town,
                 city,
                 state,
-                userId: id
+                user: id
             });
 
             await addAddress.save()
@@ -50,7 +50,7 @@ async function address(req: CustomNextApiRequest, res: NextApiResponse) {
 
         try {
             const userID = req.user?.id
-            const address = await Address.find({ userId: userID })
+            const address = await Address.find({ user: userID })
             res.status(200).json({ message: "Address fetched successfully", address })
         } catch (error) {
             res.status(500).json({ message: "Error fetching product" })
@@ -70,6 +70,8 @@ async function address(req: CustomNextApiRequest, res: NextApiResponse) {
 
             res.status(200).json({ message: "Address Deleted Successfully" })
         } catch (error) {
+            console.log(error);
+            
             res.status(500).json({ message: "Error deleting address" })
         }
     } else if (req.method === "PUT") {
