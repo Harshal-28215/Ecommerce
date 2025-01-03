@@ -7,8 +7,11 @@ import { productType } from '@/utils/utils'
 import { LucideShoppingBag, SquareCheck, Trash2 } from 'lucide-react'
 import { useMyContext } from '@/Context/context'
 import { useCart } from '@/utils/hooks/useCart'
+import { useToast } from '@/hooks/use-toast'
 
 function Product({ product }: { product: productType }) {
+
+    const {toast} = useToast();
 
     const { user, whishlist, setWhishlist } = useMyContext();
     const {isCart, addCart} = useCart(product);
@@ -37,7 +40,10 @@ function Product({ product }: { product: productType }) {
 
     useEffect(() => {
       if (isCart) {
-        handledelete()
+        handledelete();
+        toast({
+            description: "Product added to cart",
+        })
       }
     }, [isCart])
     
