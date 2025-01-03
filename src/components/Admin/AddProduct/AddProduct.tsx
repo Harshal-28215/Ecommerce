@@ -19,6 +19,8 @@ import AddCoverImage from "./AddCoverImage"
 import AddCoverProduct from "./AddCoverProduct"
 import AddProductDetailImage from "./AddProductDetailImage"
 import useSubmit from "@/utils/hooks/useSubmit"
+import { useMyContext } from "@/Context/context"
+import { useRouter } from "next/navigation"
 
 const formSchema = z.object({
     name: z.string().min(3, "Name must be at least 3 characters"),
@@ -45,6 +47,7 @@ const formSchema = z.object({
 });
 
 export default function AddProduct() {
+    const { user } = useMyContext();
 
     const [specifications, setSpecifications] = useState<{ title: string; about: string }[]>([
         { title: "", about: "" },

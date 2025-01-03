@@ -16,6 +16,7 @@ import {
   Trash,
   Trash2,
   User,
+  UserCheck2Icon,
   UserCircle,
   UserPlus,
   Users,
@@ -101,29 +102,6 @@ function AccountButton() {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <User />
-            <span>Profile</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <CreditCard />
-            <span>Billing</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Settings />
-            <span>Settings</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Keyboard />
-            <span>Keyboard shortcuts</span>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <Users />
-            <span>Team</span>
-          </DropdownMenuItem>
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>
               <UserPlus />
@@ -157,24 +135,21 @@ function AccountButton() {
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
-          <DropdownMenuItem>
-            <Plus />
-            <span>New Team</span>
-          </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Github />
-          <span>GitHub</span>
-        </DropdownMenuItem>
         <DropdownMenuItem>
           <LifeBuoy />
           <span>Support</span>
         </DropdownMenuItem>
-        <DropdownMenuItem disabled>
-          <Cloud />
-          <span>API</span>
-        </DropdownMenuItem>
+        {user?.role === "admin" &&
+          <Link href="/admin">
+            <DropdownMenuItem>
+              <UserCheck2Icon />
+              <span>Admin</span>
+            </DropdownMenuItem>
+          </Link>}
+
+
         <DropdownMenuSeparator />
         {user == null ?
           <>

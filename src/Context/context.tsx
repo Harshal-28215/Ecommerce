@@ -4,8 +4,8 @@ import { productType } from '@/utils/utils';
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 interface ContextProps {
-  user: { name: string, email: string, id: string } | null;
-  setUser: React.Dispatch<React.SetStateAction<{ name: string, email: string, id: string } | null>>;
+  user: { name: string, email: string, id: string, role: string } | null;
+  setUser: React.Dispatch<React.SetStateAction<{ name: string, email: string, id: string, role: string } | null>>;
 
   cart: productType[] | null
   whishlist: productType[] | null
