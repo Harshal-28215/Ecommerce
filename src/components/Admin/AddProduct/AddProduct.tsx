@@ -19,14 +19,12 @@ import AddCoverImage from "./AddCoverImage"
 import AddCoverProduct from "./AddCoverProduct"
 import AddProductDetailImage from "./AddProductDetailImage"
 import useSubmit from "@/utils/hooks/useSubmit"
-import { useMyContext } from "@/Context/context"
-import { useRouter } from "next/navigation"
+import { toast } from "@/hooks/use-toast"
 
 const formSchema = z.object({
     name: z.string().min(3, "Name must be at least 3 characters"),
     description: z.string(),
     price: z.string(),
-    category: z.string(),
     cardImage: z
         .instanceof(FileList)
         .refine((files) => files.length == 1, "Only one image is required")
@@ -47,11 +45,11 @@ const formSchema = z.object({
 });
 
 export default function AddProduct() {
-    const { user } = useMyContext();
 
     const [specifications, setSpecifications] = useState<{ title: string; about: string }[]>([
         { title: "", about: "" },
     ]);
+    const [selectedItem, setSelectedItem] = useState('');
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -59,7 +57,6 @@ export default function AddProduct() {
             name: "",
             description: "",
             price: "",
-            category: "men-t-shirts",
             materialAndCare: "",
             ProductDetails: "",
             sizeAndFit: "",
@@ -67,12 +64,26 @@ export default function AddProduct() {
         },
     })
 
-    const { isSubmitting, handlesubmit } = useSubmit()
+    const { isSubmitting, handlesubmit } = useSubmit({ selectedItem })
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        const response = await handlesubmit(values);
+        if (response === "Seccess") {
+            toast({
+                title: "Product Created",
+                description: "Product has been created successfully",
+            })
+        } else {
+            toast({
+                title: "Product Creation Failed",
+                description: "Product creation failed",
+            })
+        }
+    }
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(handlesubmit)} className="space-y-8 max-w-3xl mx-auto py-10">
-                <AddCoverProduct form={form} />
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-3xl mx-auto py-10">
+                <AddCoverProduct form={form} selectedItem={selectedItem} setSelectedItem={setSelectedItem} />
                 <AddCoverImage form={form} />
                 <AddProductDetail form={form} specifications={specifications} setSpecifications={setSpecifications} />
                 <AddProductDetailImage form={form} />

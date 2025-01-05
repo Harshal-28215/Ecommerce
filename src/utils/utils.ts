@@ -48,3 +48,8 @@ export type addressProp = {
     default: boolean,
     userId: string
 };
+
+export type selectCategoryProp = {
+  selectedItem: string,
+  setSelectedItem: (item: string) => void
+}

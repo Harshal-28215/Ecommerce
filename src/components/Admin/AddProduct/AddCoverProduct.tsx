@@ -1,9 +1,25 @@
-import { productform } from '@/utils/utils'
+import { productform, selectCategoryProp } from '@/utils/utils'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import React from 'react'
+import React, { useEffect } from 'react'
+import SelectCategory from './SelectCategory';
 
-function AddCoverProduct({ form }: productform) {
+type AddCoverProductProps = productform & selectCategoryProp
+
+function AddCoverProduct({ form,selectedItem,setSelectedItem }: AddCoverProductProps) {
+    const [categories, setCategories] = React.useState([]);
+
+    useEffect(() => {
+        function getCategories() {
+            fetch('http://localhost:3000/api/category/CreateCategory', {
+                method: 'GET',
+            })
+                .then(response => response.json())
+                .then(data => setCategories(data))
+        }
+        getCategories();
+    },[])
+
     return (
         <>
             <FormField
@@ -61,7 +77,8 @@ function AddCoverProduct({ form }: productform) {
                     </FormItem>
                 )}
             />
-            <FormField
+            <SelectCategory selectedItem={selectedItem} setSelectedItem={setSelectedItem}/>
+            {/* <FormField
                 control={form.control}
                 name="category"
                 render={({ field }) => (
@@ -77,7 +94,7 @@ function AddCoverProduct({ form }: productform) {
                         <FormMessage />
                     </FormItem>
                 )}
-            />
+            /> */}
         </>
     )
 }

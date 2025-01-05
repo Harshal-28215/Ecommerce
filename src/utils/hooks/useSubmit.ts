@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 
-export default function useSubmit() {
+export default function useSubmit({selectedItem}:{selectedItem:string}) {
 
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -27,11 +27,10 @@ export default function useSubmit() {
                 submitProductDetails(productId, values),
             ]);
 
-            alert("Product successfully added!");
-
+            return "Seccess"
         } catch (error) {
             console.error(error);
-            alert("Failed to submit product.");
+            return "Failed"
         }finally{
             setIsSubmitting(false)
         }
@@ -43,6 +42,7 @@ export default function useSubmit() {
             if (key === "cardImage" || key === "images") return; // Handle separately
             formData.append(key, values[key]);
         });
+        formData.append("category", selectedItem);
         return formData;
     }
 
