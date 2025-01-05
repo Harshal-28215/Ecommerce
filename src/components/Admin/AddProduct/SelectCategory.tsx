@@ -1,11 +1,12 @@
 import { categoryType, selectCategoryProp } from '@/utils/utils';
 import React, { useEffect, useState } from 'react';
 
-const SelectCategory = ({ selectedItem, setSelectedItem }: selectCategoryProp) => {
+const SelectCategory = ({ setSelectedItem, setSelectedItemId }: selectCategoryProp) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [isOpen, setIsOpen] = useState(false);
     const [category, setCategory] = useState<categoryType[]>([]);
     const [debouncedQuery, setDebouncedQuery] = useState(searchQuery);
+    const [selected, setSelected] = useState<string | null>(null);
 
     useEffect(() => {
         fetch('http://localhost:3000/api/category/CreateCategory', {
@@ -52,8 +53,10 @@ const SelectCategory = ({ selectedItem, setSelectedItem }: selectCategoryProp) =
 
     const toggleDropdown = () => setIsOpen(!isOpen);
 
-    const handleSelect = (item: string) => {
-        setSelectedItem(item);
+    const handleSelect = (slug: string, id: string) => {
+        setSelectedItemId && setSelectedItemId(id);
+        setSelectedItem && setSelectedItem(slug);
+        setSelected(slug);
         setIsOpen(false);
         setSearchQuery('');
     };
@@ -64,7 +67,7 @@ const SelectCategory = ({ selectedItem, setSelectedItem }: selectCategoryProp) =
                 onClick={toggleDropdown}
                 className="w-full bg-gray-200 p-2 rounded shadow focus:outline-none"
             >
-                {selectedItem || 'Select Category'}
+                {selected || 'Select Category'}
             </div>
             {isOpen && (
                 <div className="absolute z-10 mt-2 w-full bg-white border rounded shadow">
@@ -81,29 +84,10 @@ const SelectCategory = ({ selectedItem, setSelectedItem }: selectCategoryProp) =
                                 <div key={item._id}>
                                     <div
                                         className="p-2 cursor-pointer hover:bg-gray-100"
-                                        onClick={() => handleSelect(item.slug)}
+                                        onClick={() => handleSelect(item.slug, item._id)}
                                     >
                                         {item.slug}
                                     </div>
-                                    {/* {item.subcategories && item.subcategories.map((subcategory:categoryType) => (
-                                        <div key={subcategory._id}>
-                                            <div
-                                                className="pl-4 p-2 cursor-pointer hover:bg-gray-100"
-                                                onClick={() => handleSelect(subcategory.slug)}
-                                            >
-                                                {subcategory.slug}
-                                            </div>
-                                            {subcategory.subcategories && subcategory.subcategories.map((nestedSubcategory) => (
-                                                <div
-                                                    key={nestedSubcategory._id}
-                                                    className="pl-8 p-2 cursor-pointer hover:bg-gray-100"
-                                                    onClick={() => handleSelect(nestedSubcategory.slug)}
-                                                >
-                                                    {nestedSubcategory.slug}
-                                                </div>
-                                            ))}
-                                        </div>
-                                    ))} */}
                                 </div>
                             ))
                         ) : (

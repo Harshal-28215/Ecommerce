@@ -50,6 +50,8 @@ export type addressProp = {
 };
 
 export type selectCategoryProp = {
-  selectedItem: string,
-  setSelectedItem: (item: string) => void
+  selectedItem?: string,
+  setSelectedItem?: (item: string) => void
+  selectedItemId?: string,
+  setSelectedItemId?: (item: string) => void
 }

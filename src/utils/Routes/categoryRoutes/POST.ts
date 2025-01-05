@@ -15,7 +15,7 @@ async function createCategory(req: NextApiRequest, res: NextApiResponse) {
             return res.status(400).json({ error: 'Category name is required' });
         }
 
-        // Check if a parent category ID is provided, otherwise it's a top-level category
+        
         const parent = parentId ? await Category.findById(parentId) : null;
 
         if (!slug) {

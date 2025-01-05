@@ -1,9 +1,10 @@
+import AddCategoryForm from '@/components/Admin/AddCategory/AddCategoryForm'
 import React from 'react'
 
 function page() {
   return (
     <div>
-      this is category page
+      <AddCategoryForm />
     </div>
   )
 }
