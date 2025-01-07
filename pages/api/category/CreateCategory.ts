@@ -14,7 +14,9 @@ const CreateCategory = async (req: NextApiRequest, res: NextApiResponse) => {
         createCategory(req, res);
     } else if (req.method === 'PUT') {
         // Update a category
-        const updateCategory = Category.findByIdAndUpdate(req.body.id, req.body, { new: true });
+        console.log(req.body);
+        
+        const updateCategory = await Category.findByIdAndUpdate(req.query.id, req.body, { new: true });
         res.status(200).json(updateCategory);
     }
     else {

@@ -12,6 +12,8 @@ import {
     NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
 import Link from "next/link"
+import EditCategory from "./EditCategory"
+import { Divide } from "lucide-react"
 
 export default function NavigationMenuDemo({ category }: { category: categoryType[] }) {
 
@@ -26,19 +28,24 @@ export default function NavigationMenuDemo({ category }: { category: categoryTyp
                             >
                                 {category.subcategories && category.subcategories.map((subcategory) => (
                                     <div key={subcategory._id}>
-                                        <ListItem
-                                            className="py-1 hover:bg-transparent font-extrabold uppercase"
-                                            href={`/category/${encodeURIComponent(subcategory.name || 'unknown')}?s=${subcategory.slug}`}
-                                            title={subcategory.name || 'Unknown Category'}
-                                        />
+                                        <div className="flex">
+                                            <ListItem
+                                                className="py-1 hover:bg-transparent font-extrabold uppercase"
+                                                href={`/category/${encodeURIComponent(subcategory.name || 'unknown')}?s=${subcategory.slug}`}
+                                                title={subcategory.name || 'Unknown Category'}
+                                            />
+                                            <EditCategory categoryname={subcategory.name} categoryslug={subcategory.slug} categoryid={subcategory._id}/>
+                                        </div>
                                         {subcategory.subcategories &&
                                             subcategory.subcategories.map((nestedSubcategory) => (
-                                                <ListItem
-                                                    className="py-0 hover:bg-transparent text-slate-500 hover:font-extrabold hover:underline"
-                                                    href={`/category/${encodeURIComponent(nestedSubcategory.name)}?s=${encodeURIComponent(nestedSubcategory.slug)}`}
-                                                    title={nestedSubcategory.name || 'Unknown Subcategory'}
-                                                    key={nestedSubcategory._id}
-                                                />
+                                                <div key={nestedSubcategory._id} className="flex justify-between">
+                                                    <ListItem
+                                                        className="py-0 hover:bg-transparent text-slate-500 hover:font-extrabold hover:underline"
+                                                        href={`/category/${encodeURIComponent(nestedSubcategory.name)}?s=${encodeURIComponent(nestedSubcategory.slug)}`}
+                                                        title={nestedSubcategory.name || 'Unknown Subcategory'}
+                                                    />
+                                                    <EditCategory categoryname={nestedSubcategory.name} categoryslug={nestedSubcategory.slug} categoryid={nestedSubcategory._id}/>
+                                                </div>
                                             ))}
                                     </div>
                                 ))}
