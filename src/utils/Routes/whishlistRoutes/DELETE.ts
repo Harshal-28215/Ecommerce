@@ -7,7 +7,7 @@ export default async function deleteWhishlist(req: NextApiRequest, res: NextApiR
     const user = authenticate(req, res);
     if (!user) return res.status(401).send("Invalid token");
 
-    const isauthorize = await authorize(["admin"], WhishList)(req, res);
+    const isauthorize = await authorize(["admin"],req, res, WhishList);
     if (!isauthorize) return res.status(403).send("Unauthorized");
 
 

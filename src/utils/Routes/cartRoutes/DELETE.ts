@@ -7,7 +7,7 @@ export default async function deleteCart(req: NextApiRequest, res: NextApiRespon
     const user = authenticate(req, res);
     if (!user) return res.status(401).send("Invalid token");
 
-    const isauthorize = await authorize(["admin"], Cart)(req, res);
+    const isauthorize = await authorize(["admin"],req,res, Cart);
     if (!isauthorize) return res.status(403).send("Unauthorized");
 
 

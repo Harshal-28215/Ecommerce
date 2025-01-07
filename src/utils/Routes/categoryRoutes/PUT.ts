@@ -9,7 +9,7 @@ export default async function categoryUpdate(req: NextApiRequest, res: NextApiRe
     const user = authenticate(req, res);
     if (!user) return res.status(401).json({ message: "Not authenticated" });
 
-    const cheackauth = authorize(["admin"], Category);
+    const cheackauth = authorize(["admin"],req,res,Category);
     if (!cheackauth) return res.status(403).json({ message: "Unauthorized" });
 
     try {

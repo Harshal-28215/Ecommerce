@@ -1,7 +1,16 @@
 import Category from "@/lib/schemas/Category";
+import authenticate from "@/utils/Middleware/authentication";
+import authorize from "@/utils/Middleware/authorization";
 import { NextApiRequest, NextApiResponse } from "next";
 
 async function createCategory(req: NextApiRequest, res: NextApiResponse) {
+
+    const user = authenticate(req, res);
+    if (!user) return res.status(401).json({ message: 'Unauthenticated' });
+
+    const checkAuth = await authorize(['admin'],req,res,Category);
+    if (!checkAuth) return res.status(403).json({ message: 'Unauthorized' });
+
     let { name, parentId, slug } = req.body;
 
     try {

@@ -10,7 +10,7 @@ export default async function deleteProduct(req: NextApiRequest, res: NextApiRes
     const user = authenticate(req, res);
     if (!user) return res.status(401).send("Invalid token");
 
-    const isauthorize = await authorize(["admin"], Product)(req, res);
+    const isauthorize = await authorize(["admin"],req,res, Product);
     if (!isauthorize) return res.status(403).send("Unauthorized");
 
     if (req.query.id) {

@@ -10,24 +10,28 @@ type CustomNextApiRequest = NextApiRequest &{
     };
   }
 
-const authorize = (
+const authorize = async(
     roles: string[],
+    req:CustomNextApiRequest, res:NextApiResponse,
     model?: mongoose.Model<any>,
-  ) => async (req:CustomNextApiRequest, res:NextApiResponse) => {
+  ) => {
 
    const role = req.user?.role;
    const userID = req.user?.id
    const {uid} = req.query;
 
+   let cart = null;
 
-   const cart = await model?.findOne({user:uid})
+   if (model) {
+     cart = await model?.findOne({user:uid})
+   }
    
-   if (cart.user == userID || (role && roles.includes(role))) {
+   if (cart?.user == userID || (role && roles.includes(role))) {
        return true
    }
    else{
        return false;
-   }
+   } 
    
   };
   

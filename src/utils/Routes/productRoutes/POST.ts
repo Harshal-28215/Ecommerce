@@ -1,9 +1,16 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import formidable from "formidable";
-import fs from "fs";
 import { Product } from "@/lib/schemas/SchemaUtils";
+import authenticate from "@/utils/Middleware/authentication";
+import authorize from "@/utils/Middleware/authorization";
 
-function productPost(req: NextApiRequest, res: NextApiResponse) {
+async function productPost(req: NextApiRequest, res: NextApiResponse) {
+
+  const user = authenticate(req, res);
+    if (!user) return res.status(401).json({ message: 'Unauthenticated' });
+
+    const checkAuth = await authorize(['admin'],req,res);
+    if (!checkAuth) return res.status(403).json({ message: 'Unauthorized' });
 
   const form = formidable({
     multiples: true,

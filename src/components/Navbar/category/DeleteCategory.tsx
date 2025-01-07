@@ -9,6 +9,7 @@ function DeleteCategory({id}: {id: string}) {
       method: 'DELETE',
       credentials: 'include',
     })
+    const data = await response.json()
     if (response.ok) {
       toast({
         title: 'Category Deleted',
@@ -17,7 +18,7 @@ function DeleteCategory({id}: {id: string}) {
     }else{
       toast({
         title: 'Error',
-        description: 'Category could not be deleted',
+        description: data.message,
       })
     }
   }

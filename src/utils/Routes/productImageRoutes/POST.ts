@@ -1,9 +1,17 @@
 import productImage from "@/lib/schemas/productImage";
+import authenticate from "@/utils/Middleware/authentication";
+import authorize from "@/utils/Middleware/authorization";
 import formidable from "formidable";
 import fs from "fs";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default function addProductImage(req: NextApiRequest, res: NextApiResponse) {
+export default async function addProductImage(req: NextApiRequest, res: NextApiResponse) {
+    const user = authenticate(req, res);
+    if (!user) return res.status(401).json({ message: 'Unauthenticated' });
+
+    const checkAuth = await authorize(['admin'],req,res);
+    if (!checkAuth) return res.status(403).json({ message: 'Unauthorized' });
+
     const form = formidable({
         multiples: true,
         keepExtensions: true,
