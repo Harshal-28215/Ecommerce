@@ -91,7 +91,7 @@ function EditForm({ categoryname, categoryslug, categoryid, setIsEdit }: editFor
 
     }
     return (
-        <main className={`fixed top-0 left-0 w-full h-full justify-center items-center bg-black bg-opacity-50 flex`}>
+        <main className={`fixed top-0 left-0 w-full h-full justify-center items-center bg-black bg-opacity-50 flex z-50`}>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="mx-auto py-10 w-[400px] bg-white rounded-lg shadow-lg p-8 relative space-y-2">
                     <div className="w-[30px] h-[30px] flex justify-center items-center cursor-pointer absolute top-2 right-2" onClick={() => setIsEdit(false)}><span className="cross"></span>

@@ -9,7 +9,7 @@ function EditCategory({ categoryname, categoryslug, categoryid }: { categoryname
 
   return (
     <>
-      <div>
+      <div className="cursor-pointer hover:bg-gray-200 p-1 rounded-md">
         <Edit3 size={15} onClick={() => setIsEdit(true)} />
       </div>
       {isEdit &&

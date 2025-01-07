@@ -14,6 +14,7 @@ import {
 import Link from "next/link"
 import EditCategory from "./EditCategory"
 import { Divide } from "lucide-react"
+import DeleteCategory from "./DeleteCategory"
 
 export default function NavigationMenuDemo({ category }: { category: categoryType[] }) {
 
@@ -28,23 +29,29 @@ export default function NavigationMenuDemo({ category }: { category: categoryTyp
                             >
                                 {category.subcategories && category.subcategories.map((subcategory) => (
                                     <div key={subcategory._id}>
-                                        <div className="flex">
+                                        <div className="flex group">
                                             <ListItem
                                                 className="py-1 hover:bg-transparent font-extrabold uppercase"
                                                 href={`/category/${encodeURIComponent(subcategory.name || 'unknown')}?s=${subcategory.slug}`}
                                                 title={subcategory.name || 'Unknown Category'}
                                             />
-                                            <EditCategory categoryname={subcategory.name} categoryslug={subcategory.slug} categoryid={subcategory._id}/>
+                                            <div className="flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <EditCategory categoryname={subcategory.name} categoryslug={subcategory.slug} categoryid={subcategory._id} />
+                                                <DeleteCategory id={subcategory._id} />
+                                            </div>
                                         </div>
                                         {subcategory.subcategories &&
                                             subcategory.subcategories.map((nestedSubcategory) => (
-                                                <div key={nestedSubcategory._id} className="flex justify-between">
+                                                <div key={nestedSubcategory._id} className="flex items-center group">
                                                     <ListItem
                                                         className="py-0 hover:bg-transparent text-slate-500 hover:font-extrabold hover:underline"
                                                         href={`/category/${encodeURIComponent(nestedSubcategory.name)}?s=${encodeURIComponent(nestedSubcategory.slug)}`}
                                                         title={nestedSubcategory.name || 'Unknown Subcategory'}
                                                     />
-                                                    <EditCategory categoryname={nestedSubcategory.name} categoryslug={nestedSubcategory.slug} categoryid={nestedSubcategory._id}/>
+                                                    <div className="flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                        <EditCategory categoryname={nestedSubcategory.name} categoryslug={nestedSubcategory.slug} categoryid={nestedSubcategory._id} />
+                                                        <DeleteCategory id={nestedSubcategory._id}/>
+                                                    </div>
                                                 </div>
                                             ))}
                                     </div>
