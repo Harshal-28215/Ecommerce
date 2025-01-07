@@ -1,4 +1,5 @@
 import connectToDatabase from "@/lib/mongodb/db";
+import Category from "@/lib/schemas/Category";
 import getCategory from "@/utils/Routes/categoryRoutes/GET";
 import createCategory from "@/utils/Routes/categoryRoutes/POST";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -11,7 +12,12 @@ const CreateCategory = async (req: NextApiRequest, res: NextApiResponse) => {
     } else if (req.method === 'POST') {
         // Create a new category
         createCategory(req, res);
-    } else {
+    } else if (req.method === 'PUT') {
+        // Update a category
+        const updateCategory = Category.findByIdAndUpdate(req.body.id, req.body, { new: true });
+        res.status(200).json(updateCategory);
+    }
+    else {
         // Handle unsupported methods
         res.setHeader('Allow', ['GET', 'POST']); // Specify allowed methods
         res.status(405).json({ error: `Method ${req.method} not allowed` });
