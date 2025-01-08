@@ -15,8 +15,11 @@ import Link from "next/link"
 import EditCategory from "./EditCategory"
 import { Divide } from "lucide-react"
 import DeleteCategory from "./DeleteCategory"
+import { useMyContext } from "@/Context/context"
 
 export default function NavigationMenuDemo({ category }: { category: categoryType[] }) {
+
+    const { user } = useMyContext();
 
     return (
         <NavigationMenu>
@@ -35,10 +38,13 @@ export default function NavigationMenuDemo({ category }: { category: categoryTyp
                                                 href={`/category/${encodeURIComponent(subcategory.name || 'unknown')}?s=${subcategory.slug}`}
                                                 title={subcategory.name || 'Unknown Category'}
                                             />
-                                            <div className="flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                <EditCategory categoryname={subcategory.name} categoryslug={subcategory.slug} categoryid={subcategory._id} />
-                                                <DeleteCategory id={subcategory._id} />
-                                            </div>
+                                            {user?.role === 'admin' &&
+                                                <div className="flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                    <EditCategory categoryname={subcategory.name} categoryslug={subcategory.slug} categoryid={subcategory._id} />
+                                                    <DeleteCategory id={subcategory._id} />
+                                                </div>
+                                            }
+
                                         </div>
                                         {subcategory.subcategories &&
                                             subcategory.subcategories.map((nestedSubcategory) => (
@@ -48,10 +54,13 @@ export default function NavigationMenuDemo({ category }: { category: categoryTyp
                                                         href={`/category/${encodeURIComponent(nestedSubcategory.name)}?s=${encodeURIComponent(nestedSubcategory.slug)}`}
                                                         title={nestedSubcategory.name || 'Unknown Subcategory'}
                                                     />
-                                                    <div className="flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                        <EditCategory categoryname={nestedSubcategory.name} categoryslug={nestedSubcategory.slug} categoryid={nestedSubcategory._id} />
-                                                        <DeleteCategory id={nestedSubcategory._id}/>
-                                                    </div>
+                                                    {user?.role === 'admin' &&
+                                                        <div className="flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                            <EditCategory categoryname={nestedSubcategory.name} categoryslug={nestedSubcategory.slug} categoryid={nestedSubcategory._id} />
+                                                            <DeleteCategory id={nestedSubcategory._id} />
+                                                        </div>
+                                                    }
+
                                                 </div>
                                             ))}
                                     </div>
