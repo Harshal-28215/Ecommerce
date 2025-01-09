@@ -16,7 +16,9 @@ interface ContextProps {
   allitem: boolean
   selected: string
   active: boolean
+  search: string
 
+  setSearch: React.Dispatch<React.SetStateAction<string>>
   setActive: React.Dispatch<React.SetStateAction<boolean>>
   setSelected: React.Dispatch<React.SetStateAction<string>>
   setCart: React.Dispatch<React.SetStateAction<productType[] | null>>
@@ -33,6 +35,8 @@ const defaultContext: ContextProps = {
   allitem: false,
   selected: "",
   active: false,
+  search: '',
+  setSearch: () => { },
   setActive: () => { },
   setSelected: () => { },
   setAllitem: () => { },
@@ -53,6 +57,7 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }): JSX
   const [allitem, setAllitem] = useState(false)
   const [selected, setSelected] = useState("");
   const [active, setActive] = useState(false);
+  const [search, setSearch] = useState('')
 
 
   async function getCart() {
@@ -125,7 +130,9 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }): JSX
     selected,
     setSelected,
     active,
-    setActive
+    setActive,
+    search,
+    setSearch
   };
 
   return (
