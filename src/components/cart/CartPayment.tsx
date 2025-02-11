@@ -20,7 +20,6 @@ function CartPayment() {
       const storedItems = localStorage.getItem('cartItems');
       setItem(storedItems ? JSON.parse(storedItems) : [])
     }
-
   }, [])
 
   let totalMrp = 0;
