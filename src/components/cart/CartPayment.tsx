@@ -10,8 +10,6 @@ function CartPayment() {
   const router = useRouter();
   const path = usePathname();
 
-  console.log("path", path);
-
 
   const { item, setItem, selected } = useMyContext()
 

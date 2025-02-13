@@ -1,4 +1,5 @@
 import { categoryType, selectCategoryProp } from '@/utils/utils';
+import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 const SelectCategory = ({ setSelectedItem, setSelectedItemId }: selectCategoryProp) => {
@@ -7,6 +8,11 @@ const SelectCategory = ({ setSelectedItem, setSelectedItemId }: selectCategoryPr
     const [category, setCategory] = useState<categoryType[]>([]);
     const [debouncedQuery, setDebouncedQuery] = useState(searchQuery);
     const [selected, setSelected] = useState<string | null>(null);
+
+    const params = usePathname();
+    console.log(params);
+    
+    
 
     useEffect(() => {
         fetch('http://localhost:3000/api/category/CreateCategory', {
@@ -36,7 +42,7 @@ const SelectCategory = ({ setSelectedItem, setSelectedItemId }: selectCategoryPr
                     matchedItems.push({ ...subcategory, subcategories: [] });
                 }
 
-                if (subcategory.subcategories) {
+                if (subcategory.subcategories && params === '/admin/addproduct') {
                     subcategory.subcategories.forEach((nestedSubcategory) => {
                         if (nestedSubcategory.slug.toLowerCase().includes(debouncedQuery.toLowerCase())) {
                             matchedItems.push(nestedSubcategory);
