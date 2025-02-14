@@ -1,11 +1,11 @@
 import DetailSide from "@/components/Product/productDetails/DetailSide"
 import ImageSide from "@/components/Product/productDetails/ImageSide"
 
-async function page({ params }: { params: { id: string } }) {
+async function page({ params }: { params: Promise<{ id: string }> }) {
 
-    const { id } = await params
+    const productId = (await params).id;
 
-    const response = await fetch(`http://localhost:3000/api/productdetail/product?id=${id}`, {
+    const response = await fetch(`http://localhost:3000/api/productdetail/product?id=${productId}`, {
         method: "GET",
         headers: {
             'Content-Type': "application/json"
@@ -29,8 +29,8 @@ async function page({ params }: { params: { id: string } }) {
 
     return (
         <div className="p-4 flex gap-4 md:flex-row flex-col">
-            <ImageSide id={id} />
-            <DetailSide DeatailSideData={DeatailSideData}/>
+            <ImageSide id={productId} />
+            <DetailSide DeatailSideData={DeatailSideData} />
         </div>
     )
 }
