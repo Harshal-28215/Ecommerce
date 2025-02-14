@@ -31,7 +31,7 @@ type DeatailSideDataProp = {
 
 function DetailSide({ DeatailSideData }:{DeatailSideData:DeatailSideDataProp}) {
     return (
-        <aside className="w-[50%] px-3">
+        <aside className="md:w-[50%] w-full px-3 md:pt-0 pt-12">
             <Description Product={DeatailSideData.ProductId}/>
             <Bestoffers />
             <ProductDetail ProductDetails={DeatailSideData.ProductDetails}/>

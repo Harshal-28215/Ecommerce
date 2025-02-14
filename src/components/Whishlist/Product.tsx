@@ -49,10 +49,10 @@ function Product({ product }: { product: productType }) {
     
 
     return (
-        <div className='block relative w-[210px] h-[390px]' key={product._id}>
+        <div className='block relative w-[200px] h-[440px]' key={product._id}>
             <div className='absolute top-1 right-1 bg-white/50 z-[1] cursor-pointer rounded-sm p-1' onClick={handledelete}><Trash2 /></div>
             <Link href={`/product/${product._id}`}>
-                <div className='w-full h-[80%] bg-black relative'>
+                <div className='w-full bg-black relative'>
                     <ImageData id={product._id} width={200} height={300} />
                     <div className='absolute text-black bg-white/40 p-1 bottom-2 left-1 flex text-end flex-row text-[12px] font-bold'>
                         <span>4.5</span>

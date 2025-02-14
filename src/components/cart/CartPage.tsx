@@ -4,7 +4,7 @@ import CartPayment from './CartPayment'
 
 function CartPage() {
   return (
-    <main className='flex w-full justify-center'>
+    <main className='flex w-full justify-center md:flex-row flex-col'>
       <CartProduct />
       <CartPayment />
     </main>

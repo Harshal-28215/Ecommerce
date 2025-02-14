@@ -10,14 +10,14 @@ const response = await fetch(`http://localhost:3000/api/Image/productImage?id=${
 const ImageData = response.image.DetailImage
 
     return (
-        <aside className="w-[50%] h-fit grid grid-cols-2 grid-flow-row gap-4">
+        <aside className="md:w-[50%] w-full h-fit grid grid-cols-2 grid-flow-row gap-4">
 
             {ImageData?.map((image:{data:string,contentType:string,_id:string}) => {
 
                 const base64Image = `data:${image.contentType};base64,${image.data}`;
 
                 return (
-                    <div className="w-[100%] h-[500px]" key={image._id}>
+                    <div className="w-[100%] md:h-[500px] h-[300px]" key={image._id}>
                         <Image className="w-full h-full object-cover" src={base64Image} width={700} height={500} alt="productimage" />
                     </div>
                 )

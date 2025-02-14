@@ -82,7 +82,7 @@ export default function AddProduct() {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-3xl mx-auto py-10">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-3xl mx-auto py-10 px-4">
                 <AddCoverProduct form={form} selectedItem={selectedItem} setSelectedItem={setSelectedItem} />
                 <AddCoverImage form={form} />
                 <AddProductDetail form={form} specifications={specifications} setSpecifications={setSpecifications} />

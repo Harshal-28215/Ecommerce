@@ -12,7 +12,7 @@ async function SearchedProduct({search}:{search:string}) {
         const products = data.searchedproduct
 
     return (
-        <main className='flex gap-8 p-8 flex-wrap'>
+        <main className='flex gap-2 p-[10px] flex-wrap'>
             {products?.map((product: productType) => (
                 <Product product={product} key={product._id} />
             ))}

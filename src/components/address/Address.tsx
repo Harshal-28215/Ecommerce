@@ -39,7 +39,7 @@ function Address() {
         
     },[])
     return (
-        <div className='w-[40%] border-r border-black/20 p-5'>
+        <div className='md:w-[40%] w-[100%] md:border-r md:border-black/20 p-5'>
             <div className='w-full flex justify-between items-center pb-4 mb-4'>
                 <h1 className='font-bold'>Select Delivery Address</h1>
                 <Button variant="outline" onClick={() => setActive(!active)}>Add Address</Button>

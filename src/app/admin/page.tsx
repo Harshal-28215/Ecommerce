@@ -22,7 +22,7 @@ async function page() {
 
 
     return (
-        <div className='flex gap-4'>
+        <div className='flex gap-4 px-5'>
             <Link href="/admin/addproduct" className='border-black/20 border p-3 rounded-md hover:bg-black/10'>Add Product</Link>
             <Link href="/admin/addcategory" className='border-black/20 border p-3 rounded-md hover:bg-black/10'>Add Category</Link>
         </div>

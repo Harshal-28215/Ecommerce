@@ -55,7 +55,7 @@ function Homecategory() {
     ]
 
     return (
-        <section className='flex w-[80vw] mx-auto flex-col items-center justify-center my-10'>
+        <section className='flex md:w-[80vw] w-[95vw] mx-auto flex-col items-center justify-center my-10'>
             <h1 className='text-3xl font-bold py-10'>Shop By Category</h1>
             <div className='flex flex-wrap justify-center'>
                 {categorydata.map((category, index) => (

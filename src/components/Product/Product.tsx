@@ -22,7 +22,7 @@ async function Product({ product }: ProductProps) {
 
 
     return (
-        <div className='block relative w-[210px] h-[390px]' key={product._id}>
+        <div className='block relative w-[200px] h-[380px]' key={product._id}>
             <WhishListButton product={product} />
             <DeleteButton id={product._id} />
             <Link href={`/product/${product._id}`}>

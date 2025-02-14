@@ -36,7 +36,7 @@ function CartPayment() {
   }
 
   return (
-    <div className='w-[25%] space-y-2 p-5 text-sm'>
+    <div className='md:w-[25%] w-[100%] space-y-2 p-5 text-sm'>
       <h2 className="font-bold">PRICE DETAILS <span>{`(${item?.length} Items)`}</span></h2>
       <p className="flex justify-between">Total MRP <span>${totalMrp}</span></p>
       {item && item.length > 0 &&

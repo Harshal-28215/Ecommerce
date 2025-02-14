@@ -9,7 +9,7 @@ function WhishlistProduct() {
     const { whishlist } = useMyContext();
 
     return (
-        <div className='flex flex-wrap gap-4 px-20 py-5'>
+        <div className='flex flex-wrap md:gap-4 gap-2 md:px-20 px-[10px] py-5'>
             {whishlist?.map(product => <Product product={product} key={product._id}/>)}
         </div>
     )
