@@ -10,7 +10,7 @@ export default function useSubmit({selectedItem}:{selectedItem:string}) {
         setIsSubmitting(true);
 
         try {
-            const response = await fetch("http://localhost:3000/api/product/Product", {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product/Product`, {
                 method: "POST",
                 body: createformData(values),
                 credentials: 'include',
@@ -22,8 +22,8 @@ export default function useSubmit({selectedItem}:{selectedItem:string}) {
             const productId = product._id;
 
             await Promise.all([
-                uploadImages(`/api/Image/coverImage?id=${productId}`, values.cardImage),
-                uploadImages(`/api/Image/productImage?id=${productId}`, values.images),
+                uploadImages(`${process.env.NEXT_PUBLIC_API_URL}/api/Image/coverImage?id=${productId}`, values.cardImage),
+                uploadImages(`${process.env.NEXT_PUBLIC_API_URL}/api/Image/productImage?id=${productId}`, values.images),
                 submitProductDetails(productId, values),
             ]);
 
@@ -49,7 +49,13 @@ export default function useSubmit({selectedItem}:{selectedItem:string}) {
     async function uploadImages(url: string, files: File[]) {
         const formData = new FormData();
         files.forEach((file) => formData.append("images", file));
-        await fetch(url, { method: "POST", body: formData, credentials: "include" });
+        try {
+            const response = await fetch(url, { method: "POST", body: formData, credentials: "include" });
+            if (!response.ok) throw new Error("Image upload failed");
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
     }
 
     async function submitProductDetails(productId: string, values: any) {
@@ -62,11 +68,17 @@ export default function useSubmit({selectedItem}:{selectedItem:string}) {
             "specifications",
             JSON.stringify(values.specifications)
         );
-        await fetch("/api/productdetail/product", {
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/productdetail/product`, {
             method: "POST",
             body: detailData,
             credentials: "include",
-        });
+            });
+            if (!response.ok) throw new Error("Product details submission failed");
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
     }
 
     return {isSubmitting,handlesubmit}

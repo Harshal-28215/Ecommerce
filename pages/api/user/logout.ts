@@ -12,7 +12,7 @@ const Logout = async (req: NextApiRequest, res: NextApiResponse) => {
             res.status(405).json({ error: 'Method not allowed' })
         }
     } catch (error) {
-        res.status(500).json({ error: 'Error In Logging Out' })
+        res.status(500).json({ error: 'Error In Logging Out',eMessage: error })
     }
 }
 

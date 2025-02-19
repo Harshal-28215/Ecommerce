@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import formidable from "formidable";
-import fs from "fs";
 import ProductDeatail from "@/lib/schemas/ProductDeatail";
 import authenticate from "@/utils/Middleware/authentication";
 import authorize from "@/utils/Middleware/authorization";

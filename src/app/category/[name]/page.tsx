@@ -12,13 +12,21 @@ async function page({ searchParams }: { searchParams: Promise<URLSearchParams> }
 
   const encodedS = encodeURIComponent(s);
 
-  const data = await fetch(`http://localhost:3000/api/product/Product?s=${encodedS}`, {
-    method: "GET",
-    // cache:'force-cache',
-    // next:{revalidate:3600}
-  })
 
-  const products = await data.json();
+  let products = [];
+  try {
+    const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product/Product?s=${encodedS}`, {
+      method: "GET",
+    });
+
+    if (!data.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    products = await data.json();
+  } catch (error) {
+    console.error('Fetch error:', error);
+  }
 
 
   return (

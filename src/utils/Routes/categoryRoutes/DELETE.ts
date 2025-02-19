@@ -14,9 +14,9 @@ export default async function categoryDelete(req: NextApiRequest, res: NextApiRe
 
 
     try {
-        const deletedCategory = await Category.findByIdAndDelete(req.query.id);
+        await Category.findByIdAndDelete(req.query.id);
         res.status(200).json({ message: 'Category deleted successfully' });
     } catch (error) {
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(500).json({ message: 'Internal server error',eMessage: error  });
     }
 }

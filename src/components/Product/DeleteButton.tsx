@@ -13,13 +13,15 @@ function DeleteButton({ id }: { id: string }) {
   const router = useRouter()
 
   const handleclick = async () => {
-    const response = await fetch(`http://localhost:3000/api/product/Product?id=${id}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product/Product?id=${id}`, {
       method: 'DELETE',
       credentials: 'include'
     })
 
     if (response.ok) {
       router.refresh()
+    }else{
+      console.error('Failed to delete product')
     }
 
   }

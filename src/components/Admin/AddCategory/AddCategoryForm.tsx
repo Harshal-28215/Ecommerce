@@ -54,7 +54,7 @@ export default function AddCategoryForm() {
 
     try {
       setIsloading(true);
-      const response = await fetch("http://localhost:3000/api/category/CreateCategory", {
+      const response = await fetch("/api/category/CreateCategory", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -78,6 +78,7 @@ export default function AddCategoryForm() {
         title: "Error",
         description: "Some Error Accured During adding category",
       })
+      console.error(error)
     } finally {
       setIsloading(false)
     }

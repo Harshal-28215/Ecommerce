@@ -41,6 +41,6 @@ export default async function addwhishlist(req: NextApiRequest, res: NextApiResp
 
 
     } catch (error) {
-        res.status(500).json({ message: "Error adding product to cart" });
+        res.status(500).json({ message: "Error adding product to cart",eMessage: error });
     }
 }

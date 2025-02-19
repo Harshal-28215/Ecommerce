@@ -41,6 +41,6 @@ export default async function addCart(req: NextApiRequest, res: NextApiResponse)
 
 
     } catch (error) {
-        res.status(500).json({ message: "Error adding product to cart" });
+        res.status(500).json({ message: "Error adding product to cart",eMessage: error  });
     }
 }

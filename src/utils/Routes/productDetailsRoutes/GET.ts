@@ -14,7 +14,7 @@ export const GET = async (req: NextApiRequest, res: NextApiResponse) => {
             res.status(400).json({ error: "Product Id is required" });
         }
     } catch (error) {
-        res.status(500).json({ error: "Error Fetching Products" });
+        res.status(500).json({ error: "Error Fetching Products",eMessage: error  });
     }
 
 }

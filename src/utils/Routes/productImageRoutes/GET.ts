@@ -12,7 +12,7 @@ export default async function getProductImage(req: NextApiRequest, res: NextApiR
             })
         } catch (error) {
             res.status(500).json({
-                message: "error fetching image"
+                message: "error fetching image",eMessage: error 
             })
         }
     }

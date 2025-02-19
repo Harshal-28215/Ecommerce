@@ -11,7 +11,8 @@ async function createCategory(req: NextApiRequest, res: NextApiResponse) {
     const checkAuth = await authorize(['admin'],req,res,Category);
     if (!checkAuth) return res.status(403).json({ message: 'Unauthorized' });
 
-    let { name, parentId, slug } = req.body;
+    let { slug } = req.body;
+    const { parentId,name } = req.body;
 
     try {
         Category.findOne({ name }).then((category) => {
@@ -39,7 +40,7 @@ async function createCategory(req: NextApiRequest, res: NextApiResponse) {
         return res.status(201).json(newCategory);
 
     } catch (error) {
-        return res.status(500).json({ error: 'Error creating category' });
+        return res.status(500).json({ error: 'Error creating category',eMessage: error  });
     }
 }
 

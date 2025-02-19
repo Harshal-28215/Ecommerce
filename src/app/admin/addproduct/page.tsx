@@ -8,18 +8,32 @@ async function page() {
   const cookieStore = await cookies();
   const token = cookieStore.get('token')?.value;
 
-  const response = await fetch('http://localhost:3000/api/user/user', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Cookie': `token=${token}`
-    }
-  })
-  const data = await response.json()
-  if (data.role !== 'admin') {
-    redirect('/')
+  if (!token) {
+    redirect('/');
   }
-  
+
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/user`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Cookie': `token=${token}`
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch user data');
+    }
+
+    const data = await response.json();
+    if (data.role !== 'admin') {
+      redirect('/');
+    }
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    redirect('/');
+  }
+
 
   return (
     <div>

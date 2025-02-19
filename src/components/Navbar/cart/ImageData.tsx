@@ -7,16 +7,24 @@ function ImageData({ id, width, height }: { id: string, width: number, height: n
 
     useEffect(() => {
         async function getImagefromId(id: string) {
-
-            const response = await fetch(`http://localhost:3000/api/Image/coverImage?id=${id}`, {
+            try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Image/coverImage?id=${id}`, {
                 method: "GET",
-            })
-                .then(data => data.json())
+            });
 
-            const coverImage = await response.image.CardImage;
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            const coverImage = data.image.CardImage;
             const base64Image = `data:${coverImage.contentType};base64,${coverImage.data}`;
 
-            setImage(base64Image)
+            setImage(base64Image);
+            } catch (error) {
+            console.error('Error fetching image:', error);
+            setImage(null);
+            }
         }
 
         getImagefromId(id)

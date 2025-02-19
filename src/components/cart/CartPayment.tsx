@@ -18,7 +18,7 @@ function CartPayment() {
       const storedItems = localStorage.getItem('cartItems');
       setItem(storedItems ? JSON.parse(storedItems) : [])
     }
-  }, [])
+  }, [item])
 
   let totalMrp = 0;
 
@@ -31,7 +31,9 @@ function CartPayment() {
       localStorage.setItem('cartItems', JSON.stringify(item))
       router.push('/checkout/address')
     } else if (path === '/checkout/address') {
-      router.push('/checkout/payment')
+      // router.push('/checkout/payment')
+      console.log('Payment');
+      
     }
   }
 

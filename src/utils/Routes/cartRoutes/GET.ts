@@ -22,6 +22,6 @@ export default async function getCart(req: NextApiRequest, res: NextApiResponse)
             products,
         });
     } catch (error) {
-        res.status(500).json({ message: "Error fetching cart" });
+        res.status(500).json({ message: "Error fetching cart",eMessage: error  });
     }
 }

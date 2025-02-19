@@ -22,6 +22,6 @@ export default async function getWhishlist(req: NextApiRequest, res: NextApiResp
             products,
         });
     } catch (error) {
-        res.status(500).json({ message: "Error fetching cart" });
+        res.status(500).json({ message: "Error fetching cart",eMessage: error  });
     }
 }

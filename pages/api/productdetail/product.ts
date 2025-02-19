@@ -14,7 +14,7 @@ const productDetailPost = async (req: NextApiRequest, res: NextApiResponse) => {
             await GET(req, res);
         }
     } catch (error) {
-        res.status(500).json({ error: "Error creating product" });
+        res.status(500).json({ error: "Error creating product", message: error });
     }
 
 }

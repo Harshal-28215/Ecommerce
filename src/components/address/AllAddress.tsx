@@ -1,5 +1,5 @@
 import { useMyContext } from '@/Context/context';
-import React, { useEffect } from 'react'
+import React from 'react'
 import EditAddress from './EditAddress';
 import { addressProp } from '@/utils/utils';
 import DeleteAddress from './DeleteAddress';

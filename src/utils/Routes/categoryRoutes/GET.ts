@@ -54,7 +54,7 @@ async function getCategory(req: NextApiRequest, res: NextApiResponse) {
             );
             return res.status(200).json(categoriesWithSubcategories);
         } catch (error) {
-            return res.status(500).json({ error: "Error Fetching Category Via id" });
+            return res.status(500).json({ error: "Error Fetching Category Via id" ,eMessage: error });
         }
 
     }
@@ -78,7 +78,7 @@ async function getCategory(req: NextApiRequest, res: NextApiResponse) {
 
         return res.status(200).json(categoriesWithSubcategories);
     } catch (error) {
-        return res.status(500).json({ error: "Error Fetching Categories" });
+        return res.status(500).json({ error: "Error Fetching Categories",eMessage: error  });
     }
 }
 

@@ -62,7 +62,7 @@ async function getProduct(req: NextApiRequest, res: NextApiResponse) {
 
         return res.status(200).json(products);
     } catch (error) {
-        return res.status(500).json({ error: "Error Fetching Products" });
+        return res.status(500).json({ error: "Error Fetching Products",eMessage: error  });
     }
 }
 

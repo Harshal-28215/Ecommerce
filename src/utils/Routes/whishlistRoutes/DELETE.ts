@@ -36,7 +36,7 @@ export default async function deleteWhishlist(req: NextApiRequest, res: NextApiR
                 massage: "Cart Cleared"
             })
         } catch (error) {
-            res.status(500).json({ massage: "Error Deleting Category" })
+            res.status(500).json({ massage: "Error Deleting Category",eMessage: error  })
         }
     }
 }

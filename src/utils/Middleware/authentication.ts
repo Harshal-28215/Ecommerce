@@ -20,7 +20,7 @@ const authenticate = (req:CustomNextApiRequest, res:NextApiResponse) => {
     return req.user = decoded as CustomNextApiRequest['user'];
 
   } catch (err) {    
-    return res.status(401).send('Invalid token');
+    return res.status(401).send({message:'Invalid token',eMessage: err} );
   }
 };
 

@@ -5,7 +5,7 @@ import React from 'react'
 function DeleteCategory({id}: {id: string}) {
 
   const deleteCategory = async () => {
-    const response = await fetch(`http://localhost:3000/api/category/CreateCategory?id=${id}`, {
+    const response = await fetch(`/api/category/CreateCategory?id=${id}`, {
       method: 'DELETE',
       credentials: 'include',
     })

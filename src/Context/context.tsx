@@ -61,7 +61,7 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }): JSX
 
 
   async function getCart() {
-    const response = await fetch(`http://localhost:3000/api/cart/Cart?uid=${user?.id}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/Cart?uid=${user?.id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -72,27 +72,34 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }): JSX
 
     if (response.ok) {
       setCart(data.products);
+    }else{
+      throw new Error("Error fetching cart");
+      
     }
   }
 
   async function getWhishlist() {
-    const response = await fetch(`http://localhost:3000/api/whishlist/whishlist?uid=${user?.id}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: "include",
-    })
-    const data = await response.json()
+    if (user) {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/whishlist/whishlist?uid=${user?.id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: "include",
+      })
+      const data = await response.json()
 
-    if (response.ok) {
-      setWhishlist(data.products);
+      if (response.ok) {
+        setWhishlist(data.products);
+      }else{
+        throw new Error("Error fetching whishlist");
+      }
     }
   }
 
   useEffect(() => {
     async function getUser() {
-      const response = await fetch('http://localhost:3000/api/user/user', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/user`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -103,6 +110,8 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }): JSX
 
       if (response.ok) {
         setUser(data);
+      }else{
+        throw new Error("Error fetching user");
       }
     }
     getUser();

@@ -11,8 +11,8 @@ const SelectCategory = ({ setSelectedItem, setSelectedItemId }: selectCategoryPr
 
     const params = usePathname();
     console.log(params);
-    
-    
+
+
 
     useEffect(() => {
         fetch('http://localhost:3000/api/category/CreateCategory', {
@@ -60,8 +60,9 @@ const SelectCategory = ({ setSelectedItem, setSelectedItemId }: selectCategoryPr
     const toggleDropdown = () => setIsOpen(!isOpen);
 
     const handleSelect = (slug: string, id: string) => {
-        setSelectedItemId && setSelectedItemId(id);
-        setSelectedItem && setSelectedItem(slug);
+        if (setSelectedItemId) setSelectedItemId(id);
+        if (setSelectedItem) setSelectedItem(slug);
+
         setSelected(slug);
         setIsOpen(false);
         setSearchQuery('');

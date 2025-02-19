@@ -16,6 +16,6 @@ export default async function categoryUpdate(req: NextApiRequest, res: NextApiRe
         const updateCategory = await Category.findByIdAndUpdate(req.query.id, req.body, { new: true });
         res.status(200).json(updateCategory);
     } catch (error) {
-        res.status(400).json({ message: "Error updating category" });
+        res.status(400).json({ message: "Error updating category",eMessage: error  });
     }
 }

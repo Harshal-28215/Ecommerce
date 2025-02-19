@@ -53,13 +53,13 @@ async function address(req: CustomNextApiRequest, res: NextApiResponse) {
             const address = await Address.find({ user: userID })
             res.status(200).json({ message: "Address fetched successfully", address })
         } catch (error) {
-            res.status(500).json({ message: "Error fetching product" })
+            res.status(500).json({ message: "Error fetching product",eMessage: error })
         }
     } else if (req.method === "DELETE") {
         const user = authenticate(req, res);
         if (!user) return res.status(401).send("Invalid token");
 
-        const isauthorize = await authorize(["admin"], Address)(req, res);
+        const isauthorize = await authorize(["admin"],req, res, Address);
         if (!isauthorize) return res.status(403).send("Unauthorized");
 
         try {
@@ -78,7 +78,7 @@ async function address(req: CustomNextApiRequest, res: NextApiResponse) {
         const user = authenticate(req, res);
         if (!user) return res.status(401).send("Invalid token");
 
-        const isauthorize = await authorize(["admin"], Address)(req, res);
+        const isauthorize = await authorize(["admin"],req, res, Address);
         if (!isauthorize) return res.status(403).send("Unauthorized");
 
         try {
@@ -96,7 +96,7 @@ async function address(req: CustomNextApiRequest, res: NextApiResponse) {
             })
             res.status(200).json({ message: "Address updated successfully" })
         } catch (error) {
-            res.status(500).json({ message: "Error updating address" })
+            res.status(500).json({ message: "Error updating address",eMessage: error })
         }
     }
 }

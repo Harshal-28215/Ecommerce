@@ -60,7 +60,7 @@ function EditForm({ categoryname, categoryslug, categoryid, setIsEdit }: editFor
         
         try {
             setIsloading(true);
-            const response = await fetch(`http://localhost:3000/api/category/CreateCategory?id=${categoryid}`, {
+            const response = await fetch(`/api/category/CreateCategory?id=${categoryid}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -85,6 +85,7 @@ function EditForm({ categoryname, categoryslug, categoryid, setIsEdit }: editFor
                 title: "Error",
                 description: "Some Error Accured During Login",
             })
+            console.error(error)
         } finally {
             setIsloading(false)
         }

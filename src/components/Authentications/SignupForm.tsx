@@ -1,16 +1,12 @@
 "use client"
 
 import {
-  toast
-} from "sonner"
-import {
   useForm
 } from "react-hook-form"
 import {
   zodResolver
 } from "@hookform/resolvers/zod"
 import * as z from "zod"
-import { ZodError } from "zod"
 import {
   Button
 } from "@/components/ui/button"
@@ -43,7 +39,7 @@ const formSchema = z.object({
   });
 
 export default function SignupForm() {
-  const {toast} = useToast();
+  const { toast } = useToast();
   const router = useRouter()
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -64,7 +60,7 @@ export default function SignupForm() {
       password: values.Password,
     }
     try {
-      const response = await fetch("http://localhost:3000/api/user/signup", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -75,17 +71,23 @@ export default function SignupForm() {
 
       if (response.ok) {
         toast({
-          title:"Success",
-          description:"Signup Successfully"
+          title: "Success",
+          description: "Signup Successfully"
         })
         router.push('/login')
+      }else{
+        toast({
+          title: "Error",
+          description: "Error during signup"
+        })
       }
 
     } catch (error) {
       toast({
-        title:"Error",
-        description:"Error during signup"
+        title: "Error",
+        description: "Error during signup"
       })
+      console.error(error)
     }
 
   }

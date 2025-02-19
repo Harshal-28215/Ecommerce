@@ -19,7 +19,7 @@ function Product({ product }: { product: productType }) {
     const pid = product._id;
     const handledelete = async () => {
 
-        const response = await fetch(`http://localhost:3000/api/whishlist/whishlist?uid=${user?.id}&pid=${pid}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/whishlist/whishlist?uid=${user?.id}&pid=${pid}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',

@@ -54,7 +54,7 @@ export default function AddAddressForm({ address,edit,setActive }: { address?: a
         }
     })
 
-    const url = address && edit ? `http://localhost:3000/api/user/address?id=${address?._id}&uid=${user?.id}` : "http://localhost:3000/api/user/address"
+    const url = address && edit ? `${process.env.NEXT_PUBLIC_API_URL}/api/user/address?id=${address?._id}&uid=${user?.id}` : `${process.env.NEXT_PUBLIC_API_URL}/api/user/address`
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         setIsloading(true);
@@ -85,6 +85,8 @@ export default function AddAddressForm({ address,edit,setActive }: { address?: a
                 title: "Error",
                 description: "Error adding address",
             })
+            console.log(error);
+            
         } finally {
             setIsloading(false);
         }

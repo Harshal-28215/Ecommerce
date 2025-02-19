@@ -8,16 +8,33 @@ async function page() {
     const cookieStore = await cookies();
     const token = cookieStore.get('token')?.value;
 
-    const response = await fetch('http://localhost:3000/api/user/user', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Cookie': `token=${token}`
+    if (!token) {
+        console.error('No token found');
+        redirect('/');
+    }
+
+    let data;
+    try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/user`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Cookie': `token=${token}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
-    })
-    const data = await response.json()
+
+        data = await response.json();
+    } catch (error) {
+        console.error('Fetch error:', error);
+        redirect('/');
+    }
+
     if (data.role !== 'admin') {
-        redirect('/')
+        redirect('/');
     }
 
 

@@ -22,7 +22,7 @@ export const useCart = (product: productType) => {
     }, [cart])
 
     const addCart = async () => {
-        const response = await fetch(`http://localhost:3000/api/cart/Cart`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/Cart`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

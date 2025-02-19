@@ -1,5 +1,4 @@
 import connectToDatabase from "@/lib/mongodb/db";
-import Category from "@/lib/schemas/Category";
 import categoryDelete from "@/utils/Routes/categoryRoutes/DELETE";
 import getCategory from "@/utils/Routes/categoryRoutes/GET";
 import createCategory from "@/utils/Routes/categoryRoutes/POST";

@@ -20,7 +20,7 @@ export default async function deleteProduct(req: NextApiRequest, res: NextApiRes
             await Image.findOneAndDelete({ productId: req.query.id })
             res.status(200).json({ message: "product deleted successfully" })
         } catch (error) {
-            res.status(500).json({ message: "error deleting product" })
+            res.status(500).json({ message: "error deleting product",eMessage: error  })
         }
     }
 

@@ -12,10 +12,15 @@ interface ProductProps {
 
 async function Product({ product }: ProductProps) {
 
-    const response = await fetch(`http://localhost:3000/api/Image/coverImage?id=${product._id}`, {
-        method: "GET",
-    })
-        .then(data => data.json())
+    let response;
+    try {
+        response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Image/coverImage?id=${product._id}`, {
+            method: "GET",
+        }).then(data => data.json());
+    } catch (error) {
+        console.error('Error fetching cover image:', error);
+        return null; // or handle the error as needed
+    }
 
     const coverImage = await response.image.CardImage;
     const base64Image = `data:${coverImage.contentType};base64,${coverImage.data}`;

@@ -3,7 +3,7 @@ import ConditionalOnNav from './ConditionalOnNav'
 
 async function Header() {
 
-  const response = await fetch('http://localhost:3000/api/category/CreateCategory', {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/category/CreateCategory`, {
     // cache:'force-cache',
     // next:{revalidate:3600},
 

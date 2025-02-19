@@ -1,4 +1,4 @@
-import { LucideShoppingBag, Truck } from 'lucide-react'
+import { Truck } from 'lucide-react'
 import React from 'react'
 import ProductWhishlistButton from './ProductWhishlistButton'
 import { productType } from '@/utils/utils'

@@ -5,7 +5,7 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
 
     const productId = (await params).id;
 
-    const response = await fetch(`http://localhost:3000/api/productdetail/product?id=${productId}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/productdetail/product?id=${productId}`, {
         method: "GET",
         headers: {
             'Content-Type': "application/json"

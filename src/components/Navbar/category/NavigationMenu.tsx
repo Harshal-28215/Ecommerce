@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/navigation-menu"
 import Link from "next/link"
 import EditCategory from "./EditCategory"
-import { Divide } from "lucide-react"
 import DeleteCategory from "./DeleteCategory"
 import { useMyContext } from "@/Context/context"
 

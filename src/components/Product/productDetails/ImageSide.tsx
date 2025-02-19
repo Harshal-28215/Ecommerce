@@ -3,7 +3,7 @@ import React from 'react'
 
 async function ImageSide({ id }: { id: string }) {
 
-const response = await fetch(`http://localhost:3000/api/Image/productImage?id=${id}`,{
+const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Image/productImage?id=${id}`,{
     method:"GET"
 }).then(data => data.json())
 

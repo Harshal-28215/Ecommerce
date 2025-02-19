@@ -26,7 +26,7 @@ function CartButton() {
 
 
   const handleDelete = async () => {
-    const response = await fetch(`http://localhost:3000/api/cart/Cart?uid=${user?.id}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/Cart?uid=${user?.id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -35,12 +35,14 @@ function CartButton() {
     })
     if (response.ok) {
       setCart(null);
+    }else{
+      throw new Error("Failed to delete cart")
     }
   }
 
   const handleProductDelete = async (pid: string) => {
 
-    const response = await fetch(`http://localhost:3000/api/cart/Cart?uid=${user?.id}&pid=${pid}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/Cart?uid=${user?.id}&pid=${pid}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -56,6 +58,8 @@ function CartButton() {
       else {
         setCart(null)
       }
+    }else{
+      throw new Error("Failed to delete product from cart")
     }
   }
 

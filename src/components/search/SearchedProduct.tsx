@@ -3,13 +3,23 @@ import Product from '../Product/Product';
 
 async function SearchedProduct({search}:{search:string}) {
     
+let products = [];
 
-        const response = await fetch(`http://localhost:3000/api/search/search?search=${search}`, {
-            method: "GET",
-        })
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/search/search?search=${search}`, {
+                method: "GET",
+            })
 
-        const data = await response.json()
-        const products = data.searchedproduct
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status} ${response.statusText}`);
+            }
+
+            const data = await response.json()
+            products = data.searchedproduct
+        } catch (error) {
+            console.error('Failed to fetch products:', error);
+            products = [];
+        }
 
     return (
         <main className='flex gap-2 p-[10px] flex-wrap'>

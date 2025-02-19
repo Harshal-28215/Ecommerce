@@ -32,7 +32,7 @@ import { useToast } from "@/hooks/use-toast"
 
 const formSchema = z.object({
   email: z.string(),
-  Password: z.string(),
+  password: z.string(),
 });
 
 export default function LoginForm() {
@@ -45,7 +45,7 @@ export default function LoginForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
-      Password: "",
+      password: "",
     },
   })
 
@@ -54,36 +54,40 @@ export default function LoginForm() {
 
     const data = {
       email: values.email,
-      password: values.Password,
+      password: values.password,
     }
 
     try {
       setIsloading(true);
-      const response = await fetch("http://localhost:3000/api/user/login", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-        credentials: 'include',
+        credentials: "include",
       });
-      const user = await response.json()
 
-      if (response.ok) {
-        toast({
-          title: "Success",
-          description: "Login Successfully",
-        })
-        router.push('/')
+      if (!response.ok) {
+        const errorData = await response.json(); // Get error message from API
+        throw new Error(errorData.message || "Login failed"); // Show API error
       }
+
+      const user = await response.json();
+      toast({
+        title: "Success",
+        description: "Login Successfully",
+      });
+      router.push("/");
       setUser(user.userObj);
 
     } catch (error) {
       toast({
-        variant:"destructive",
+        variant: "destructive",
         title: "Error",
         description: "Some Error Accured During Login",
       })
+      console.error(error)
     } finally {
       setIsloading(false)
     }
@@ -115,7 +119,7 @@ export default function LoginForm() {
 
         <FormField
           control={form.control}
-          name="Password"
+          name="password"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Password</FormLabel>

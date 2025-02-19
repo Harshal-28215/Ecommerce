@@ -12,7 +12,7 @@ function DeleteAddress({ address, selected }: { address: addressProp, selected: 
 
     const handledelete = async () => {
         try {
-            const response = await fetch(`http://localhost:3000/api/user/address?id=${address._id}&uid=${user?.id}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/address?id=${address._id}&uid=${user?.id}`, {
                 method: "DELETE",
                 credentials: "include"
             })

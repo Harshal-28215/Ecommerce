@@ -1,25 +1,14 @@
 "use client"
 
 import {
-  Cloud,
-  CreditCard,
-  Github,
-  Keyboard,
   LifeBuoy,
   LogIn,
   LogOut,
-  Mail,
-  MessageSquare,
-  Plus,
-  PlusCircle,
-  Settings,
   Trash,
   Trash2,
-  User,
   UserCheck2Icon,
   UserCircle,
   UserPlus,
-  Users,
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -45,7 +34,7 @@ function AccountButton() {
   const { user, whishlist, setWhishlist } = useMyContext();
 
   const handleLogOut = async () => {
-    const response = await fetch('http://localhost:3000/api/user/logout', {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/logout`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -54,13 +43,15 @@ function AccountButton() {
     })
     if (response.ok) {
       window.location.href = '/'
+    }else{
+      console.log("Failed to logout")
     }
     console.log('Logged out');
 
   }
 
   const handleDelete = async () => {
-    const response = await fetch(`http://localhost:3000/api/whishlist/whishlist?uid=${user?.id}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/whishlist/whishlist?uid=${user?.id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -69,12 +60,14 @@ function AccountButton() {
     })
     if (response.ok) {
       setWhishlist(null);
+    }else{
+      console.log("Failed to delete whishlist")
     }
   }
 
   const handleProductDelete = async (pid: string) => {
 
-    const response = await fetch(`http://localhost:3000/api/whishlist/whishlist?uid=${user?.id}&pid=${pid}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/whishlist/whishlist?uid=${user?.id}&pid=${pid}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -90,6 +83,8 @@ function AccountButton() {
       else {
         setWhishlist(null)
       }
+    }else{
+      console.log("Failed to delete product from whishlist")
     }
   }
 

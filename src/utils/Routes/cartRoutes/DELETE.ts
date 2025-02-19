@@ -36,7 +36,7 @@ export default async function deleteCart(req: NextApiRequest, res: NextApiRespon
                 massage: "Cart Cleared"
             })
         } catch (error) {
-            res.status(500).json({ massage: "Error Deleting Category" })
+            res.status(500).json({ massage: "Error Deleting Category" ,eMessage: error })
         }
     }
 }
