@@ -16,7 +16,9 @@ function CartPayment() {
   useEffect(() => {
     if (item?.length === 0) {
       const storedItems = localStorage.getItem('cartItems');
-      setItem(storedItems ? JSON.parse(storedItems) : [])
+      if (storedItems) {
+        setItem(JSON.parse(storedItems))
+      }
     }
   }, [item])
 
@@ -29,11 +31,10 @@ function CartPayment() {
   const setitemtolocal = () => {
     if (path === '/cart') {
       localStorage.setItem('cartItems', JSON.stringify(item))
+      localStorage.setItem('totalMrp', JSON.stringify(totalMrp))
       router.push('/checkout/address')
     } else if (path === '/checkout/address') {
-      // router.push('/checkout/payment')
-      console.log('Payment');
-      
+      router.push('/checkout/payment')
     }
   }
 

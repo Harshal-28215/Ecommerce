@@ -11,7 +11,7 @@ async function page({ searchParams }: { searchParams: Promise<URLSearchParams> }
   const s = (await searchParams).s;
 
   const encodedS = encodeURIComponent(s);
-
+  
 
   let products = [];
   try {

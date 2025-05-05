@@ -47,13 +47,6 @@ function Description({ Product }: { Product: productType }) {
             </div>
 
             <div>
-                <h1 className="flex my-5 font-bold gap-3">DELIVERY OPTIONS <Truck /> </h1>
-                <div className="w-[300px] h-[40px] border px-4 box-border rounded-sm">
-                    <input className="h-[100%] border-none outline-none w-[80%] hidearrow" type="number" placeholder="Enter Pincode" />
-                    <button className="w-[20%]">Check</button>
-                </div>
-                <p className="text-[12px] text-black/50 mb-4">Please enter PIN code to check delivery time & Pay on Delivery Availability</p>
-
                 <div className="space-y-3 my-4 font-thin">
                     <h2>100% Original Products</h2>
                     <h2>Pay on delivery might be available</h2>

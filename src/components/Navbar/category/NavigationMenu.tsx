@@ -34,7 +34,7 @@ export default function NavigationMenuDemo({ category }: { category: categoryTyp
                                         <div className="flex group">
                                             <ListItem
                                                 className="py-1 hover:bg-transparent font-extrabold uppercase"
-                                                href={`/category/${encodeURIComponent(subcategory.name || 'unknown')}?s=${subcategory.slug}`}
+                                                href={`/category/${encodeURIComponent(subcategory.name || 'unknown')}?s=${encodeURIComponent(subcategory.slug)}`}
                                                 title={subcategory.name || 'Unknown Category'}
                                             />
                                             {user?.role === 'admin' &&

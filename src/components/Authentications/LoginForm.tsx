@@ -1,5 +1,7 @@
 "use client"
 
+export const dynamic = 'force-dynamic';
+
 import {
   useForm
 } from "react-hook-form"
@@ -69,8 +71,8 @@ export default function LoginForm() {
       });
 
       if (!response.ok) {
-        const errorData = await response.json(); // Get error message from API
-        throw new Error(errorData.message || "Login failed"); // Show API error
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Login failed");
       }
 
       const user = await response.json();

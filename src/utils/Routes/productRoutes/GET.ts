@@ -5,7 +5,7 @@ import { Product } from "@/lib/schemas/SchemaUtils";
 async function getProduct(req: NextApiRequest, res: NextApiResponse) {
   
     if (req.query.s) {
-    const slug = req.query.s as string;
+    const slug = req.query.s as string;    
   
     try {
 
@@ -33,8 +33,6 @@ async function getProduct(req: NextApiRequest, res: NextApiResponse) {
             },
           },
       ]);
-
-      console.log(slug);
       
   
       if (!categories.length) {

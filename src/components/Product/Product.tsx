@@ -22,8 +22,8 @@ async function Product({ product }: ProductProps) {
         return null; // or handle the error as needed
     }
 
-    const coverImage = await response.image.CardImage;
-    const base64Image = `data:${coverImage.contentType};base64,${coverImage.data}`;
+    const coverImage = await response.image?.CardImage;
+    const base64Image = coverImage ? `data:${coverImage?.contentType};base64,${coverImage?.data}` : null;
 
 
     return (
@@ -32,7 +32,13 @@ async function Product({ product }: ProductProps) {
             <DeleteButton id={product._id} />
             <Link href={`/product/${product._id}`}>
                 <div className='w-full h-[80%] bg-black relative'>
-                    <Image src={base64Image} alt='Product Image' width={300} height={500} />
+                    {base64Image ? (
+                        <Image src={base64Image} alt='Product Image' width={300} height={500} />
+                    ) : (
+                        <div className='w-full h-full bg-gray-200 flex items-center justify-center'>
+                            <span>No Image Available</span>
+                        </div>
+                    )}
                     <div className='absolute text-black bg-white/40 p-1 bottom-2 left-1 flex text-end flex-row text-[12px] font-bold'>
                         <span>4.5</span>
                         <span>⭐</span>

@@ -73,8 +73,7 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }): JSX
     if (response.ok) {
       setCart(data.products);
     }else{
-      throw new Error("Error fetching cart");
-      
+      console.log("Error fetching cart");
     }
   }
 
@@ -92,7 +91,7 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }): JSX
       if (response.ok) {
         setWhishlist(data.products);
       }else{
-        throw new Error("Error fetching whishlist");
+        console.log("Error fetching whishlist");
       }
     }
   }
@@ -111,7 +110,7 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }): JSX
       if (response.ok) {
         setUser(data);
       }else{
-        throw new Error("Error fetching user");
+        console.log("Error fetching user");
       }
     }
     getUser();
